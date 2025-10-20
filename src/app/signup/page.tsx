@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { ZodError, treeifyError } from "zod";
+import z, { ZodError, treeifyError } from "zod";
 import { signUpSchema } from "@/lib/auth/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -39,19 +48,17 @@ export default function SignUpPage() {
       // Validate input with Zod
       signUpSchema.parse(formData);
 
-      // Call backend via NextAuth signIn with isSignUp flag
       const res = await signIn("credentials", {
         redirect: false,
         email: formData.email,
         password: formData.password,
         name: formData.name,
-        isSignUp: "true", // Important for backend to create user
+        isSignUp: "true",
       });
 
       if (res?.error) {
         setErrors({ general: res.error });
       } else if (res?.ok) {
-        // Optionally auto-login after signup
         router.push("/");
       }
     } catch (err) {
@@ -60,10 +67,13 @@ export default function SignUpPage() {
           errors: string[];
           properties?: Record<string, { errors: string[] }>;
         };
+
         setErrors({
+          name: tree.properties?.name?.errors?.[0],
           email: tree.properties?.email?.errors?.[0],
           password: tree.properties?.password?.errors?.[0],
-          general: tree.errors?.[0], // optional general messages
+          confirmPassword: tree.properties?.confirmPassword?.errors?.[0],
+          general: tree.errors?.[0],
         });
       } else {
         console.error(err);
@@ -75,108 +85,102 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md rounded-xl border border-border bg-card shadow-lg p-8">
-        <h1 className="text-3xl font-semibold text-center text-foreground mb-8">
-          Create Account
-        </h1>
+    <div className="flex  items-center justify-center px-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl text-center font-semibold">
+            Create Account
+          </CardTitle>
+          {errors.general && (
+            <p className="text-sm text-center text-destructive mt-2">
+              {errors.general}
+            </p>
+          )}
+        </CardHeader>
 
-        {errors.general && (
-          <p className="text-destructive text-sm mb-4 text-center">
-            {errors.general}
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name */}
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                placeholder="Your name"
+                onChange={handleChange}
+              />
+              {errors.name && (
+                <p className="text-sm text-destructive mt-1">{errors.name}</p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                value={formData.email}
+                placeholder="you@example.com"
+                onChange={handleChange}
+              />
+              {errors.email && (
+                <p className="text-sm text-destructive mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                placeholder="********"
+                onChange={handleChange}
+              />
+              {errors.password && (
+                <p className="text-sm text-destructive mt-1">
+                  {errors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                placeholder="********"
+                onChange={handleChange}
+              />
+              {errors.confirmPassword && (
+                <p className="text-sm text-destructive mt-1">
+                  {errors.confirmPassword}
+                </p>
+              )}
+            </div>
+
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? "Creating Account..." : "Sign Up"}
+            </Button>
+          </form>
+        </CardContent>
+
+        <CardFooter className="flex justify-center">
+          <p className="text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary hover:underline">
+              Sign in
+            </Link>
           </p>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Name
-            </label>
-            <Input
-              name="name"
-              value={formData.name}
-              placeholder="Your name"
-              onChange={handleChange}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.name && (
-              <p className="text-destructive text-sm mt-1">{errors.name}</p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Email
-            </label>
-            <Input
-              name="email"
-              value={formData.email}
-              placeholder="you@example.com"
-              onChange={handleChange}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.email && (
-              <p className="text-destructive text-sm mt-1">{errors.email}</p>
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Password
-            </label>
-            <Input
-              name="password"
-              type="password"
-              value={formData.password}
-              placeholder="********"
-              onChange={handleChange}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.password && (
-              <p className="text-destructive text-sm mt-1">{errors.password}</p>
-            )}
-          </div>
-
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Confirm Password
-            </label>
-            <Input
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              placeholder="********"
-              onChange={handleChange}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.confirmPassword && (
-              <p className="text-destructive text-sm mt-1">
-                {errors.confirmPassword}
-              </p>
-            )}
-          </div>
-
-          {/* Submit */}
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
-          >
-            {isLoading ? "Creating Account..." : "Sign Up"}
-          </Button>
-        </form>
-
-        <p className="text-sm text-muted-foreground text-center mt-6">
-          Already have an account?{" "}
-          <a href="/login" className="text-primary hover:underline">
-            Log in
-          </a>
-        </p>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { ZodError, treeifyError } from "zod";
+import { ZodError, treeifyError, z } from "zod";
 import { signInSchema } from "@/lib/auth/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,46 +34,30 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // Validate input with Zod
       signInSchema.parse({ email, password });
 
-      // Call NextAuth signIn
       const res = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
+
       if (res?.error) {
         setErrors({ general: res.error });
+      } else {
+        router.push("/");
       }
     } catch (err) {
       if (err instanceof ZodError) {
+        const tree = treeifyError(err) as {
+          errors: string[];
+          properties?: Record<string, { errors: string[] }>;
+        };
         setErrors({
-          email: err.name,
-          password: err.message,
+          email: tree.properties?.email?.errors?.[0],
+          password: tree.properties?.password?.errors?.[0],
+          general: tree.errors?.[0],
         });
-        if (err instanceof ZodError) {
-          const tree = treeifyError(err) as {
-            errors: string[];
-            properties?: Record<string, { errors: string[] }>;
-          };
-          /**
-           * tree has this structure:
-           * {
-           *   errors: ["general error if any"],
-           *   properties: {
-           *     email: { errors: ["Invalid email address"] },
-           *     password: { errors: ["Password must be at least 8 characters"] }
-           *   }
-           * }
-           */
-
-          setErrors({
-            email: tree.properties?.email?.errors?.[0],
-            password: tree.properties?.password?.errors?.[0],
-            general: tree.errors?.[0], // optional general messages
-          });
-        }
       } else {
         setErrors({ general: "Unexpected error occurred" });
       }
@@ -74,69 +67,74 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md rounded-xl border border-border bg-card shadow-lg p-8">
-        <h1 className="text-3xl font-semibold text-center text-foreground mb-8">
-          Welcome Back
-        </h1>
+    <div className="flex  items-center justify-center px-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl text-center font-semibold">
+            Welcome Back
+          </CardTitle>
+          {errors.general && (
+            <p className="text-sm text-center text-destructive mt-2">
+              {errors.general}
+            </p>
+          )}
+        </CardHeader>
 
-        {errors.general && (
-          <p className="text-destructive text-sm mb-4 text-center">
-            {errors.general}
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Email */}
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                value={email}
+                placeholder="you@example.com"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errors.email && (
+                <p className="text-sm text-destructive mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {errors.password && (
+                <p className="text-sm text-destructive mt-1">
+                  {errors.password}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full font-medium"
+            >
+              {isLoading ? "Signing in..." : "Sign In"}
+            </Button>
+          </form>
+        </CardContent>
+
+        <CardFooter className="flex justify-center">
+          <p className="text-sm text-muted-foreground">
+            Don’t have an account?{" "}
+            <Link
+              href="/signup"
+              className="text-primary hover:underline underline-offset-2"
+            >
+              Sign up
+            </Link>
           </p>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Email
-            </label>
-            <Input
-              value={email}
-              placeholder="you@example.com"
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.email && (
-              <p className="text-destructive text-sm mt-1">{errors.email}</p>
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Password
-            </label>
-            <Input
-              type="password"
-              value={password}
-              placeholder="********"
-              onChange={(e) => setPassword(e.target.value)}
-              className="bg-input border border-border text-foreground placeholder:text-muted-foreground focus:ring-ring focus:border-ring"
-            />
-            {errors.password && (
-              <p className="text-destructive text-sm mt-1">{errors.password}</p>
-            )}
-          </div>
-
-          {/* Submit */}
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </Button>
-        </form>
-
-        <p className="text-sm text-muted-foreground text-center mt-6">
-          Don’t have an account?{" "}
-          <a href="/signup" className="text-primary hover:underline">
-            Sign up
-          </a>
-        </p>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
