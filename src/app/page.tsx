@@ -1,4 +1,12 @@
-import { BookOpen, Play, Star, Users, Clock, Award } from "lucide-react";
+import {
+  BookOpen,
+  Play,
+  Star,
+  Users,
+  Clock,
+  Award,
+  CheckCircle2,
+} from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -9,14 +17,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { EnrollButton } from "@/components/actionButtons/EnrollButton";
+import { isUserEnrolled } from "@/lib/actions/enrollmentActions";
 
-export default function Home() {
+export default async function Home() {
   const stats = [
     { icon: Clock, value: "8h 24m", label: "Total Duration" },
     { icon: BookOpen, value: "24", label: "Lessons" },
     { icon: Users, value: "1.2k", label: "Students" },
     { icon: Star, value: "4.9", label: "Rating" },
   ];
+  const enrolled = await isUserEnrolled();
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -65,13 +76,17 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button
-                size="lg"
-                className="flex items-center gap-2 text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                <Play className="h-5 w-5" />
-                Enroll Now
-              </Button>
+              {enrolled ? (
+                <div className="flex items-center gap-1 text">
+                  <p className=" text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    {" "}
+                    You’re already enrolled
+                  </p>
+                  <CheckCircle2 color="var(--secondary)" />
+                </div>
+              ) : (
+                <EnrollButton />
+              )}
 
               <Button
                 variant="outline"

@@ -1,14 +1,14 @@
 import { MessageSquare } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { getCommentsByCourse } from "@/lib/actions/courseActions";
+import { getCommentsByCourseAction } from "@/lib/actions/courseActions";
 
 interface CommentsSectionProps {
   courseId: string;
 }
 
 const CommentsSection = async ({ courseId }: CommentsSectionProps) => {
-  const comments = await getCommentsByCourse(courseId);
+  const comments = await getCommentsByCourseAction(courseId);
 
   return (
     <Card className="p-6 space-y-6">

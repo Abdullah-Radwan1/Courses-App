@@ -2,11 +2,11 @@ import CourseCurriculum from "@/components/Cirriculum";
 import CommentsSection from "@/components/Comments";
 import CourseMetadata from "@/components/CourseMetaData";
 import VideoPlayer from "@/components/Video";
-import { getCourses } from "@/lib/actions/courseActions";
+import { getCoursesAction } from "@/lib/actions/courseActions";
 import { Card, CardContent } from "@/components/ui/card";
 
 const page = async () => {
-  const courses = await getCourses();
+  const courses = await getCoursesAction();
 
   return (
     <div className="bg-background min-h-screen py-10">
@@ -24,6 +24,7 @@ const page = async () => {
 
             <Card>
               <CardContent className="p-6">
+                {/* hardcoded */}
                 <CommentsSection courseId="0d998d73-f549-4a63-b465-6f74bb69b227" />
               </CardContent>
             </Card>

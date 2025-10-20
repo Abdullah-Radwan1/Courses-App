@@ -4,6 +4,7 @@ import "./globals.css";
 import SessionProvider from "@/lib/auth/SessionProvider";
 import Header from "@/components/header_footer/Header";
 import Footer from "@/components/header_footer/Footer";
+import { Toaster } from "@/components/ui/sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Header />
         <SessionProvider>
           <main className="flex-1 content-center">{children}</main>
+          <Toaster />
         </SessionProvider>
         {/* Footer */}
         <Footer />

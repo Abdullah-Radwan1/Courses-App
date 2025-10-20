@@ -5,7 +5,6 @@ import SignoutButton from "@/lib/auth/SignoutButton";
 
 const Header = async () => {
   const session = await getServerSession();
-
   return (
     <header className="border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
