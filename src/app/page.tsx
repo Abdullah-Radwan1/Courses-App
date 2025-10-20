@@ -1,7 +1,4 @@
-"use client";
-
 import { BookOpen, Play, Star, Users, Clock, Award } from "lucide-react";
-import { useRouter } from "next/navigation";
 import {
   Card,
   CardHeader,
@@ -14,12 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleGoToCourse = () => {
-    router.push("/dashboard");
-  };
-
   const stats = [
     { icon: Clock, value: "8h 24m", label: "Total Duration" },
     { icon: BookOpen, value: "24", label: "Lessons" },
@@ -77,10 +68,9 @@ export default function Home() {
               <Button
                 size="lg"
                 className="flex items-center gap-2 text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={handleGoToCourse}
               >
                 <Play className="h-5 w-5" />
-                Start Learning Now
+                Enroll Now
               </Button>
 
               <Button
