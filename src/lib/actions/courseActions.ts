@@ -11,11 +11,3 @@ export const getCoursesAction = cache(async () => {
     },
   });
 });
-
-export const getCommentsByCourseAction = cache(async (courseId: string) => {
-  return db.comment.findMany({
-    where: { courseId },
-    include: { user: true },
-    orderBy: { createdAt: "desc" },
-  });
-});

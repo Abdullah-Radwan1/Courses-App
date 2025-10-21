@@ -150,7 +150,6 @@ exports.Prisma.CommentScalarFieldEnum = {
   content: 'content',
   userId: 'userId',
   courseId: 'courseId',
-  lessonId: 'lessonId',
   createdAt: 'createdAt'
 };
 

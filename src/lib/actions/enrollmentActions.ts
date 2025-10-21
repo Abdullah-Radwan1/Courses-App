@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/auth";
 
 // ✅ shared helper to get the logged-in user
-async function getCurrentUser() {
+export async function getCurrentUser() {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.email) {
@@ -24,14 +24,14 @@ async function getCurrentUser() {
 }
 
 // ✅ check if enrolled
-export async function isUserEnrolled() {
+export async function isUserEnrolled(courseId: string) {
   const user = await getCurrentUser();
   //hard coded
   const existing = await db.enrollment.findUnique({
     where: {
       userId_courseId: {
         userId: user.id,
-        courseId: "9800eaa7-861b-4141-8752-dc2505826e5d",
+        courseId,
       },
     },
   });
@@ -40,10 +40,10 @@ export async function isUserEnrolled() {
 }
 
 // ✅ enroll action
-export async function enrollInCourse() {
+export async function enrollInCourse(courseId: string) {
   const user = await getCurrentUser();
 
-  const already = await isUserEnrolled();
+  const already = await isUserEnrolled("9800eaa7-861b-4141-8752-dc2505826e5d");
   if (already) {
     return { message: "Already enrolled in this course." };
   }
@@ -51,7 +51,7 @@ export async function enrollInCourse() {
   await db.enrollment.create({
     data: {
       userId: user.id,
-      courseId: "9800eaa7-861b-4141-8752-dc2505826e5d",
+      courseId,
     },
   });
 

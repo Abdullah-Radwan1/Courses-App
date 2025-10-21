@@ -6,6 +6,7 @@ import {
   Clock,
   Award,
   CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
 import {
   Card,
@@ -19,20 +20,21 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { EnrollButton } from "@/components/actionButtons/EnrollButton";
 import { isUserEnrolled } from "@/lib/actions/enrollmentActions";
+import Link from "next/link";
 
 export default async function Home() {
   const stats = [
-    { icon: Clock, value: "8h 24m", label: "Total Duration" },
+    { icon: Clock, value: "8 Weeks", label: "Total Duration" },
     { icon: BookOpen, value: "24", label: "Lessons" },
     { icon: Users, value: "1.2k", label: "Students" },
     { icon: Star, value: "4.9", label: "Rating" },
   ];
-  const enrolled = await isUserEnrolled();
+  const enrolled = await isUserEnrolled("9800eaa7-861b-4141-8752-dc2505826e5d");
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className=" bg-background flex flex-col">
       {/* Hero Section */}
-      <main className="flex-grow container mx-auto px-6 py-16">
+      <main className=" container mx-auto px-6 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
@@ -78,23 +80,16 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               {enrolled ? (
                 <div className="flex items-center gap-1 text">
-                  <p className=" text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    {" "}
-                    You’re already enrolled
-                  </p>
-                  <CheckCircle2 color="var(--secondary)" />
+                  <Link className="flex items-center gap-1" href={"/dashboard"}>
+                    <Button variant="default" size="lg">
+                      {" "}
+                      Preview Course <ArrowRight />
+                    </Button>
+                  </Link>
                 </div>
               ) : (
                 <EnrollButton />
               )}
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="flex items-center gap-2 text-lg px-8 py-6 border-border text-foreground hover:bg-accent hover:text-accent-foreground"
-              >
-                Preview Course
-              </Button>
             </div>
 
             {/* Trust Badges */}

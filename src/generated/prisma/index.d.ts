@@ -1622,12 +1622,10 @@ export namespace Prisma {
    */
 
   export type LessonCountOutputType = {
-    comments: number
     questions: number
   }
 
   export type LessonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comments?: boolean | LessonCountOutputTypeCountCommentsArgs
     questions?: boolean | LessonCountOutputTypeCountQuestionsArgs
   }
 
@@ -1640,13 +1638,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the LessonCountOutputType
      */
     select?: LessonCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * LessonCountOutputType without action
-   */
-  export type LessonCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CommentWhereInput
   }
 
   /**
@@ -4176,7 +4167,6 @@ export namespace Prisma {
     stamps?: boolean
     courseId?: boolean
     course?: boolean | CourseDefaultArgs<ExtArgs>
-    comments?: boolean | Lesson$commentsArgs<ExtArgs>
     questions?: boolean | Lesson$questionsArgs<ExtArgs>
     _count?: boolean | LessonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lesson"]>
@@ -4207,7 +4197,6 @@ export namespace Prisma {
   export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "stamps" | "courseId", ExtArgs["result"]["lesson"]>
   export type LessonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     course?: boolean | CourseDefaultArgs<ExtArgs>
-    comments?: boolean | Lesson$commentsArgs<ExtArgs>
     questions?: boolean | Lesson$questionsArgs<ExtArgs>
     _count?: boolean | LessonCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4222,7 +4211,6 @@ export namespace Prisma {
     name: "Lesson"
     objects: {
       course: Prisma.$CoursePayload<ExtArgs>
-      comments: Prisma.$CommentPayload<ExtArgs>[]
       questions: Prisma.$QuestionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4625,7 +4613,6 @@ export namespace Prisma {
   export interface Prisma__LessonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     course<T extends CourseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseDefaultArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    comments<T extends Lesson$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Lesson$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     questions<T extends Lesson$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Lesson$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5056,30 +5043,6 @@ export namespace Prisma {
   }
 
   /**
-   * Lesson.comments
-   */
-  export type Lesson$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Comment
-     */
-    select?: CommentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Comment
-     */
-    omit?: CommentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CommentInclude<ExtArgs> | null
-    where?: CommentWhereInput
-    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
-    cursor?: CommentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
-  }
-
-  /**
    * Lesson.questions
    */
   export type Lesson$questionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5137,7 +5100,6 @@ export namespace Prisma {
     content: string | null
     userId: string | null
     courseId: string | null
-    lessonId: string | null
     createdAt: Date | null
   }
 
@@ -5146,7 +5108,6 @@ export namespace Prisma {
     content: string | null
     userId: string | null
     courseId: string | null
-    lessonId: string | null
     createdAt: Date | null
   }
 
@@ -5155,7 +5116,6 @@ export namespace Prisma {
     content: number
     userId: number
     courseId: number
-    lessonId: number
     createdAt: number
     _all: number
   }
@@ -5166,7 +5126,6 @@ export namespace Prisma {
     content?: true
     userId?: true
     courseId?: true
-    lessonId?: true
     createdAt?: true
   }
 
@@ -5175,7 +5134,6 @@ export namespace Prisma {
     content?: true
     userId?: true
     courseId?: true
-    lessonId?: true
     createdAt?: true
   }
 
@@ -5184,7 +5142,6 @@ export namespace Prisma {
     content?: true
     userId?: true
     courseId?: true
-    lessonId?: true
     createdAt?: true
     _all?: true
   }
@@ -5266,7 +5223,6 @@ export namespace Prisma {
     content: string
     userId: string
     courseId: string | null
-    lessonId: string | null
     createdAt: Date
     _count: CommentCountAggregateOutputType | null
     _min: CommentMinAggregateOutputType | null
@@ -5292,11 +5248,9 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     courseId?: boolean
-    lessonId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5304,11 +5258,9 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     courseId?: boolean
-    lessonId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5316,11 +5268,9 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     courseId?: boolean
-    lessonId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
@@ -5328,25 +5278,21 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     courseId?: boolean
-    lessonId?: boolean
     createdAt?: boolean
   }
 
-  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "courseId" | "lessonId" | "createdAt", ExtArgs["result"]["comment"]>
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "courseId" | "createdAt", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Comment$courseArgs<ExtArgs>
-    lesson?: boolean | Comment$lessonArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5354,14 +5300,12 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       course: Prisma.$CoursePayload<ExtArgs> | null
-      lesson: Prisma.$LessonPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       content: string
       userId: string
       courseId: string | null
-      lessonId: string | null
       createdAt: Date
     }, ExtArgs["result"]["comment"]>
     composites: {}
@@ -5759,7 +5703,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     course<T extends Comment$courseArgs<ExtArgs> = {}>(args?: Subset<T, Comment$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    lesson<T extends Comment$lessonArgs<ExtArgs> = {}>(args?: Subset<T, Comment$lessonArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5793,7 +5736,6 @@ export namespace Prisma {
     readonly content: FieldRef<"Comment", 'String'>
     readonly userId: FieldRef<"Comment", 'String'>
     readonly courseId: FieldRef<"Comment", 'String'>
-    readonly lessonId: FieldRef<"Comment", 'String'>
     readonly createdAt: FieldRef<"Comment", 'DateTime'>
   }
     
@@ -6207,25 +6149,6 @@ export namespace Prisma {
      */
     include?: CourseInclude<ExtArgs> | null
     where?: CourseWhereInput
-  }
-
-  /**
-   * Comment.lesson
-   */
-  export type Comment$lessonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Lesson
-     */
-    select?: LessonSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Lesson
-     */
-    omit?: LessonOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LessonInclude<ExtArgs> | null
-    where?: LessonWhereInput
   }
 
   /**
@@ -10622,7 +10545,6 @@ export namespace Prisma {
     content: 'content',
     userId: 'userId',
     courseId: 'courseId',
-    lessonId: 'lessonId',
     createdAt: 'createdAt'
   };
 
@@ -10942,7 +10864,6 @@ export namespace Prisma {
     stamps?: JsonFilter<"Lesson">
     courseId?: StringFilter<"Lesson"> | string
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
-    comments?: CommentListRelationFilter
     questions?: QuestionListRelationFilter
   }
 
@@ -10952,7 +10873,6 @@ export namespace Prisma {
     stamps?: SortOrder
     courseId?: SortOrder
     course?: CourseOrderByWithRelationInput
-    comments?: CommentOrderByRelationAggregateInput
     questions?: QuestionOrderByRelationAggregateInput
   }
 
@@ -10965,7 +10885,6 @@ export namespace Prisma {
     stamps?: JsonFilter<"Lesson">
     courseId?: StringFilter<"Lesson"> | string
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
-    comments?: CommentListRelationFilter
     questions?: QuestionListRelationFilter
   }, "id">
 
@@ -10997,11 +10916,9 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     courseId?: StringNullableFilter<"Comment"> | string | null
-    lessonId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
-    lesson?: XOR<LessonNullableScalarRelationFilter, LessonWhereInput> | null
   }
 
   export type CommentOrderByWithRelationInput = {
@@ -11009,11 +10926,9 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     courseId?: SortOrderInput | SortOrder
-    lessonId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
-    lesson?: LessonOrderByWithRelationInput
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -11024,11 +10939,9 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     courseId?: StringNullableFilter<"Comment"> | string | null
-    lessonId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
-    lesson?: XOR<LessonNullableScalarRelationFilter, LessonWhereInput> | null
   }, "id">
 
   export type CommentOrderByWithAggregationInput = {
@@ -11036,7 +10949,6 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     courseId?: SortOrderInput | SortOrder
-    lessonId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: CommentCountOrderByAggregateInput
     _max?: CommentMaxOrderByAggregateInput
@@ -11051,7 +10963,6 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"Comment"> | string
     userId?: StringWithAggregatesFilter<"Comment"> | string
     courseId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
-    lessonId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
@@ -11460,7 +11371,6 @@ export namespace Prisma {
     title: string
     stamps: JsonNullValueInput | InputJsonValue
     course: CourseCreateNestedOneWithoutLessonsInput
-    comments?: CommentCreateNestedManyWithoutLessonInput
     questions?: QuestionCreateNestedManyWithoutLessonInput
   }
 
@@ -11469,7 +11379,6 @@ export namespace Prisma {
     title: string
     stamps: JsonNullValueInput | InputJsonValue
     courseId: string
-    comments?: CommentUncheckedCreateNestedManyWithoutLessonInput
     questions?: QuestionUncheckedCreateNestedManyWithoutLessonInput
   }
 
@@ -11478,7 +11387,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
     course?: CourseUpdateOneRequiredWithoutLessonsNestedInput
-    comments?: CommentUpdateManyWithoutLessonNestedInput
     questions?: QuestionUpdateManyWithoutLessonNestedInput
   }
 
@@ -11487,7 +11395,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
     courseId?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUncheckedUpdateManyWithoutLessonNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutLessonNestedInput
   }
 
@@ -11517,7 +11424,6 @@ export namespace Prisma {
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
     course?: CourseCreateNestedOneWithoutCommentsInput
-    lesson?: LessonCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateInput = {
@@ -11525,7 +11431,6 @@ export namespace Prisma {
     content: string
     userId: string
     courseId?: string | null
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -11535,7 +11440,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
     course?: CourseUpdateOneWithoutCommentsNestedInput
-    lesson?: LessonUpdateOneWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateInput = {
@@ -11543,7 +11447,6 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -11552,7 +11455,6 @@ export namespace Prisma {
     content: string
     userId: string
     courseId?: string | null
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -11567,7 +11469,6 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12095,17 +11996,11 @@ export namespace Prisma {
     isNot?: CourseWhereInput | null
   }
 
-  export type LessonNullableScalarRelationFilter = {
-    is?: LessonWhereInput | null
-    isNot?: LessonWhereInput | null
-  }
-
   export type CommentCountOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
-    lessonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12114,7 +12009,6 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
-    lessonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12123,7 +12017,6 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
-    lessonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12143,6 +12036,11 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type LessonNullableScalarRelationFilter = {
+    is?: LessonWhereInput | null
+    isNot?: LessonWhereInput | null
   }
 
   export type QuestionCountOrderByAggregateInput = {
@@ -12685,25 +12583,11 @@ export namespace Prisma {
     connect?: CourseWhereUniqueInput
   }
 
-  export type CommentCreateNestedManyWithoutLessonInput = {
-    create?: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput> | CommentCreateWithoutLessonInput[] | CommentUncheckedCreateWithoutLessonInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutLessonInput | CommentCreateOrConnectWithoutLessonInput[]
-    createMany?: CommentCreateManyLessonInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-  }
-
   export type QuestionCreateNestedManyWithoutLessonInput = {
     create?: XOR<QuestionCreateWithoutLessonInput, QuestionUncheckedCreateWithoutLessonInput> | QuestionCreateWithoutLessonInput[] | QuestionUncheckedCreateWithoutLessonInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutLessonInput | QuestionCreateOrConnectWithoutLessonInput[]
     createMany?: QuestionCreateManyLessonInputEnvelope
     connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
-  }
-
-  export type CommentUncheckedCreateNestedManyWithoutLessonInput = {
-    create?: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput> | CommentCreateWithoutLessonInput[] | CommentUncheckedCreateWithoutLessonInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutLessonInput | CommentCreateOrConnectWithoutLessonInput[]
-    createMany?: CommentCreateManyLessonInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type QuestionUncheckedCreateNestedManyWithoutLessonInput = {
@@ -12721,20 +12605,6 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutLessonsInput, CourseUpdateWithoutLessonsInput>, CourseUncheckedUpdateWithoutLessonsInput>
   }
 
-  export type CommentUpdateManyWithoutLessonNestedInput = {
-    create?: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput> | CommentCreateWithoutLessonInput[] | CommentUncheckedCreateWithoutLessonInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutLessonInput | CommentCreateOrConnectWithoutLessonInput[]
-    upsert?: CommentUpsertWithWhereUniqueWithoutLessonInput | CommentUpsertWithWhereUniqueWithoutLessonInput[]
-    createMany?: CommentCreateManyLessonInputEnvelope
-    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    update?: CommentUpdateWithWhereUniqueWithoutLessonInput | CommentUpdateWithWhereUniqueWithoutLessonInput[]
-    updateMany?: CommentUpdateManyWithWhereWithoutLessonInput | CommentUpdateManyWithWhereWithoutLessonInput[]
-    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
-  }
-
   export type QuestionUpdateManyWithoutLessonNestedInput = {
     create?: XOR<QuestionCreateWithoutLessonInput, QuestionUncheckedCreateWithoutLessonInput> | QuestionCreateWithoutLessonInput[] | QuestionUncheckedCreateWithoutLessonInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutLessonInput | QuestionCreateOrConnectWithoutLessonInput[]
@@ -12747,20 +12617,6 @@ export namespace Prisma {
     update?: QuestionUpdateWithWhereUniqueWithoutLessonInput | QuestionUpdateWithWhereUniqueWithoutLessonInput[]
     updateMany?: QuestionUpdateManyWithWhereWithoutLessonInput | QuestionUpdateManyWithWhereWithoutLessonInput[]
     deleteMany?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
-  }
-
-  export type CommentUncheckedUpdateManyWithoutLessonNestedInput = {
-    create?: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput> | CommentCreateWithoutLessonInput[] | CommentUncheckedCreateWithoutLessonInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutLessonInput | CommentCreateOrConnectWithoutLessonInput[]
-    upsert?: CommentUpsertWithWhereUniqueWithoutLessonInput | CommentUpsertWithWhereUniqueWithoutLessonInput[]
-    createMany?: CommentCreateManyLessonInputEnvelope
-    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    update?: CommentUpdateWithWhereUniqueWithoutLessonInput | CommentUpdateWithWhereUniqueWithoutLessonInput[]
-    updateMany?: CommentUpdateManyWithWhereWithoutLessonInput | CommentUpdateManyWithWhereWithoutLessonInput[]
-    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type QuestionUncheckedUpdateManyWithoutLessonNestedInput = {
@@ -12789,12 +12645,6 @@ export namespace Prisma {
     connect?: CourseWhereUniqueInput
   }
 
-  export type LessonCreateNestedOneWithoutCommentsInput = {
-    create?: XOR<LessonCreateWithoutCommentsInput, LessonUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: LessonCreateOrConnectWithoutCommentsInput
-    connect?: LessonWhereUniqueInput
-  }
-
   export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
@@ -12811,16 +12661,6 @@ export namespace Prisma {
     delete?: CourseWhereInput | boolean
     connect?: CourseWhereUniqueInput
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutCommentsInput, CourseUpdateWithoutCommentsInput>, CourseUncheckedUpdateWithoutCommentsInput>
-  }
-
-  export type LessonUpdateOneWithoutCommentsNestedInput = {
-    create?: XOR<LessonCreateWithoutCommentsInput, LessonUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: LessonCreateOrConnectWithoutCommentsInput
-    upsert?: LessonUpsertWithoutCommentsInput
-    disconnect?: LessonWhereInput | boolean
-    delete?: LessonWhereInput | boolean
-    connect?: LessonWhereUniqueInput
-    update?: XOR<XOR<LessonUpdateToOneWithWhereWithoutCommentsInput, LessonUpdateWithoutCommentsInput>, LessonUncheckedUpdateWithoutCommentsInput>
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -13124,14 +12964,12 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     course?: CourseCreateNestedOneWithoutCommentsInput
-    lesson?: LessonCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateWithoutUserInput = {
     id?: string
     content: string
     courseId?: string | null
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -13267,7 +13105,6 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     courseId?: StringNullableFilter<"Comment"> | string | null
-    lessonId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
   }
 
@@ -13384,7 +13221,6 @@ export namespace Prisma {
     id?: string
     title: string
     stamps: JsonNullValueInput | InputJsonValue
-    comments?: CommentCreateNestedManyWithoutLessonInput
     questions?: QuestionCreateNestedManyWithoutLessonInput
   }
 
@@ -13392,7 +13228,6 @@ export namespace Prisma {
     id?: string
     title: string
     stamps: JsonNullValueInput | InputJsonValue
-    comments?: CommentUncheckedCreateNestedManyWithoutLessonInput
     questions?: QuestionUncheckedCreateNestedManyWithoutLessonInput
   }
 
@@ -13411,14 +13246,12 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
-    lesson?: LessonCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateWithoutCourseInput = {
     id?: string
     content: string
     userId: string
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -13579,32 +13412,6 @@ export namespace Prisma {
     create: XOR<CourseCreateWithoutLessonsInput, CourseUncheckedCreateWithoutLessonsInput>
   }
 
-  export type CommentCreateWithoutLessonInput = {
-    id?: string
-    content: string
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutCommentsInput
-    course?: CourseCreateNestedOneWithoutCommentsInput
-  }
-
-  export type CommentUncheckedCreateWithoutLessonInput = {
-    id?: string
-    content: string
-    userId: string
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type CommentCreateOrConnectWithoutLessonInput = {
-    where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput>
-  }
-
-  export type CommentCreateManyLessonInputEnvelope = {
-    data: CommentCreateManyLessonInput | CommentCreateManyLessonInput[]
-    skipDuplicates?: boolean
-  }
-
   export type QuestionCreateWithoutLessonInput = {
     id?: string
     content: string
@@ -13662,22 +13469,6 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     progress?: CourseProgressUncheckedUpdateManyWithoutCourseNestedInput
-  }
-
-  export type CommentUpsertWithWhereUniqueWithoutLessonInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutLessonInput, CommentUncheckedUpdateWithoutLessonInput>
-    create: XOR<CommentCreateWithoutLessonInput, CommentUncheckedCreateWithoutLessonInput>
-  }
-
-  export type CommentUpdateWithWhereUniqueWithoutLessonInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutLessonInput, CommentUncheckedUpdateWithoutLessonInput>
-  }
-
-  export type CommentUpdateManyWithWhereWithoutLessonInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutLessonInput>
   }
 
   export type QuestionUpsertWithWhereUniqueWithoutLessonInput = {
@@ -13756,27 +13547,6 @@ export namespace Prisma {
     create: XOR<CourseCreateWithoutCommentsInput, CourseUncheckedCreateWithoutCommentsInput>
   }
 
-  export type LessonCreateWithoutCommentsInput = {
-    id?: string
-    title: string
-    stamps: JsonNullValueInput | InputJsonValue
-    course: CourseCreateNestedOneWithoutLessonsInput
-    questions?: QuestionCreateNestedManyWithoutLessonInput
-  }
-
-  export type LessonUncheckedCreateWithoutCommentsInput = {
-    id?: string
-    title: string
-    stamps: JsonNullValueInput | InputJsonValue
-    courseId: string
-    questions?: QuestionUncheckedCreateNestedManyWithoutLessonInput
-  }
-
-  export type LessonCreateOrConnectWithoutCommentsInput = {
-    where: LessonWhereUniqueInput
-    create: XOR<LessonCreateWithoutCommentsInput, LessonUncheckedCreateWithoutCommentsInput>
-  }
-
   export type UserUpsertWithoutCommentsInput = {
     update: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
@@ -13849,33 +13619,6 @@ export namespace Prisma {
     progress?: CourseProgressUncheckedUpdateManyWithoutCourseNestedInput
   }
 
-  export type LessonUpsertWithoutCommentsInput = {
-    update: XOR<LessonUpdateWithoutCommentsInput, LessonUncheckedUpdateWithoutCommentsInput>
-    create: XOR<LessonCreateWithoutCommentsInput, LessonUncheckedCreateWithoutCommentsInput>
-    where?: LessonWhereInput
-  }
-
-  export type LessonUpdateToOneWithWhereWithoutCommentsInput = {
-    where?: LessonWhereInput
-    data: XOR<LessonUpdateWithoutCommentsInput, LessonUncheckedUpdateWithoutCommentsInput>
-  }
-
-  export type LessonUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    stamps?: JsonNullValueInput | InputJsonValue
-    course?: CourseUpdateOneRequiredWithoutLessonsNestedInput
-    questions?: QuestionUpdateManyWithoutLessonNestedInput
-  }
-
-  export type LessonUncheckedUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    stamps?: JsonNullValueInput | InputJsonValue
-    courseId?: StringFieldUpdateOperationsInput | string
-    questions?: QuestionUncheckedUpdateManyWithoutLessonNestedInput
-  }
-
   export type UserCreateWithoutQuestionsInput = {
     id?: string
     name: string
@@ -13914,7 +13657,6 @@ export namespace Prisma {
     title: string
     stamps: JsonNullValueInput | InputJsonValue
     course: CourseCreateNestedOneWithoutLessonsInput
-    comments?: CommentCreateNestedManyWithoutLessonInput
   }
 
   export type LessonUncheckedCreateWithoutQuestionsInput = {
@@ -13922,7 +13664,6 @@ export namespace Prisma {
     title: string
     stamps: JsonNullValueInput | InputJsonValue
     courseId: string
-    comments?: CommentUncheckedCreateNestedManyWithoutLessonInput
   }
 
   export type LessonCreateOrConnectWithoutQuestionsInput = {
@@ -13985,7 +13726,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
     course?: CourseUpdateOneRequiredWithoutLessonsNestedInput
-    comments?: CommentUpdateManyWithoutLessonNestedInput
   }
 
   export type LessonUncheckedUpdateWithoutQuestionsInput = {
@@ -13993,7 +13733,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
     courseId?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUncheckedUpdateManyWithoutLessonNestedInput
   }
 
   export type UserCreateWithoutProgressInput = {
@@ -14336,7 +14075,6 @@ export namespace Prisma {
     id?: string
     content: string
     courseId?: string | null
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -14374,14 +14112,12 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     course?: CourseUpdateOneWithoutCommentsNestedInput
-    lesson?: LessonUpdateOneWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14389,7 +14125,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14490,7 +14225,6 @@ export namespace Prisma {
     id?: string
     content: string
     userId: string
-    lessonId?: string | null
     createdAt?: Date | string
   }
 
@@ -14511,7 +14245,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
-    comments?: CommentUpdateManyWithoutLessonNestedInput
     questions?: QuestionUpdateManyWithoutLessonNestedInput
   }
 
@@ -14519,7 +14252,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     stamps?: JsonNullValueInput | InputJsonValue
-    comments?: CommentUncheckedUpdateManyWithoutLessonNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutLessonNestedInput
   }
 
@@ -14534,14 +14266,12 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    lesson?: LessonUpdateOneWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14549,7 +14279,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    lessonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14592,44 +14321,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentCreateManyLessonInput = {
-    id?: string
-    content: string
-    userId: string
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
   export type QuestionCreateManyLessonInput = {
     id?: string
     content: string
     userId: string
     courseId?: string | null
     createdAt?: Date | string
-  }
-
-  export type CommentUpdateWithoutLessonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    course?: CourseUpdateOneWithoutCommentsNestedInput
-  }
-
-  export type CommentUncheckedUpdateWithoutLessonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CommentUncheckedUpdateManyWithoutLessonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionUpdateWithoutLessonInput = {

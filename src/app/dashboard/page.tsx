@@ -25,7 +25,7 @@ const page = async () => {
             <Card>
               <CardContent className="p-6">
                 {/* hardcoded */}
-                <CommentsSection courseId="0d998d73-f549-4a63-b465-6f74bb69b227" />
+                <CommentsSection />
               </CardContent>
             </Card>
           </section>
