@@ -3,7 +3,7 @@
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./enrollmentActions";
 
-export const createCommentAction = async ({
+export const createQuestionAction = async ({
   courseId,
   content,
 }: {
@@ -11,15 +11,15 @@ export const createCommentAction = async ({
   content: string;
 }) => {
   const user = await getCurrentUser();
-  if (!user) throw new Error("You must be logged in to comment");
+  if (!user) throw new Error("You must be logged in to ask a question");
 
-  return db.comment.create({
+  return db.question.create({
     data: { content, courseId, userId: user.id },
     include: { user: true }, // so frontend can display user info
   });
 };
 
-export const getCommentsByCourseAction = async ({
+export const getQuestionsByCourseAction = async ({
   courseId,
   page = 1,
   take = 3,
@@ -30,7 +30,7 @@ export const getCommentsByCourseAction = async ({
 }) => {
   const skip = (page - 1) * take;
 
-  const comments = await db.comment.findMany({
+  const questionWithUser = await db.question.findMany({
     where: { courseId },
     include: {
       user: {
@@ -47,8 +47,8 @@ export const getCommentsByCourseAction = async ({
     take,
   });
 
-  const totalComments = await db.comment.count({ where: { courseId } });
-  const hasMore = page * take < totalComments;
+  const totalQuestions = await db.question.count({ where: { courseId } });
+  const hasMore = page * take < totalQuestions;
 
-  return { comments, hasMore };
+  return { questionWithUser, hasMore };
 };

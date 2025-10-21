@@ -4,6 +4,7 @@ import CourseMetadata from "@/components/CourseMetaData";
 import VideoPlayer from "@/components/Video";
 import { getCoursesAction } from "@/lib/actions/courseActions";
 import { Card, CardContent } from "@/components/ui/card";
+import AllTabs from "@/components/course_tabs/AllTabs";
 
 const page = async () => {
   const courses = await getCoursesAction();
@@ -15,23 +16,22 @@ const page = async () => {
           {/* Left Side: Video + Meta + Comments */}
           <section className="lg:col-span-2 space-y-8">
             <VideoPlayer />
-
+            <AllTabs />
             <Card>
               <CardContent className="p-6">
                 <CourseMetadata course={courses[0]} />
               </CardContent>
             </Card>
 
-            <Card>
+            <Card id="comments">
               <CardContent className="p-6">
-                {/* hardcoded */}
                 <CommentsSection />
               </CardContent>
             </Card>
           </section>
 
           {/* Right Side: Curriculum */}
-          <aside className="lg:col-span-1">
+          <aside id="cirriculm" className="lg:col-span-1">
             <div className="sticky top-28">
               <CourseCurriculum />
             </div>

@@ -14,12 +14,16 @@ export async function getCurrentUser() {
 
   const user = await db.user.findUnique({
     where: { email: session.user.email },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    }, // ✅ only return safe fields
   });
 
   if (!user) {
     throw new Error("User not found.");
   }
-
   return user;
 }
 

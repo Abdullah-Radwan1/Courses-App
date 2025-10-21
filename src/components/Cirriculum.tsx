@@ -41,7 +41,10 @@ const CourseCurriculum = () => {
   const progress = Math.round((completedLessons / totalLessons) * 100);
 
   return (
-    <Card className="p-6 space-y-6 border border-border/60 shadow-sm rounded-2xl bg-card sticky top-6">
+    <Card
+      id="curriculum"
+      className="p-6 space-y-6 border border-border/60 shadow-sm rounded-2xl bg-card sticky top-6"
+    >
       {/* === Course Progress === */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">

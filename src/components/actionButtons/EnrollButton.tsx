@@ -14,7 +14,10 @@ export function EnrollButton() {
   const handleClick = () => {
     startTransition(async () => {
       try {
-        const result = await enrollInCourse();
+        const result = await enrollInCourse(
+          //hard coded
+          "9800eaa7-861b-4141-8752-dc2505826e5d"
+        );
         toast.success(result.message);
         router.refresh(); // refresh data on page
       } catch (error) {

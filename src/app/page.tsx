@@ -28,7 +28,7 @@ export default async function Home() {
     { icon: BookOpen, value: "24", label: "Lessons" },
     { icon: Users, value: "1.2k", label: "Students" },
     { icon: Star, value: "4.9", label: "Rating" },
-  ];
+  ]; //hard coded
   const enrolled = await isUserEnrolled("9800eaa7-861b-4141-8752-dc2505826e5d");
 
   return (

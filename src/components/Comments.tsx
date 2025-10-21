@@ -10,6 +10,7 @@ import {
   getCommentsByCourseAction,
   createCommentAction,
 } from "@/lib/actions/commentsAction";
+import CustomSkeleton from "./CustomSkeleton";
 
 export default function CommentsSection() {
   const [comments, setComments] = useState<any[]>([]);
@@ -117,7 +118,7 @@ export default function CommentsSection() {
               </div>
             </div>
           ))}
-          {fetching && <Loader className="animate-spin" />}
+          {fetching && <CustomSkeleton />}
         </section>
       ) : (
         "no comment"

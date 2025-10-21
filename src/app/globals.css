@@ -102,6 +102,10 @@
     @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
   }
 }
+
+html {
+  scroll-behavior: smooth !important;
+}
 button:hover {
   cursor: pointer;
 }
