@@ -127,11 +127,13 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   password: 'password',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  leaderboardId: 'leaderboardId'
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
+  instructor: 'instructor',
   title: 'title',
   description: 'description',
   duration: 'duration',
@@ -158,7 +160,6 @@ exports.Prisma.QuestionScalarFieldEnum = {
   content: 'content',
   userId: 'userId',
   courseId: 'courseId',
-  lessonId: 'lessonId',
   createdAt: 'createdAt'
 };
 
@@ -173,6 +174,43 @@ exports.Prisma.CourseProgressScalarFieldEnum = {
 exports.Prisma.EnrollmentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  courseId: 'courseId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ExamScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  courseId: 'courseId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ExamQuestionScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  correctId: 'correctId',
+  examId: 'examId'
+};
+
+exports.Prisma.ExamOptionScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  questionId: 'questionId'
+};
+
+exports.Prisma.ExamResultScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  examId: 'examId',
+  score: 'score',
+  rank: 'rank',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LeaderboardScalarFieldEnum = {
+  id: 'id',
+  rank: 'rank',
+  score: 'score',
   courseId: 'courseId',
   createdAt: 'createdAt'
 };
@@ -220,6 +258,11 @@ exports.Prisma.ModelName = {
   Question: 'Question',
   CourseProgress: 'CourseProgress',
   Enrollment: 'Enrollment',
+  Exam: 'Exam',
+  ExamQuestion: 'ExamQuestion',
+  ExamOption: 'ExamOption',
+  ExamResult: 'ExamResult',
+  leaderboard: 'leaderboard',
   Session: 'Session'
 };
 

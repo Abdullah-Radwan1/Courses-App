@@ -71,36 +71,4 @@ export const weeks = [
       },
     ],
   },
-  {
-    id: 3,
-    title: "Week 5-6: Advanced Topics",
-    duration: "2 weeks",
-    description: "Master advanced techniques and optimization strategies",
-    lessons: [
-      {
-        id: 9,
-        title: "Performance Optimization",
-        type: "video",
-        completed: false,
-        duration: "20:30",
-        locked: true,
-      },
-      {
-        id: 10,
-        title: "Advanced Patterns",
-        type: "video",
-        completed: false,
-        duration: "18:55",
-        locked: true,
-      },
-      {
-        id: 11,
-        title: "Real-world Case Studies",
-        type: "video",
-        completed: false,
-        duration: "28:15",
-        locked: true,
-      },
-    ],
-  },
 ];

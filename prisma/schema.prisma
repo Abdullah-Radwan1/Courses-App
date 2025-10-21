@@ -21,13 +21,16 @@ model User {
   enrolledCourses Enrollment[]
   sessions        Session[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  leaderboard   leaderboard? @relation(fields: [leaderboardId], references: [id])
+  leaderboardId String?
+  ExamResult    ExamResult[]
 }
 
 model Course {
   id          String           @id @default(uuid())
-  instructor  String
+  instructor  String           @default("Abdullah Radwan")
   title       String
   description String
   duration    String
@@ -36,6 +39,7 @@ model Course {
   comments    Comment[]
   enrollments Enrollment[]
   progress    CourseProgress[]
+  Exam        Exam[]
 }
 
 model Lesson {
@@ -88,6 +92,56 @@ model Enrollment {
   course Course @relation(fields: [courseId], references: [id])
 
   @@unique([userId, courseId])
+}
+
+// exam models 
+model Exam {
+  id        String         @id @default(uuid())
+  title     String
+  courseId  String
+  course    Course         @relation(fields: [courseId], references: [id])
+  questions ExamQuestion[]
+  results   ExamResult[]
+  createdAt DateTime       @default(now())
+}
+
+model ExamQuestion {
+  id        String       @id @default(uuid())
+  text      String
+  options   ExamOption[]
+  correctId String?
+  examId    String
+  exam      Exam         @relation(fields: [examId], references: [id])
+}
+
+model ExamOption {
+  id         String       @id @default(uuid())
+  text       String
+  questionId String
+  question   ExamQuestion @relation(fields: [questionId], references: [id])
+}
+
+model ExamResult {
+  id        String   @id @default(uuid())
+  userId    String
+  examId    String
+  score     Float
+  rank      Int?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  exam Exam @relation(fields: [examId], references: [id])
+
+  @@unique([userId, examId])
+}
+
+model leaderboard {
+  id        String   @id @default(cuid())
+  user      User[]
+  rank      Int?
+  score     Float?
+  courseId  String?
+  createdAt DateTime @default(now())
 }
 
 model Session {
