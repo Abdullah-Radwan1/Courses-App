@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { EnrollButton } from "@/components/actionButtons/EnrollButton";
-import { isUserEnrolled } from "@/lib/actions/enrollmentActions";
+import { isUserEnrolled } from "@/lib/actions/userAction";
 import Link from "next/link";
 
 export default async function Home() {

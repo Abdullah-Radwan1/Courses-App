@@ -1,14 +1,12 @@
-import CourseCurriculum from "@/components/Cirriculum";
-import CommentsSection from "@/components/Comments";
-import CourseMetadata from "@/components/CourseMetaData";
+import CourseCurriculum from "@/app/dashboard/components/Cirriculum";
+import CommentsSection from "@/app/dashboard/components/Comments";
+import CourseMetadata from "@/app/dashboard/components/CourseMetaData";
 import VideoPlayer from "@/components/Video";
 import { getCoursesAction } from "@/lib/actions/courseActions";
-import { Card, CardContent } from "@/components/ui/card";
-import AllTabs from "@/components/course_tabs/AllTabs";
+import AllTabs from "@/app/dashboard/components/AllTabs";
 
 const page = async () => {
-  const courses = await getCoursesAction();
-
+  const course = await getCoursesAction();
   return (
     <div className="bg-background min-h-screen py-10">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,17 +15,12 @@ const page = async () => {
           <section className="lg:col-span-2 space-y-8">
             <VideoPlayer />
             <AllTabs />
-            <Card>
-              <CardContent className="p-6">
-                <CourseMetadata course={courses[0]} />
-              </CardContent>
-            </Card>
 
-            <Card id="comments">
-              <CardContent className="p-6">
-                <CommentsSection />
-              </CardContent>
-            </Card>
+            <CourseMetadata course={course[0]} />
+
+            {/* comments  */}
+
+            <CommentsSection />
           </section>
 
           {/* Right Side: Curriculum */}

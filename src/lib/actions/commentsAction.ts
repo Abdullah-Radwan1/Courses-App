@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "../../../prisma/db";
-import { getCurrentUser } from "./enrollmentActions";
+import { getCurrentUser } from "./userAction";
 
 export const createCommentAction = async ({
   courseId,
