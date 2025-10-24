@@ -7,8 +7,7 @@ import { getCurrentUser, isUserEnrolled } from "./userAction";
 // ✅ enroll action
 export async function enrollInCourse(courseId: string) {
   const user = await getCurrentUser();
-  //hard coded
-  const already = await isUserEnrolled("9800eaa7-861b-4141-8752-dc2505826e5d");
+  const already = await isUserEnrolled(courseId);
   if (already) {
     return { message: "Already enrolled in this course." };
   }

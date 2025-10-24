@@ -140,11 +140,28 @@ exports.Prisma.CourseScalarFieldEnum = {
   language: 'language'
 };
 
-exports.Prisma.LessonScalarFieldEnum = {
+exports.Prisma.CurriculumScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  stamps: 'stamps',
+  period: 'period',
   courseId: 'courseId'
+};
+
+exports.Prisma.LessonScalarFieldEnum = {
+  id: 'id',
+  period: 'period',
+  type: 'type',
+  name: 'name',
+  courseId: 'courseId',
+  curriculumId: 'curriculumId'
+};
+
+exports.Prisma.LessonCompletionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  lessonId: 'lessonId',
+  completed: 'completed',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -161,14 +178,6 @@ exports.Prisma.QuestionScalarFieldEnum = {
   userId: 'userId',
   courseId: 'courseId',
   createdAt: 'createdAt'
-};
-
-exports.Prisma.CourseProgressScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  courseId: 'courseId',
-  progress: 'progress',
-  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
@@ -229,10 +238,6 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.JsonNullValueInput = {
-  JsonNull: Prisma.JsonNull
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -242,21 +247,20 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
+exports.Type = exports.$Enums.Type = {
+  VIDEO: 'VIDEO',
+  PDF: 'PDF',
+  EXAM: 'EXAM'
 };
-
 
 exports.Prisma.ModelName = {
   User: 'User',
   Course: 'Course',
+  Curriculum: 'Curriculum',
   Lesson: 'Lesson',
+  LessonCompletion: 'LessonCompletion',
   Comment: 'Comment',
   Question: 'Question',
-  CourseProgress: 'CourseProgress',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   ExamQuestion: 'ExamQuestion',

@@ -21,6 +21,7 @@ import { Separator } from "@/components/ui/separator";
 import { EnrollButton } from "@/components/actionButtons/EnrollButton";
 import { isUserEnrolled } from "@/lib/actions/userAction";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function Home() {
   const stats = [
@@ -29,7 +30,9 @@ export default async function Home() {
     { icon: Users, value: "1.2k", label: "Students" },
     { icon: Star, value: "4.9", label: "Rating" },
   ]; //hard coded
-  const enrolled = await isUserEnrolled("9800eaa7-861b-4141-8752-dc2505826e5d");
+
+  const courseId = "353b6d90-7f3f-45c6-9795-f5f7f8fd5a46";
+  const enrolled = await isUserEnrolled(courseId);
 
   return (
     <div className=" bg-background flex flex-col">
@@ -80,7 +83,10 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               {enrolled ? (
                 <div className="flex items-center gap-1 text">
-                  <Link className="flex items-center gap-1" href={"/dashboard"}>
+                  <Link
+                    className="flex items-center gap-1"
+                    href={`/courses/${courseId}`}
+                  >
                     <Button variant="default" size="lg">
                       {" "}
                       Preview Course <ArrowRight />
@@ -88,7 +94,7 @@ export default async function Home() {
                   </Link>
                 </div>
               ) : (
-                <EnrollButton />
+                <EnrollButton courseId={courseId} />
               )}
             </div>
 
@@ -113,15 +119,13 @@ export default async function Home() {
             </Badge>
 
             <CardContent className="space-y-6 mt-4">
-              <div className="aspect-video rounded-xl bg-muted flex items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/20">
-                    <Play className="h-8 w-8 text-primary" />
-                  </div>
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    Course Preview
-                  </p>
-                </div>
+              <div className="relative aspect-video rounded-xl  bg-muted flex items-center justify-center">
+                <Image
+                  alt="Course Promotion"
+                  src={"/Course_Promotion.jpg"}
+                  fill
+                  className="rounded-xl"
+                />
               </div>
 
               <div className="space-y-4">

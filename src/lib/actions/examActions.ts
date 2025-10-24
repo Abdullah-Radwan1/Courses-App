@@ -1,9 +1,8 @@
 "use server";
-
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
 
-export async function startExamAction(courseId: string) {
+export async function getExamByCourseId(courseId: string) {
   try {
     const user = await getCurrentUser();
     if (!user) throw new Error("Unauthorized");
@@ -61,19 +60,41 @@ export async function startExamAction(courseId: string) {
 }
 
 // ✅ Fixed: no need to pass a full ExamResult object — just the score and rank
-export async function createExamResult({
+export async function submitExamAction({
   examId,
-  score,
-  rank,
+  answers,
 }: {
   examId: string;
-  score: number;
-  rank?: number;
+  answers: { questionId: string; selectedOptionId: string }[];
 }) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
-  const updated = await db.examResult.update({
+  // ✅ Get all questions for the exam, including the correct answers
+  const questions = await db.examQuestion.findMany({
+    where: { examId },
+    select: {
+      id: true,
+      correctId: true,
+    },
+  });
+
+  let correctCount = 0;
+
+  // ✅ Compare submitted answers with correct answers
+  for (const question of questions) {
+    const userAnswer = answers.find((ans) => ans.questionId === question.id);
+
+    if (userAnswer && userAnswer.selectedOptionId === question.correctId) {
+      correctCount++;
+    }
+  }
+
+  // ✅ Calculate score as a percentage
+  const score = (correctCount / questions.length) * 100;
+
+  // ✅ Update the existing exam result
+  await db.examResult.update({
     where: {
       userId_examId: {
         userId: user.id,
@@ -82,12 +103,36 @@ export async function createExamResult({
     },
     data: {
       score,
-      rank: rank ?? null,
     },
   });
 
   return {
-    ExamScore: updated.score,
-    Rank: updated.rank,
+    totalQuestions: questions.length,
+    correctCount,
+    score,
   };
 }
+
+export const checkIfAlreadyExammed = async (examId: string) => {
+  try {
+    // Get current logged-in user
+    const user = await getCurrentUser();
+    if (!user) throw new Error("User not authenticated");
+
+    // Check if exam result exists
+    const result = await db.examResult.findUnique({
+      where: {
+        userId_examId: {
+          userId: user.id,
+          examId,
+        },
+      },
+    });
+
+    // Return a simple boolean or the full result object
+    return !!result; // true = already exammed, false = not yet
+  } catch (error) {
+    console.error("Error checking exam status:", error);
+    return false;
+  }
+};

@@ -17,37 +17,61 @@ model User {
 
   comments        Comment[]
   questions       Question[]
-  progress        CourseProgress[]
   enrolledCourses Enrollment[]
   sessions        Session[]
 
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  leaderboard   leaderboard? @relation(fields: [leaderboardId], references: [id])
-  leaderboardId String?
-  ExamResult    ExamResult[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  leaderboard      leaderboard?       @relation(fields: [leaderboardId], references: [id])
+  leaderboardId    String?
+  ExamResult       ExamResult[]
+  LessonCompletion LessonCompletion[]
 }
 
 model Course {
-  id          String           @id @default(uuid())
-  instructor  String           @default("Abdullah Radwan")
+  id          String       @id @default(uuid())
+  instructor  String       @default("Abdullah Radwan")
   title       String
   description String
   duration    String
   language    String
-  lessons     Lesson[]
+  curriculums Curriculum[]
   comments    Comment[]
   enrollments Enrollment[]
-  progress    CourseProgress[]
   Exam        Exam[]
 }
 
-model Lesson {
-  id       String @id @default(uuid())
-  title    String
-  stamps   Json
+model Curriculum {
+  id       String   @id @default(uuid())
+  title    String   @default("course")
+  period   String
   courseId String
-  course   Course @relation(fields: [courseId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id])
+  Lessons  Lesson[]
+}
+
+model Lesson {
+  id               String             @id @default(uuid())
+  period           String
+  type             Type               @default(VIDEO)
+  name             String
+  courseId         String
+  curriculumId     String
+  curriculum       Curriculum         @relation(fields: [curriculumId], references: [id])
+  LessonCompletion LessonCompletion[]
+}
+
+model LessonCompletion {
+  id        String   @id @default(uuid())
+  userId    String
+  lessonId  String
+  completed Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  lesson Lesson @relation(fields: [lessonId], references: [id])
+
+  @@unique([userId, lessonId])
 }
 
 model Comment {
@@ -67,19 +91,6 @@ model Question {
   courseId  String?
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-}
-
-model CourseProgress {
-  id        String   @id @default(uuid())
-  userId    String
-  courseId  String
-  progress  Float
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
-
-  @@unique([userId, courseId])
 }
 
 model Enrollment {
@@ -155,4 +166,10 @@ model Session {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+}
+
+enum Type {
+  VIDEO
+  PDF
+  EXAM
 }
