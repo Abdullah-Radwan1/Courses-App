@@ -1,5 +1,6 @@
 "use server";
 
+import { cache } from "react";
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
 
@@ -19,36 +20,38 @@ export const createCommentAction = async ({
   });
 };
 
-export const getCommentsByCourseAction = async ({
-  courseId,
-  page = 1,
-  take = 3,
-}: {
-  courseId: string;
-  page: number;
-  take: number;
-}) => {
-  const skip = (page - 1) * take;
+export const getCommentsByCourseAction = cache(
+  async ({
+    courseId,
+    page = 1,
+    take = 3,
+  }: {
+    courseId: string;
+    page: number;
+    take: number;
+  }) => {
+    const skip = (page - 1) * take;
 
-  const comments = await db.comment.findMany({
-    where: { courseId },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true, // optional — only if you need it
-          // ❌ no password, no emailVerified, etc.
+    const comments = await db.comment.findMany({
+      where: { courseId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true, // optional — only if you need it
+            // ❌ no password, no emailVerified, etc.
+          },
         },
       },
-    },
-    orderBy: { createdAt: "desc" },
-    skip,
-    take,
-  });
+      orderBy: { createdAt: "desc" },
+      skip,
+      take,
+    });
 
-  const totalComments = await db.comment.count({ where: { courseId } });
-  const hasMore = page * take < totalComments;
+    const totalComments = await db.comment.count({ where: { courseId } });
+    const hasMore = page * take < totalComments;
 
-  return { comments, hasMore };
-};
+    return { comments, hasMore };
+  }
+);

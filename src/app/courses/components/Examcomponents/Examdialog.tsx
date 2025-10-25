@@ -14,6 +14,7 @@ import { submitExamAction } from "@/lib/actions/examActions";
 import { Exam, ExamOption, ExamQuestion } from "@/generated/prisma";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Loading from "@/app/loading";
 
 interface ExamDialogProps {
   open: boolean;
@@ -57,8 +58,7 @@ export default function ExamDialog({
     }
   }, [timeLeft]);
 
-  if (!examData) return null;
-
+  if (examData == undefined) return <Loading />;
   const question = examData.questions[currentIndex];
 
   const handleSelectOption = (questionId: string, optionId: string) => {
@@ -106,7 +106,7 @@ export default function ExamDialog({
         if (!isOpen) onClose(); // only close manually
       }}
     >
-      <DialogContent isExam={true} className="p-6 h-screen bg-blue-600  w-full">
+      <DialogContent isExam={open} className="p-6 h-screen bg-blue-600  w-full">
         <DialogHeader className="mx-auto ">
           <VisuallyHidden>
             <DialogTitle className="text-white">{"Exam"}</DialogTitle>

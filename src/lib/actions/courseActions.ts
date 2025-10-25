@@ -20,7 +20,8 @@ export const getCoursesAction = cache(async (courseId: string) => {
         curriculums: {
           select: {
             Lessons: {
-              select: { id: true }, // we only need the count
+              select: { id: true },
+              where: { type: "VIDEO" }, // we only need the count
             },
           },
         },
@@ -100,4 +101,24 @@ export async function toggleLessonCompletion(lessonId: string) {
     console.error("Error toggling lesson completion:", error);
     throw new Error("Failed to update lesson completion");
   }
+}
+
+export async function getCourseProgress(courseId: string) {
+  const { id } = await getCurrentUser();
+  const totalLessons = await db.lesson.count({
+    where: { courseId, type: "VIDEO" },
+  });
+
+  // عدد الدروس المكتملة من قبل المستخدم
+  const completedLessons = await db.lessonCompletion.count({
+    where: {
+      userId: id,
+      lesson: { courseId, type: "VIDEO" },
+      completed: true,
+    },
+  });
+
+  const progress = (completedLessons / totalLessons) * 100;
+
+  return progress; // النسبة المئوية
 }

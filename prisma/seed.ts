@@ -24,7 +24,7 @@ async function findOrCreateCurriculum(title: string, period: string) {
 
   if (!curriculum) {
     curriculum = await db.curriculum.create({
-      data: { title, period },
+      data: { title, courseId: "353b6d90-7f3f-45c6-9795-f5f7f8fd5a46", period },
     });
   } else if (curriculum.period !== period) {
     curriculum = await db.curriculum.update({
