@@ -5,7 +5,6 @@ import {
   Users,
   Clock,
   Award,
-  CheckCircle2,
   ArrowRight,
 } from "lucide-react";
 import {
@@ -41,11 +40,8 @@ export default async function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
-            <Badge
-              variant="secondary"
-              className="px-4 py-2 text-sm flex items-center w-fit"
-            >
-              <Star className="mr-2 h-4 w-4 text-primary" />
+            <Badge className="px-4 py-2 text-sm flex items-center w-fit">
+              <Star className="mr-2 h-4 w-4 " />
               Rated 4.9/5 by over 1,200 students
             </Badge>
 

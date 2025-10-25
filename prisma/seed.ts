@@ -196,15 +196,15 @@ async function main() {
       curriculumId: fundamentals.id,
     },
     {
-      name: "Fundamentals Exam",
+      name: "CSR and SSR",
       period: "Week 1 - Day 3",
-      type: Type.EXAM,
+      type: Type.VIDEO,
       curriculumId: fundamentals.id,
     },
     {
-      name: "Overview PDF",
+      name: "Caching in Next.js",
       period: "Week 1 - Day 4",
-      type: Type.PDF,
+      type: Type.VIDEO,
       curriculumId: fundamentals.id,
     },
   ];
@@ -223,14 +223,14 @@ async function main() {
       curriculumId: advanced.id,
     },
     {
-      name: "Advanced Exam",
-      period: "Week 2 - Day 3",
+      name: "Your First Exam!",
+      period: "Week 2 - Day 4",
       type: Type.EXAM,
       curriculumId: advanced.id,
     },
     {
-      name: "Advanced Overview PDF",
-      period: "Week 2 - Day 4",
+      name: "Course overview",
+      period: "Week 2 - Day 3",
       type: Type.PDF,
       curriculumId: advanced.id,
     },

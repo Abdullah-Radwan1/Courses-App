@@ -5,6 +5,7 @@ import SessionProvider from "@/lib/auth/SessionProvider";
 import Header from "@/components/header_footer/Header";
 import Footer from "@/components/header_footer/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import NextTopLoader from "nextjs-toploader";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
       >
+        <NextTopLoader color="royalblue" />
         <Header />
         <SessionProvider>
           <main className="flex-1 content-center">{children}</main>

@@ -15,30 +15,36 @@ model User {
   emailVerified DateTime?
   password      String
 
-  comments        Comment[]
-  questions       Question[]
-  enrolledCourses Enrollment[]
-  sessions        Session[]
-
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  leaderboard      leaderboard?       @relation(fields: [leaderboardId], references: [id])
-  leaderboardId    String?
+  comments         Comment[]
+  questions        Question[]
+  enrolledCourses  Enrollment[]
+  sessions         Session[]
   ExamResult       ExamResult[]
   LessonCompletion LessonCompletion[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leaderboard   leaderboard? @relation(fields: [leaderboardId], references: [id])
+  leaderboardId String?
+
+  @@index([email])
 }
 
 model Course {
   id          String       @id @default(uuid())
   instructor  String       @default("Abdullah Radwan")
   title       String
-  description String
+  description String       @db.Text
   duration    String
   language    String
   curriculums Curriculum[]
   comments    Comment[]
   enrollments Enrollment[]
   Exam        Exam[]
+  Question    Question[]
+
+  @@index([title])
 }
 
 model Curriculum {
@@ -46,8 +52,10 @@ model Curriculum {
   title    String   @default("course")
   period   String
   courseId String
-  course   Course   @relation(fields: [courseId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   Lessons  Lesson[]
+
+  @@index([courseId])
 }
 
 model Lesson {
@@ -57,8 +65,11 @@ model Lesson {
   name             String
   courseId         String
   curriculumId     String
-  curriculum       Curriculum         @relation(fields: [curriculumId], references: [id])
+  curriculum       Curriculum         @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
   LessonCompletion LessonCompletion[]
+
+  @@index([curriculumId])
+  @@index([courseId])
 }
 
 model LessonCompletion {
@@ -68,29 +79,38 @@ model LessonCompletion {
   completed Boolean  @default(false)
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id])
-  lesson Lesson @relation(fields: [lessonId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
 }
 
 model Comment {
   id        String   @id @default(cuid())
-  content   String
+  content   String   @db.Text
   userId    String
-  courseId  String?
-  user      User     @relation(fields: [userId], references: [id])
-  course    Course?  @relation(fields: [courseId], references: [id])
+  courseId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@index([courseId])
+  @@index([userId])
 }
 
 model Question {
   id        String   @id @default(cuid())
-  content   String
+  content   String   @db.Text
   userId    String
-  courseId  String?
-  user      User     @relation(fields: [userId], references: [id])
+  courseId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@index([courseId])
+  @@index([userId])
 }
 
 model Enrollment {
@@ -99,21 +119,24 @@ model Enrollment {
   courseId  String
   createdAt DateTime @default(now())
 
-  user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
+  @@index([courseId])
+  @@index([userId])
 }
 
-// exam models 
 model Exam {
   id        String         @id @default(uuid())
   title     String
   courseId  String
-  course    Course         @relation(fields: [courseId], references: [id])
+  course    Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   questions ExamQuestion[]
   results   ExamResult[]
   createdAt DateTime       @default(now())
+
+  @@index([courseId])
 }
 
 model ExamQuestion {
@@ -122,14 +145,18 @@ model ExamQuestion {
   options   ExamOption[]
   correctId String?
   examId    String
-  exam      Exam         @relation(fields: [examId], references: [id])
+  exam      Exam         @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@index([examId])
 }
 
 model ExamOption {
   id         String       @id @default(uuid())
   text       String
   questionId String
-  question   ExamQuestion @relation(fields: [questionId], references: [id])
+  question   ExamQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
 }
 
 model ExamResult {
@@ -140,10 +167,12 @@ model ExamResult {
   rank      Int?
   createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id])
-  exam Exam @relation(fields: [examId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
 
   @@unique([userId, examId])
+  @@index([examId])
+  @@index([userId])
 }
 
 model leaderboard {
@@ -161,9 +190,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([userId])
 }

@@ -6,47 +6,52 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "../../../components/ui/dialog";
-import { Button } from "../../../components/ui/button";
-import { Textarea } from "../../../components/ui/textarea";
-import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { MessageCircleQuestionMark } from "lucide-react";
+import { useState } from "react";
+import CustomSkeleton from "@/components/CustomSkeleton";
 import {
   createQuestionAction,
   getQuestionsByCourseAction,
 } from "@/lib/actions/questionActions";
-import { useState } from "react";
-import CustomSkeleton from "../../../components/CustomSkeleton";
-import { MessageCircleQuestionMark } from "lucide-react";
+
+type QuestionModalProps = {
+  initialQuestions: any[];
+  initialHasMore: boolean;
+  initialPage: number;
+  courseId: string;
+};
 
 export const QuestionModal = ({
-  questions,
-  setQuestions,
-  hasMore,
-  setHasMore,
-  page,
-  setPage,
+  initialQuestions,
+  initialHasMore,
+  initialPage,
   courseId,
-}: any) => {
+}: QuestionModalProps) => {
   const [open, setOpen] = useState(false);
+  const [questions, setQuestions] = useState(initialQuestions || []);
+  const [hasMore, setHasMore] = useState(initialHasMore);
+  const [page, setPage] = useState(initialPage);
   const [newQuestion, setNewQuestion] = useState("");
-  const [loading, setLoading] = useState(false); // initial load
-  const [loadingMore, setLoadingMore] = useState(false); // "Show More"
   const [asking, setAsking] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+
   const take = 3;
 
-  // Helper to dedupe and set questions
   const appendUniqueQuestions = (incoming: any[]) => {
-    setQuestions((prev: any[]) => {
-      const existingIds = new Set(prev.map((p) => p.id));
+    setQuestions((prev) => {
+      const existingIds = new Set(prev.map((q) => q.id));
       const unique = incoming.filter((q) => !existingIds.has(q.id));
       return [...prev, ...unique];
     });
   };
 
   const prependUniqueQuestion = (item: any) => {
-    setQuestions((prev: any[]) => {
-      // if it already exists, don't prepend
-      if (prev.some((p) => p.id === item.id)) return prev;
+    setQuestions((prev) => {
+      if (prev.some((q) => q.id === item.id)) return prev;
       return [item, ...prev];
     });
   };
@@ -67,7 +72,6 @@ export const QuestionModal = ({
   };
 
   const handleShowMore = async () => {
-    // If already loading more, ignore
     if (loadingMore) return;
     setLoadingMore(true);
     try {
@@ -78,11 +82,8 @@ export const QuestionModal = ({
           take,
         });
 
-      // Append only the unique ones
       appendUniqueQuestions(questionWithUser);
-
-      // advance page only once (we could check if any unique were added, but safe to advance)
-      setPage((p: number) => p + 1);
+      setPage((p) => p + 1);
       setHasMore(more);
     } finally {
       setLoadingMore(false);
@@ -96,24 +97,22 @@ export const QuestionModal = ({
           <MessageCircleQuestionMark />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Course Questions</DialogTitle>
         </DialogHeader>
 
-        <section className="space-y-4 max-h-[350px] overflow-y-auto p-2">
+        <section className="space-y-4 p-2">
+          {asking && <CustomSkeleton />}
+
           {questions.length === 0 ? (
-            // No questions yet: show initial skeleton while loading, otherwise empty state
-            loading ? (
-              <CustomSkeleton />
-            ) : (
-              <div className="text-center text-sm text-muted-foreground">
-                No questions yet. Be the first to ask!
-              </div>
-            )
+            <div className="text-center text-sm text-muted-foreground">
+              No questions yet. Be the first to ask!
+            </div>
           ) : (
             <>
-              {questions.map((q: any) => (
+              {questions.map((q) => (
                 <div
                   key={q.id}
                   className="space-y-3 pb-4 border-b last:border-0"
@@ -140,13 +139,9 @@ export const QuestionModal = ({
                   </div>
                 </div>
               ))}
-
-              {/* show-more skeleton */}
               {loadingMore && <CustomSkeleton />}
             </>
           )}
-          {/* show skeleton while asking (when pressing submit) */}
-          {asking && <CustomSkeleton />}
         </section>
 
         <div className="mt-4 space-y-2">
@@ -156,11 +151,10 @@ export const QuestionModal = ({
             onChange={(e) => setNewQuestion(e.target.value)}
           />
           <div className="flex gap-2">
-            <Button onClick={handleSubmit} disabled={loading || asking}>
+            <Button onClick={handleSubmit} disabled={asking}>
               Submit
             </Button>
 
-            {/* show the Show More button only when there are more and not currently loading more */}
             {hasMore && !loadingMore && (
               <Button variant="outline" onClick={handleShowMore}>
                 Show More

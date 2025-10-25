@@ -2141,6 +2141,7 @@ export namespace Prisma {
     comments: number
     enrollments: number
     Exam: number
+    Question: number
   }
 
   export type CourseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2148,6 +2149,7 @@ export namespace Prisma {
     comments?: boolean | CourseCountOutputTypeCountCommentsArgs
     enrollments?: boolean | CourseCountOutputTypeCountEnrollmentsArgs
     Exam?: boolean | CourseCountOutputTypeCountExamArgs
+    Question?: boolean | CourseCountOutputTypeCountQuestionArgs
   }
 
   // Custom InputTypes
@@ -2187,6 +2189,13 @@ export namespace Prisma {
    */
   export type CourseCountOutputTypeCountExamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ExamWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountQuestionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuestionWhereInput
   }
 
 
@@ -2550,9 +2559,9 @@ export namespace Prisma {
     questions?: boolean | User$questionsArgs<ExtArgs>
     enrolledCourses?: boolean | User$enrolledCoursesArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     ExamResult?: boolean | User$ExamResultArgs<ExtArgs>
     LessonCompletion?: boolean | User$LessonCompletionArgs<ExtArgs>
+    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2597,9 +2606,9 @@ export namespace Prisma {
     questions?: boolean | User$questionsArgs<ExtArgs>
     enrolledCourses?: boolean | User$enrolledCoursesArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     ExamResult?: boolean | User$ExamResultArgs<ExtArgs>
     LessonCompletion?: boolean | User$LessonCompletionArgs<ExtArgs>
+    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2616,9 +2625,9 @@ export namespace Prisma {
       questions: Prisma.$QuestionPayload<ExtArgs>[]
       enrolledCourses: Prisma.$EnrollmentPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
-      leaderboard: Prisma.$leaderboardPayload<ExtArgs> | null
       ExamResult: Prisma.$ExamResultPayload<ExtArgs>[]
       LessonCompletion: Prisma.$LessonCompletionPayload<ExtArgs>[]
+      leaderboard: Prisma.$leaderboardPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3027,9 +3036,9 @@ export namespace Prisma {
     questions<T extends User$questionsArgs<ExtArgs> = {}>(args?: Subset<T, User$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrolledCourses<T extends User$enrolledCoursesArgs<ExtArgs> = {}>(args?: Subset<T, User$enrolledCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    leaderboard<T extends User$leaderboardArgs<ExtArgs> = {}>(args?: Subset<T, User$leaderboardArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ExamResult<T extends User$ExamResultArgs<ExtArgs> = {}>(args?: Subset<T, User$ExamResultArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     LessonCompletion<T extends User$LessonCompletionArgs<ExtArgs> = {}>(args?: Subset<T, User$LessonCompletionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonCompletionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    leaderboard<T extends User$leaderboardArgs<ExtArgs> = {}>(args?: Subset<T, User$leaderboardArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3559,25 +3568,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.leaderboard
-   */
-  export type User$leaderboardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    where?: leaderboardWhereInput
-  }
-
-  /**
    * User.ExamResult
    */
   export type User$ExamResultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3623,6 +3613,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LessonCompletionScalarFieldEnum | LessonCompletionScalarFieldEnum[]
+  }
+
+  /**
+   * User.leaderboard
+   */
+  export type User$leaderboardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the leaderboard
+     */
+    select?: leaderboardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the leaderboard
+     */
+    omit?: leaderboardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: leaderboardInclude<ExtArgs> | null
+    where?: leaderboardWhereInput
   }
 
   /**
@@ -3820,6 +3829,7 @@ export namespace Prisma {
     comments?: boolean | Course$commentsArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
     Exam?: boolean | Course$ExamArgs<ExtArgs>
+    Question?: boolean | Course$QuestionArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -3856,6 +3866,7 @@ export namespace Prisma {
     comments?: boolean | Course$commentsArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
     Exam?: boolean | Course$ExamArgs<ExtArgs>
+    Question?: boolean | Course$QuestionArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3868,6 +3879,7 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
       Exam: Prisma.$ExamPayload<ExtArgs>[]
+      Question: Prisma.$QuestionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4274,6 +4286,7 @@ export namespace Prisma {
     comments<T extends Course$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Course$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Exam<T extends Course$ExamArgs<ExtArgs> = {}>(args?: Subset<T, Course$ExamArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Question<T extends Course$QuestionArgs<ExtArgs> = {}>(args?: Subset<T, Course$QuestionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4790,6 +4803,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ExamScalarFieldEnum | ExamScalarFieldEnum[]
+  }
+
+  /**
+   * Course.Question
+   */
+  export type Course$QuestionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Question
+     */
+    omit?: QuestionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionInclude<ExtArgs> | null
+    where?: QuestionWhereInput
+    orderBy?: QuestionOrderByWithRelationInput | QuestionOrderByWithRelationInput[]
+    cursor?: QuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuestionScalarFieldEnum | QuestionScalarFieldEnum[]
   }
 
   /**
@@ -8190,7 +8227,7 @@ export namespace Prisma {
     id: string
     content: string
     userId: string
-    courseId: string | null
+    courseId: string
     createdAt: Date
     _count: CommentCountAggregateOutputType | null
     _min: CommentMinAggregateOutputType | null
@@ -8218,7 +8255,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8228,7 +8265,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8238,7 +8275,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
@@ -8252,28 +8289,28 @@ export namespace Prisma {
   export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "courseId" | "createdAt", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    course?: boolean | Comment$courseArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Comment"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      course: Prisma.$CoursePayload<ExtArgs> | null
+      course: Prisma.$CoursePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       content: string
       userId: string
-      courseId: string | null
+      courseId: string
       createdAt: Date
     }, ExtArgs["result"]["comment"]>
     composites: {}
@@ -8670,7 +8707,7 @@ export namespace Prisma {
   export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    course<T extends Comment$courseArgs<ExtArgs> = {}>(args?: Subset<T, Comment$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    course<T extends CourseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseDefaultArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9101,25 +9138,6 @@ export namespace Prisma {
   }
 
   /**
-   * Comment.course
-   */
-  export type Comment$courseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Course
-     */
-    select?: CourseSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Course
-     */
-    omit?: CourseOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CourseInclude<ExtArgs> | null
-    where?: CourseWhereInput
-  }
-
-  /**
    * Comment without action
    */
   export type CommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9275,7 +9293,7 @@ export namespace Prisma {
     id: string
     content: string
     userId: string
-    courseId: string | null
+    courseId: string
     createdAt: Date
     _count: QuestionCountAggregateOutputType | null
     _min: QuestionMinAggregateOutputType | null
@@ -9303,6 +9321,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["question"]>
 
   export type QuestionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9312,6 +9331,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["question"]>
 
   export type QuestionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9321,6 +9341,7 @@ export namespace Prisma {
     courseId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["question"]>
 
   export type QuestionSelectScalar = {
@@ -9334,24 +9355,28 @@ export namespace Prisma {
   export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "courseId" | "createdAt", ExtArgs["result"]["question"]>
   export type QuestionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
   export type QuestionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
   export type QuestionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    course?: boolean | CourseDefaultArgs<ExtArgs>
   }
 
   export type $QuestionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Question"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      course: Prisma.$CoursePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       content: string
       userId: string
-      courseId: string | null
+      courseId: string
       createdAt: Date
     }, ExtArgs["result"]["question"]>
     composites: {}
@@ -9748,6 +9773,7 @@ export namespace Prisma {
   export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    course<T extends CourseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseDefaultArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18049,9 +18075,9 @@ export namespace Prisma {
     questions?: QuestionListRelationFilter
     enrolledCourses?: EnrollmentListRelationFilter
     sessions?: SessionListRelationFilter
-    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
     ExamResult?: ExamResultListRelationFilter
     LessonCompletion?: LessonCompletionListRelationFilter
+    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18067,9 +18093,9 @@ export namespace Prisma {
     questions?: QuestionOrderByRelationAggregateInput
     enrolledCourses?: EnrollmentOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
-    leaderboard?: leaderboardOrderByWithRelationInput
     ExamResult?: ExamResultOrderByRelationAggregateInput
     LessonCompletion?: LessonCompletionOrderByRelationAggregateInput
+    leaderboard?: leaderboardOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18088,9 +18114,9 @@ export namespace Prisma {
     questions?: QuestionListRelationFilter
     enrolledCourses?: EnrollmentListRelationFilter
     sessions?: SessionListRelationFilter
-    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
     ExamResult?: ExamResultListRelationFilter
     LessonCompletion?: LessonCompletionListRelationFilter
+    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18135,6 +18161,7 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     Exam?: ExamListRelationFilter
+    Question?: QuestionListRelationFilter
   }
 
   export type CourseOrderByWithRelationInput = {
@@ -18148,6 +18175,7 @@ export namespace Prisma {
     comments?: CommentOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
     Exam?: ExamOrderByRelationAggregateInput
+    Question?: QuestionOrderByRelationAggregateInput
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -18164,6 +18192,7 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     Exam?: ExamListRelationFilter
+    Question?: QuestionListRelationFilter
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
@@ -18372,17 +18401,17 @@ export namespace Prisma {
     id?: StringFilter<"Comment"> | string
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
-    courseId?: StringNullableFilter<"Comment"> | string | null
+    courseId?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
+    course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
   }
 
   export type CommentOrderByWithRelationInput = {
     id?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    courseId?: SortOrderInput | SortOrder
+    courseId?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
@@ -18395,17 +18424,17 @@ export namespace Prisma {
     NOT?: CommentWhereInput | CommentWhereInput[]
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
-    courseId?: StringNullableFilter<"Comment"> | string | null
+    courseId?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
+    course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
   }, "id">
 
   export type CommentOrderByWithAggregationInput = {
     id?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    courseId?: SortOrderInput | SortOrder
+    courseId?: SortOrder
     createdAt?: SortOrder
     _count?: CommentCountOrderByAggregateInput
     _max?: CommentMaxOrderByAggregateInput
@@ -18419,7 +18448,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Comment"> | string
     content?: StringWithAggregatesFilter<"Comment"> | string
     userId?: StringWithAggregatesFilter<"Comment"> | string
-    courseId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    courseId?: StringWithAggregatesFilter<"Comment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
@@ -18430,18 +18459,20 @@ export namespace Prisma {
     id?: StringFilter<"Question"> | string
     content?: StringFilter<"Question"> | string
     userId?: StringFilter<"Question"> | string
-    courseId?: StringNullableFilter<"Question"> | string | null
+    courseId?: StringFilter<"Question"> | string
     createdAt?: DateTimeFilter<"Question"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
   }
 
   export type QuestionOrderByWithRelationInput = {
     id?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    courseId?: SortOrderInput | SortOrder
+    courseId?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    course?: CourseOrderByWithRelationInput
   }
 
   export type QuestionWhereUniqueInput = Prisma.AtLeast<{
@@ -18451,16 +18482,17 @@ export namespace Prisma {
     NOT?: QuestionWhereInput | QuestionWhereInput[]
     content?: StringFilter<"Question"> | string
     userId?: StringFilter<"Question"> | string
-    courseId?: StringNullableFilter<"Question"> | string | null
+    courseId?: StringFilter<"Question"> | string
     createdAt?: DateTimeFilter<"Question"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
   }, "id">
 
   export type QuestionOrderByWithAggregationInput = {
     id?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    courseId?: SortOrderInput | SortOrder
+    courseId?: SortOrder
     createdAt?: SortOrder
     _count?: QuestionCountOrderByAggregateInput
     _max?: QuestionMaxOrderByAggregateInput
@@ -18474,7 +18506,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Question"> | string
     content?: StringWithAggregatesFilter<"Question"> | string
     userId?: StringWithAggregatesFilter<"Question"> | string
-    courseId?: StringNullableWithAggregatesFilter<"Question"> | string | null
+    courseId?: StringWithAggregatesFilter<"Question"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Question"> | Date | string
   }
 
@@ -18881,9 +18913,9 @@ export namespace Prisma {
     questions?: QuestionCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -18915,9 +18947,9 @@ export namespace Prisma {
     questions?: QuestionUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -18980,6 +19012,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     Exam?: ExamCreateNestedManyWithoutCourseInput
+    Question?: QuestionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateInput = {
@@ -18993,6 +19026,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     Exam?: ExamUncheckedCreateNestedManyWithoutCourseInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUpdateInput = {
@@ -19006,6 +19040,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     Exam?: ExamUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
@@ -19019,6 +19054,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     Exam?: ExamUncheckedUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseCreateManyInput = {
@@ -19225,14 +19261,14 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
-    course?: CourseCreateNestedOneWithoutCommentsInput
+    course: CourseCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateInput = {
     id?: string
     content: string
     userId: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
@@ -19241,14 +19277,14 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    course?: CourseUpdateOneWithoutCommentsNestedInput
+    course?: CourseUpdateOneRequiredWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19256,7 +19292,7 @@ export namespace Prisma {
     id?: string
     content: string
     userId: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
@@ -19270,39 +19306,39 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionCreateInput = {
     id?: string
     content: string
-    courseId?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutQuestionsInput
+    course: CourseCreateNestedOneWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateInput = {
     id?: string
     content: string
     userId: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
   export type QuestionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutQuestionsNestedInput
+    course?: CourseUpdateOneRequiredWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19310,14 +19346,13 @@ export namespace Prisma {
     id?: string
     content: string
     userId: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
   export type QuestionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19325,7 +19360,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19784,11 +19819,6 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
-  export type LeaderboardNullableScalarRelationFilter = {
-    is?: leaderboardWhereInput | null
-    isNot?: leaderboardWhereInput | null
-  }
-
   export type ExamResultListRelationFilter = {
     every?: ExamResultWhereInput
     some?: ExamResultWhereInput
@@ -19799,6 +19829,11 @@ export namespace Prisma {
     every?: LessonCompletionWhereInput
     some?: LessonCompletionWhereInput
     none?: LessonCompletionWhereInput
+  }
+
+  export type LeaderboardNullableScalarRelationFilter = {
+    is?: leaderboardWhereInput | null
+    isNot?: leaderboardWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -20109,11 +20144,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type CourseNullableScalarRelationFilter = {
-    is?: CourseWhereInput | null
-    isNot?: CourseWhereInput | null
   }
 
   export type CommentCountOrderByAggregateInput = {
@@ -20502,12 +20532,6 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
-  export type leaderboardCreateNestedOneWithoutUserInput = {
-    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
-    connect?: leaderboardWhereUniqueInput
-  }
-
   export type ExamResultCreateNestedManyWithoutUserInput = {
     create?: XOR<ExamResultCreateWithoutUserInput, ExamResultUncheckedCreateWithoutUserInput> | ExamResultCreateWithoutUserInput[] | ExamResultUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ExamResultCreateOrConnectWithoutUserInput | ExamResultCreateOrConnectWithoutUserInput[]
@@ -20520,6 +20544,12 @@ export namespace Prisma {
     connectOrCreate?: LessonCompletionCreateOrConnectWithoutUserInput | LessonCompletionCreateOrConnectWithoutUserInput[]
     createMany?: LessonCompletionCreateManyUserInputEnvelope
     connect?: LessonCompletionWhereUniqueInput | LessonCompletionWhereUniqueInput[]
+  }
+
+  export type leaderboardCreateNestedOneWithoutUserInput = {
+    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
+    connect?: leaderboardWhereUniqueInput
   }
 
   export type CommentUncheckedCreateNestedManyWithoutUserInput = {
@@ -20632,16 +20662,6 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type leaderboardUpdateOneWithoutUserNestedInput = {
-    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
-    upsert?: leaderboardUpsertWithoutUserInput
-    disconnect?: leaderboardWhereInput | boolean
-    delete?: leaderboardWhereInput | boolean
-    connect?: leaderboardWhereUniqueInput
-    update?: XOR<XOR<leaderboardUpdateToOneWithWhereWithoutUserInput, leaderboardUpdateWithoutUserInput>, leaderboardUncheckedUpdateWithoutUserInput>
-  }
-
   export type ExamResultUpdateManyWithoutUserNestedInput = {
     create?: XOR<ExamResultCreateWithoutUserInput, ExamResultUncheckedCreateWithoutUserInput> | ExamResultCreateWithoutUserInput[] | ExamResultUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ExamResultCreateOrConnectWithoutUserInput | ExamResultCreateOrConnectWithoutUserInput[]
@@ -20668,6 +20688,16 @@ export namespace Prisma {
     update?: LessonCompletionUpdateWithWhereUniqueWithoutUserInput | LessonCompletionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: LessonCompletionUpdateManyWithWhereWithoutUserInput | LessonCompletionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: LessonCompletionScalarWhereInput | LessonCompletionScalarWhereInput[]
+  }
+
+  export type leaderboardUpdateOneWithoutUserNestedInput = {
+    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
+    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
+    upsert?: leaderboardUpsertWithoutUserInput
+    disconnect?: leaderboardWhereInput | boolean
+    delete?: leaderboardWhereInput | boolean
+    connect?: leaderboardWhereUniqueInput
+    update?: XOR<XOR<leaderboardUpdateToOneWithWhereWithoutUserInput, leaderboardUpdateWithoutUserInput>, leaderboardUncheckedUpdateWithoutUserInput>
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -20786,6 +20816,13 @@ export namespace Prisma {
     connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
   }
 
+  export type QuestionCreateNestedManyWithoutCourseInput = {
+    create?: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput> | QuestionCreateWithoutCourseInput[] | QuestionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: QuestionCreateOrConnectWithoutCourseInput | QuestionCreateOrConnectWithoutCourseInput[]
+    createMany?: QuestionCreateManyCourseInputEnvelope
+    connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+  }
+
   export type CurriculumUncheckedCreateNestedManyWithoutCourseInput = {
     create?: XOR<CurriculumCreateWithoutCourseInput, CurriculumUncheckedCreateWithoutCourseInput> | CurriculumCreateWithoutCourseInput[] | CurriculumUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: CurriculumCreateOrConnectWithoutCourseInput | CurriculumCreateOrConnectWithoutCourseInput[]
@@ -20812,6 +20849,13 @@ export namespace Prisma {
     connectOrCreate?: ExamCreateOrConnectWithoutCourseInput | ExamCreateOrConnectWithoutCourseInput[]
     createMany?: ExamCreateManyCourseInputEnvelope
     connect?: ExamWhereUniqueInput | ExamWhereUniqueInput[]
+  }
+
+  export type QuestionUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput> | QuestionCreateWithoutCourseInput[] | QuestionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: QuestionCreateOrConnectWithoutCourseInput | QuestionCreateOrConnectWithoutCourseInput[]
+    createMany?: QuestionCreateManyCourseInputEnvelope
+    connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
   }
 
   export type CurriculumUpdateManyWithoutCourseNestedInput = {
@@ -20870,6 +20914,20 @@ export namespace Prisma {
     deleteMany?: ExamScalarWhereInput | ExamScalarWhereInput[]
   }
 
+  export type QuestionUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput> | QuestionCreateWithoutCourseInput[] | QuestionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: QuestionCreateOrConnectWithoutCourseInput | QuestionCreateOrConnectWithoutCourseInput[]
+    upsert?: QuestionUpsertWithWhereUniqueWithoutCourseInput | QuestionUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: QuestionCreateManyCourseInputEnvelope
+    set?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    disconnect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    delete?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    update?: QuestionUpdateWithWhereUniqueWithoutCourseInput | QuestionUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: QuestionUpdateManyWithWhereWithoutCourseInput | QuestionUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
+  }
+
   export type CurriculumUncheckedUpdateManyWithoutCourseNestedInput = {
     create?: XOR<CurriculumCreateWithoutCourseInput, CurriculumUncheckedCreateWithoutCourseInput> | CurriculumCreateWithoutCourseInput[] | CurriculumUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: CurriculumCreateOrConnectWithoutCourseInput | CurriculumCreateOrConnectWithoutCourseInput[]
@@ -20924,6 +20982,20 @@ export namespace Prisma {
     update?: ExamUpdateWithWhereUniqueWithoutCourseInput | ExamUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: ExamUpdateManyWithWhereWithoutCourseInput | ExamUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: ExamScalarWhereInput | ExamScalarWhereInput[]
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput> | QuestionCreateWithoutCourseInput[] | QuestionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: QuestionCreateOrConnectWithoutCourseInput | QuestionCreateOrConnectWithoutCourseInput[]
+    upsert?: QuestionUpsertWithWhereUniqueWithoutCourseInput | QuestionUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: QuestionCreateManyCourseInputEnvelope
+    set?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    disconnect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    delete?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+    update?: QuestionUpdateWithWhereUniqueWithoutCourseInput | QuestionUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: QuestionUpdateManyWithWhereWithoutCourseInput | QuestionUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
   }
 
   export type CourseCreateNestedOneWithoutCurriculumsInput = {
@@ -21094,12 +21166,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type CourseUpdateOneWithoutCommentsNestedInput = {
+  export type CourseUpdateOneRequiredWithoutCommentsNestedInput = {
     create?: XOR<CourseCreateWithoutCommentsInput, CourseUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: CourseCreateOrConnectWithoutCommentsInput
     upsert?: CourseUpsertWithoutCommentsInput
-    disconnect?: CourseWhereInput | boolean
-    delete?: CourseWhereInput | boolean
     connect?: CourseWhereUniqueInput
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutCommentsInput, CourseUpdateWithoutCommentsInput>, CourseUncheckedUpdateWithoutCommentsInput>
   }
@@ -21110,12 +21180,26 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type CourseCreateNestedOneWithoutQuestionInput = {
+    create?: XOR<CourseCreateWithoutQuestionInput, CourseUncheckedCreateWithoutQuestionInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutQuestionInput
+    connect?: CourseWhereUniqueInput
+  }
+
   export type UserUpdateOneRequiredWithoutQuestionsNestedInput = {
     create?: XOR<UserCreateWithoutQuestionsInput, UserUncheckedCreateWithoutQuestionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuestionsInput
     upsert?: UserUpsertWithoutQuestionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuestionsInput, UserUpdateWithoutQuestionsInput>, UserUncheckedUpdateWithoutQuestionsInput>
+  }
+
+  export type CourseUpdateOneRequiredWithoutQuestionNestedInput = {
+    create?: XOR<CourseCreateWithoutQuestionInput, CourseUncheckedCreateWithoutQuestionInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutQuestionInput
+    upsert?: CourseUpsertWithoutQuestionInput
+    connect?: CourseWhereUniqueInput
+    update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutQuestionInput, CourseUpdateWithoutQuestionInput>, CourseUncheckedUpdateWithoutQuestionInput>
   }
 
   export type UserCreateNestedOneWithoutEnrolledCoursesInput = {
@@ -21660,13 +21744,13 @@ export namespace Prisma {
     id?: string
     content: string
     createdAt?: Date | string
-    course?: CourseCreateNestedOneWithoutCommentsInput
+    course: CourseCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateWithoutUserInput = {
     id?: string
     content: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
@@ -21683,14 +21767,14 @@ export namespace Prisma {
   export type QuestionCreateWithoutUserInput = {
     id?: string
     content: string
-    courseId?: string | null
     createdAt?: Date | string
+    course: CourseCreateNestedOneWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateWithoutUserInput = {
     id?: string
     content: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
@@ -21752,27 +21836,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type leaderboardCreateWithoutUserInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type leaderboardUncheckedCreateWithoutUserInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type leaderboardCreateOrConnectWithoutUserInput = {
-    where: leaderboardWhereUniqueInput
-    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-  }
-
   export type ExamResultCreateWithoutUserInput = {
     id?: string
     score: number
@@ -21823,6 +21886,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type leaderboardCreateWithoutUserInput = {
+    id?: string
+    rank?: number | null
+    score?: number | null
+    courseId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type leaderboardUncheckedCreateWithoutUserInput = {
+    id?: string
+    rank?: number | null
+    score?: number | null
+    courseId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type leaderboardCreateOrConnectWithoutUserInput = {
+    where: leaderboardWhereUniqueInput
+    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
+  }
+
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
     where: CommentWhereUniqueInput
     update: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
@@ -21846,7 +21930,7 @@ export namespace Prisma {
     id?: StringFilter<"Comment"> | string
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
-    courseId?: StringNullableFilter<"Comment"> | string | null
+    courseId?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
   }
 
@@ -21873,7 +21957,7 @@ export namespace Prisma {
     id?: StringFilter<"Question"> | string
     content?: StringFilter<"Question"> | string
     userId?: StringFilter<"Question"> | string
-    courseId?: StringNullableFilter<"Question"> | string | null
+    courseId?: StringFilter<"Question"> | string
     createdAt?: DateTimeFilter<"Question"> | Date | string
   }
 
@@ -21931,33 +22015,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
-  export type leaderboardUpsertWithoutUserInput = {
-    update: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
-    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    where?: leaderboardWhereInput
-  }
-
-  export type leaderboardUpdateToOneWithWhereWithoutUserInput = {
-    where?: leaderboardWhereInput
-    data: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
-  }
-
-  export type leaderboardUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type leaderboardUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ExamResultUpsertWithWhereUniqueWithoutUserInput = {
     where: ExamResultWhereUniqueInput
     update: XOR<ExamResultUpdateWithoutUserInput, ExamResultUncheckedUpdateWithoutUserInput>
@@ -22011,6 +22068,33 @@ export namespace Prisma {
     lessonId?: StringFilter<"LessonCompletion"> | string
     completed?: BoolFilter<"LessonCompletion"> | boolean
     updatedAt?: DateTimeFilter<"LessonCompletion"> | Date | string
+  }
+
+  export type leaderboardUpsertWithoutUserInput = {
+    update: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
+    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
+    where?: leaderboardWhereInput
+  }
+
+  export type leaderboardUpdateToOneWithWhereWithoutUserInput = {
+    where?: leaderboardWhereInput
+    data: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type leaderboardUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type leaderboardUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CurriculumCreateWithoutCourseInput = {
@@ -22109,6 +22193,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type QuestionCreateWithoutCourseInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutQuestionsInput
+  }
+
+  export type QuestionUncheckedCreateWithoutCourseInput = {
+    id?: string
+    content: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type QuestionCreateOrConnectWithoutCourseInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput>
+  }
+
+  export type QuestionCreateManyCourseInputEnvelope = {
+    data: QuestionCreateManyCourseInput | QuestionCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CurriculumUpsertWithWhereUniqueWithoutCourseInput = {
     where: CurriculumWhereUniqueInput
     update: XOR<CurriculumUpdateWithoutCourseInput, CurriculumUncheckedUpdateWithoutCourseInput>
@@ -22193,6 +22301,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Exam"> | Date | string
   }
 
+  export type QuestionUpsertWithWhereUniqueWithoutCourseInput = {
+    where: QuestionWhereUniqueInput
+    update: XOR<QuestionUpdateWithoutCourseInput, QuestionUncheckedUpdateWithoutCourseInput>
+    create: XOR<QuestionCreateWithoutCourseInput, QuestionUncheckedCreateWithoutCourseInput>
+  }
+
+  export type QuestionUpdateWithWhereUniqueWithoutCourseInput = {
+    where: QuestionWhereUniqueInput
+    data: XOR<QuestionUpdateWithoutCourseInput, QuestionUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type QuestionUpdateManyWithWhereWithoutCourseInput = {
+    where: QuestionScalarWhereInput
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutCourseInput>
+  }
+
   export type CourseCreateWithoutCurriculumsInput = {
     id?: string
     instructor?: string
@@ -22203,6 +22327,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     Exam?: ExamCreateNestedManyWithoutCourseInput
+    Question?: QuestionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutCurriculumsInput = {
@@ -22215,6 +22340,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     Exam?: ExamUncheckedCreateNestedManyWithoutCourseInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutCurriculumsInput = {
@@ -22271,6 +22397,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     Exam?: ExamUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutCurriculumsInput = {
@@ -22283,6 +22410,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     Exam?: ExamUncheckedUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type LessonUpsertWithWhereUniqueWithoutCurriculumInput = {
@@ -22409,8 +22537,8 @@ export namespace Prisma {
     questions?: QuestionCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLessonCompletionInput = {
@@ -22480,8 +22608,8 @@ export namespace Prisma {
     questions?: QuestionUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLessonCompletionInput = {
@@ -22540,9 +22668,9 @@ export namespace Prisma {
     questions?: QuestionCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -22576,6 +22704,7 @@ export namespace Prisma {
     curriculums?: CurriculumCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     Exam?: ExamCreateNestedManyWithoutCourseInput
+    Question?: QuestionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutCommentsInput = {
@@ -22588,6 +22717,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     Exam?: ExamUncheckedCreateNestedManyWithoutCourseInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutCommentsInput = {
@@ -22617,9 +22747,9 @@ export namespace Prisma {
     questions?: QuestionUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -22659,6 +22789,7 @@ export namespace Prisma {
     curriculums?: CurriculumUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     Exam?: ExamUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutCommentsInput = {
@@ -22671,6 +22802,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     Exam?: ExamUncheckedUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserCreateWithoutQuestionsInput = {
@@ -22684,9 +22816,9 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuestionsInput = {
@@ -22708,6 +22840,37 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutQuestionsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutQuestionsInput, UserUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type CourseCreateWithoutQuestionInput = {
+    id?: string
+    instructor?: string
+    title: string
+    description: string
+    duration: string
+    language: string
+    curriculums?: CurriculumCreateNestedManyWithoutCourseInput
+    comments?: CommentCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    Exam?: ExamCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseUncheckedCreateWithoutQuestionInput = {
+    id?: string
+    instructor?: string
+    title: string
+    description: string
+    duration: string
+    language: string
+    curriculums?: CurriculumUncheckedCreateNestedManyWithoutCourseInput
+    comments?: CommentUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    Exam?: ExamUncheckedCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseCreateOrConnectWithoutQuestionInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutQuestionInput, CourseUncheckedCreateWithoutQuestionInput>
   }
 
   export type UserUpsertWithoutQuestionsInput = {
@@ -22732,9 +22895,9 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuestionsInput = {
@@ -22753,6 +22916,43 @@ export namespace Prisma {
     LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type CourseUpsertWithoutQuestionInput = {
+    update: XOR<CourseUpdateWithoutQuestionInput, CourseUncheckedUpdateWithoutQuestionInput>
+    create: XOR<CourseCreateWithoutQuestionInput, CourseUncheckedCreateWithoutQuestionInput>
+    where?: CourseWhereInput
+  }
+
+  export type CourseUpdateToOneWithWhereWithoutQuestionInput = {
+    where?: CourseWhereInput
+    data: XOR<CourseUpdateWithoutQuestionInput, CourseUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type CourseUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    instructor?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    curriculums?: CurriculumUpdateManyWithoutCourseNestedInput
+    comments?: CommentUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    Exam?: ExamUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    instructor?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    curriculums?: CurriculumUncheckedUpdateManyWithoutCourseNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    Exam?: ExamUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
   export type UserCreateWithoutEnrolledCoursesInput = {
     id?: string
     name: string
@@ -22764,9 +22964,9 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     questions?: QuestionCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnrolledCoursesInput = {
@@ -22800,6 +23000,7 @@ export namespace Prisma {
     curriculums?: CurriculumCreateNestedManyWithoutCourseInput
     comments?: CommentCreateNestedManyWithoutCourseInput
     Exam?: ExamCreateNestedManyWithoutCourseInput
+    Question?: QuestionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutEnrollmentsInput = {
@@ -22812,6 +23013,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedCreateNestedManyWithoutCourseInput
     comments?: CommentUncheckedCreateNestedManyWithoutCourseInput
     Exam?: ExamUncheckedCreateNestedManyWithoutCourseInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutEnrollmentsInput = {
@@ -22841,9 +23043,9 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     questions?: QuestionUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnrolledCoursesInput = {
@@ -22883,6 +23085,7 @@ export namespace Prisma {
     curriculums?: CurriculumUpdateManyWithoutCourseNestedInput
     comments?: CommentUpdateManyWithoutCourseNestedInput
     Exam?: ExamUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
@@ -22895,6 +23098,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedUpdateManyWithoutCourseNestedInput
     comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
     Exam?: ExamUncheckedUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseCreateWithoutExamInput = {
@@ -22907,6 +23111,7 @@ export namespace Prisma {
     curriculums?: CurriculumCreateNestedManyWithoutCourseInput
     comments?: CommentCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    Question?: QuestionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutExamInput = {
@@ -22919,6 +23124,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedCreateNestedManyWithoutCourseInput
     comments?: CommentUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutExamInput = {
@@ -22997,6 +23203,7 @@ export namespace Prisma {
     curriculums?: CurriculumUpdateManyWithoutCourseNestedInput
     comments?: CommentUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutExamInput = {
@@ -23009,6 +23216,7 @@ export namespace Prisma {
     curriculums?: CurriculumUncheckedUpdateManyWithoutCourseNestedInput
     comments?: CommentUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type ExamQuestionUpsertWithWhereUniqueWithoutExamInput = {
@@ -23202,8 +23410,8 @@ export namespace Prisma {
     questions?: QuestionCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutExamResultInput = {
@@ -23271,8 +23479,8 @@ export namespace Prisma {
     questions?: QuestionUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamResultInput = {
@@ -23401,9 +23609,9 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     questions?: QuestionCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
+    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -23449,9 +23657,9 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     questions?: QuestionUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
+    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -23473,14 +23681,14 @@ export namespace Prisma {
   export type CommentCreateManyUserInput = {
     id?: string
     content: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
   export type QuestionCreateManyUserInput = {
     id?: string
     content: string
-    courseId?: string | null
+    courseId: string
     createdAt?: Date | string
   }
 
@@ -23517,41 +23725,41 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    course?: CourseUpdateOneWithoutCommentsNestedInput
+    course?: CourseUpdateOneRequiredWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    course?: CourseUpdateOneRequiredWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23667,6 +23875,13 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type QuestionCreateManyCourseInput = {
+    id?: string
+    content: string
+    userId: string
+    createdAt?: Date | string
+  }
+
   export type CurriculumUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -23745,6 +23960,27 @@ export namespace Prisma {
   export type ExamUncheckedUpdateManyWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutQuestionsNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

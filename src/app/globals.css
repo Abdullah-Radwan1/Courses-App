@@ -52,7 +52,7 @@
   --primary-hover: oklch(0.45 0.21 255);
 
   /* Enhanced secondary purple - made more vibrant */
-  --secondary: oklch(0.65 0.25 322.13); /* More vibrant purple */
+  --secondary: oklch(0.65 0.18 195); /* Energetic and modern */
   --secondary-foreground: oklch(0.98 0.005 250); /* Better contrast */
 
   /* Improved muted colors */

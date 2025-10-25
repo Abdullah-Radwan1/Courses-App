@@ -2,6 +2,8 @@
 import { cache } from "react";
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
+import { revalidatePath } from "next/cache";
+import { Type } from "@/generated/prisma";
 
 export const getCoursesAction = cache(async (courseId: string) => {
   return db.course
@@ -81,6 +83,28 @@ export const getCourseCurriculum = async (courseId: string) => {
   });
 };
 
+export async function getCourseProgress(courseId: string) {
+  const { id } = await getCurrentUser();
+  const totalLessons = await db.lesson.count({
+    where: { courseId, type: { in: [Type.VIDEO, Type.EXAM] } },
+  });
+
+  // عدد الدروس المكتملة من قبل المستخدم
+  const completedLessons = await db.lessonCompletion.count({
+    where: {
+      userId: id,
+      lesson: {
+        courseId,
+        type: { in: [Type.VIDEO, Type.EXAM] }, // ✅ multiple types
+      },
+      completed: true,
+    },
+  });
+
+  const progress = Number(((completedLessons / totalLessons) * 100).toFixed(2));
+  return progress; // النسبة المئوية
+}
+
 export async function toggleLessonCompletion(lessonId: string) {
   try {
     // Check if completion already exists
@@ -101,24 +125,4 @@ export async function toggleLessonCompletion(lessonId: string) {
     console.error("Error toggling lesson completion:", error);
     throw new Error("Failed to update lesson completion");
   }
-}
-
-export async function getCourseProgress(courseId: string) {
-  const { id } = await getCurrentUser();
-  const totalLessons = await db.lesson.count({
-    where: { courseId, type: "VIDEO" },
-  });
-
-  // عدد الدروس المكتملة من قبل المستخدم
-  const completedLessons = await db.lessonCompletion.count({
-    where: {
-      userId: id,
-      lesson: { courseId, type: "VIDEO" },
-      completed: true,
-    },
-  });
-
-  const progress = (completedLessons / totalLessons) * 100;
-
-  return progress; // النسبة المئوية
 }

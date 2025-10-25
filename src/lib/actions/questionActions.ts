@@ -1,5 +1,6 @@
 "use server";
 
+import { cache } from "react";
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
 
@@ -19,36 +20,38 @@ export const createQuestionAction = async ({
   });
 };
 
-export const getQuestionsByCourseAction = async ({
-  courseId,
-  page = 1,
-  take = 3,
-}: {
-  courseId: string;
-  page: number;
-  take: number;
-}) => {
-  const skip = (page - 1) * take;
+export const getQuestionsByCourseAction = cache(
+  async ({
+    courseId,
+    page = 1,
+    take = 3,
+  }: {
+    courseId: string;
+    page: number;
+    take: number;
+  }) => {
+    const skip = (page - 1) * take;
 
-  const questionWithUser = await db.question.findMany({
-    where: { courseId },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true, // optional — only if you need it
-          // ❌ no password, no emailVerified, etc.
+    const questionWithUser = await db.question.findMany({
+      where: { courseId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true, // optional — only if you need it
+            // ❌ no password, no emailVerified, etc.
+          },
         },
       },
-    },
-    orderBy: { createdAt: "desc" },
-    skip,
-    take,
-  });
+      orderBy: { createdAt: "desc" },
+      skip,
+      take,
+    });
 
-  const totalQuestions = await db.question.count({ where: { courseId } });
-  const hasMore = page * take < totalQuestions;
+    const totalQuestions = await db.question.count({ where: { courseId } });
+    const hasMore = page * take < totalQuestions;
 
-  return { questionWithUser, hasMore };
-};
+    return { questionWithUser, hasMore };
+  }
+);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -20,29 +20,48 @@ interface ExamDialogProps {
   open: boolean;
   onClose: () => void;
   examData: Exam & {
-    questions: (ExamQuestion & {
-      options: ExamOption[];
-    })[];
+    questions: (ExamQuestion & { options: ExamOption[] })[];
     examId: string;
+    courseId: string;
   };
+  lessonId: string;
 }
+
+// ✅ Timer component is memoized so it only re-renders when timeLeft changes
+const Timer = memo(({ timeLeft }: { timeLeft: number }) => {
+  const minutes = Math.floor(timeLeft / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (timeLeft % 60).toString().padStart(2, "0");
+
+  return (
+    <div className="flex items-center bg-amber-300 gap-2 rounded-xl py-2 px-8 text-white text-xl shadow-lg shadow-amber-300 font-semibold">
+      <Clock className="w-5 h-5" />
+      <span>
+        {minutes}:{seconds}
+      </span>
+    </div>
+  );
+});
 
 export default function ExamDialog({
   open,
   onClose,
   examData,
+  lessonId,
 }: ExamDialogProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
   >({});
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
   const [submitted, setSubmitted] = useState(false);
-  // Countdown timer — just decreases time
+
+  // Timer effect
   useEffect(() => {
     if (!open) return;
 
-    setTimeLeft(600); // reset on open
+    setTimeLeft(600); // reset when dialog opens
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
@@ -50,20 +69,23 @@ export default function ExamDialog({
     return () => clearInterval(timer);
   }, [open]);
 
-  // 🔥 Trigger submit only when timeLeft hits 0
+  // Auto-submit when timer reaches 0
   useEffect(() => {
     if (timeLeft === 0 && !submitted) {
       handleSubmit();
-      onClose();
     }
   }, [timeLeft]);
 
-  if (examData == undefined) return <Loading />;
+  if (!examData) return <Loading />;
+
   const question = examData.questions[currentIndex];
 
-  const handleSelectOption = (questionId: string, optionId: string) => {
-    setSelectedOptions((prev) => ({ ...prev, [questionId]: optionId }));
-  };
+  const handleSelectOption = useCallback(
+    (questionId: string, optionId: string) => {
+      setSelectedOptions((prev) => ({ ...prev, [questionId]: optionId }));
+    },
+    []
+  );
 
   const handleNext = () => {
     if (currentIndex < examData.questions.length - 1)
@@ -75,7 +97,7 @@ export default function ExamDialog({
   };
 
   const handleSubmit = async () => {
-    if (submitted || !examData) return; // prevent multiple submits
+    if (submitted || !examData) return;
     setSubmitted(true);
 
     const answers = examData.questions.map((q) => ({
@@ -87,54 +109,40 @@ export default function ExamDialog({
       const result = await submitExamAction({
         examId: examData.examId,
         answers,
-      });
-      await submitExamAction({
-        examId: examData.examId,
-        answers,
+        courseId: examData.courseId,
       });
       toast(`You scored ${result.score.toFixed(2)}%.`);
     } catch (error) {
       console.error("Exam submit failed", error);
     }
+
     onClose();
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) onClose(); // only close manually
-      }}
-    >
-      <DialogContent isExam={open} className="p-6 h-screen bg-blue-600  w-full">
-        <DialogHeader className="mx-auto ">
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <DialogContent isExam={open} className="p-6 h-screen bg-blue-700 w-full">
+        <DialogHeader className="mx-auto">
           <VisuallyHidden>
             <DialogTitle className="text-white">{"Exam"}</DialogTitle>
           </VisuallyHidden>
 
-          <div className="flex items-center  bg-amber-300 gap-2 rounded-xl py-2 px-8  text-white text-xl shadow-lg shadow-amber-300 font-semibold">
-            <Clock className="w-5 h-5" />
-            <span>
-              {Math.floor(timeLeft / 60)
-                .toString()
-                .padStart(2, "0")}
-              :{(timeLeft % 60).toString().padStart(2, "0")}
-            </span>
-          </div>
+          {/* Timer */}
+          <Timer timeLeft={timeLeft} />
         </DialogHeader>
 
         <section>
           <div className="flex content-center justify-center m-4 gap-2">
-            {examData.questions.map((_: any, idx: number) => (
+            {examData.questions.map((_, idx) => (
               <div
                 key={idx}
                 className={cn(
-                  "w-12 h-12 flex items-center justify-center rounded-full border  cursor-pointer",
+                  "w-12 h-12 flex items-center justify-center rounded-full border cursor-pointer",
                   idx === currentIndex
-                    ? "bg-white  text-blue-600 "
+                    ? "bg-white text-blue-700"
                     : selectedOptions[examData.questions[idx].id]
                     ? "bg-blue-600 text-white border-accent"
-                    : "border-muted bg-blue-600 text-white"
+                    : "border-muted bg-blue-700 text-white"
                 )}
                 onClick={() => setCurrentIndex(idx)}
               >
@@ -142,13 +150,14 @@ export default function ExamDialog({
               </div>
             ))}
           </div>
-          {/* questions  */}
+
+          {/* Question */}
           <div className="p-4 border rounded-lg bg-card mb-4">
             <p className="font-medium mb-3">
               {currentIndex + 1}. {question.text}
             </p>
             <div className="grid grid-cols-1 gap-2">
-              {question.options.map((opt: any) => (
+              {question.options.map((opt) => (
                 <div
                   key={opt.id}
                   onClick={() => handleSelectOption(question.id, opt.id)}
@@ -178,7 +187,7 @@ export default function ExamDialog({
           <div className="space-x-2">
             {currentIndex < examData.questions.length - 1 && (
               <Button
-                className="bg-white text-black hover:bg-accent "
+                className="bg-white text-black hover:bg-accent"
                 onClick={handleNext}
                 disabled={!selectedOptions[question.id]}
               >
