@@ -37,7 +37,7 @@ export default async function Home() {
     <div className=" bg-background flex flex-col">
       {/* Hero Section */}
       <main className=" container mx-auto px-6 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid xl:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
             <Badge className="px-4 py-2 text-sm flex items-center w-fit">
@@ -63,7 +63,7 @@ export default async function Home() {
               {stats.map((stat, i) => (
                 <Card key={i} className="text-center border-border">
                   <CardHeader className="flex flex-col items-center space-y-2 p-4">
-                    <stat.icon className="h-6 w-6 text-primary" />
+                    <stat.icon size={40} className=" text-primary" />
                     <CardTitle className="text-2xl font-bold text-foreground">
                       {stat.value}
                     </CardTitle>

@@ -34,9 +34,11 @@ function getMessageForScore(score: number) {
   };
 }
 
-export default async function LeaderboardPage({ id }: { id: string }) {
-  const { leaderboard } = await getLeaderboard(id);
-
+export default async function LeaderboardPage({
+  leaderboard,
+}: {
+  leaderboard: any;
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -58,7 +60,7 @@ export default async function LeaderboardPage({ id }: { id: string }) {
               Be the First to be on the BOOOARD 🦅
             </h2>
           ) : (
-            leaderboard.map((entry, index) => {
+            leaderboard.map((entry: any, index: number) => {
               const message = getMessageForScore(entry.score);
               return (
                 <Card

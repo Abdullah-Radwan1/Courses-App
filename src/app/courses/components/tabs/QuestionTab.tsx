@@ -21,20 +21,18 @@ import {
 type QuestionModalProps = {
   initialQuestions: any[];
   initialHasMore: boolean;
-  initialPage: number;
   courseId: string;
 };
 
 export const QuestionModal = ({
   initialQuestions,
   initialHasMore,
-  initialPage,
   courseId,
 }: QuestionModalProps) => {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(initialQuestions || []);
   const [hasMore, setHasMore] = useState(initialHasMore);
-  const [page, setPage] = useState(initialPage);
+  const [page, setPage] = useState(2);
   const [newQuestion, setNewQuestion] = useState("");
   const [asking, setAsking] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -78,12 +76,12 @@ export const QuestionModal = ({
       const { questionWithUser, hasMore: more } =
         await getQuestionsByCourseAction({
           courseId,
-          page: page + 1,
-          take,
+          page, // current page
+          take, // items per page
         });
 
       appendUniqueQuestions(questionWithUser);
-      setPage((p) => p + 1);
+      setPage((p) => p + 1); // ✅ increment by 1, not 2
       setHasMore(more);
     } finally {
       setLoadingMore(false);

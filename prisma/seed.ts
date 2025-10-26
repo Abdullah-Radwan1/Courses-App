@@ -2,13 +2,13 @@ import { db } from "./db";
 import { Type } from "../src/generated/prisma";
 
 async function findOrCreateCourse() {
-  const title = "Fullstack Next.js Course";
-  let course = await db.course.findFirst({ where: { title } });
+  const id = "353b6d90-7f3f-45c6-9795-f5f7f8fd5a46";
+  let course = await db.course.findFirst({ where: { id } });
 
   if (!course) {
     course = await db.course.create({
       data: {
-        title,
+        title: "Fullstack Next.js Course",
         description: "Learn fullstack development using Next.js and Prisma",
         duration: "10 hours",
         language: "English",
@@ -224,13 +224,13 @@ async function main() {
     },
     {
       name: "Your First Exam!",
-      period: "Week 2 - Day 4",
+      period: "Week 2 - Day 3",
       type: Type.EXAM,
       curriculumId: advanced.id,
     },
     {
       name: "Course overview",
-      period: "Week 2 - Day 3",
+      period: "Week 2 - Day 4",
       type: Type.PDF,
       curriculumId: advanced.id,
     },

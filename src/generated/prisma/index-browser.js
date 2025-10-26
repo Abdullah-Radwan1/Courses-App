@@ -127,8 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   password: 'password',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  leaderboardId: 'leaderboardId'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
@@ -152,6 +151,7 @@ exports.Prisma.LessonScalarFieldEnum = {
   period: 'period',
   type: 'type',
   name: 'name',
+  url: 'url',
   courseId: 'courseId',
   curriculumId: 'curriculumId'
 };
@@ -216,14 +216,6 @@ exports.Prisma.ExamResultScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.LeaderboardScalarFieldEnum = {
-  id: 'id',
-  rank: 'rank',
-  score: 'score',
-  courseId: 'courseId',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   sessionToken: 'sessionToken',
@@ -266,7 +258,6 @@ exports.Prisma.ModelName = {
   ExamQuestion: 'ExamQuestion',
   ExamOption: 'ExamOption',
   ExamResult: 'ExamResult',
-  leaderboard: 'leaderboard',
   Session: 'Session'
 };
 

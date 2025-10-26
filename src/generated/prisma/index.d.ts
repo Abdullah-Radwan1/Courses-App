@@ -74,11 +74,6 @@ export type ExamOption = $Result.DefaultSelection<Prisma.$ExamOptionPayload>
  */
 export type ExamResult = $Result.DefaultSelection<Prisma.$ExamResultPayload>
 /**
- * Model leaderboard
- * 
- */
-export type leaderboard = $Result.DefaultSelection<Prisma.$leaderboardPayload>
-/**
  * Model Session
  * 
  */
@@ -339,16 +334,6 @@ export class PrismaClient<
     * ```
     */
   get examResult(): Prisma.ExamResultDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.leaderboard`: Exposes CRUD operations for the **leaderboard** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Leaderboards
-    * const leaderboards = await prisma.leaderboard.findMany()
-    * ```
-    */
-  get leaderboard(): Prisma.leaderboardDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -811,7 +796,6 @@ export namespace Prisma {
     ExamQuestion: 'ExamQuestion',
     ExamOption: 'ExamOption',
     ExamResult: 'ExamResult',
-    leaderboard: 'leaderboard',
     Session: 'Session'
   };
 
@@ -831,7 +815,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "course" | "curriculum" | "lesson" | "lessonCompletion" | "comment" | "question" | "enrollment" | "exam" | "examQuestion" | "examOption" | "examResult" | "leaderboard" | "session"
+      modelProps: "user" | "course" | "curriculum" | "lesson" | "lessonCompletion" | "comment" | "question" | "enrollment" | "exam" | "examQuestion" | "examOption" | "examResult" | "session"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1723,80 +1707,6 @@ export namespace Prisma {
           }
         }
       }
-      leaderboard: {
-        payload: Prisma.$leaderboardPayload<ExtArgs>
-        fields: Prisma.leaderboardFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.leaderboardFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.leaderboardFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          findFirst: {
-            args: Prisma.leaderboardFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.leaderboardFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          findMany: {
-            args: Prisma.leaderboardFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>[]
-          }
-          create: {
-            args: Prisma.leaderboardCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          createMany: {
-            args: Prisma.leaderboardCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.leaderboardCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>[]
-          }
-          delete: {
-            args: Prisma.leaderboardDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          update: {
-            args: Prisma.leaderboardUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          deleteMany: {
-            args: Prisma.leaderboardDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.leaderboardUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.leaderboardUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>[]
-          }
-          upsert: {
-            args: Prisma.leaderboardUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$leaderboardPayload>
-          }
-          aggregate: {
-            args: Prisma.LeaderboardAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateLeaderboard>
-          }
-          groupBy: {
-            args: Prisma.leaderboardGroupByArgs<ExtArgs>
-            result: $Utils.Optional<LeaderboardGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.leaderboardCountArgs<ExtArgs>
-            result: $Utils.Optional<LeaderboardCountAggregateOutputType> | number
-          }
-        }
-      }
       Session: {
         payload: Prisma.$SessionPayload<ExtArgs>
         fields: Prisma.SessionFieldRefs
@@ -1979,7 +1889,6 @@ export namespace Prisma {
     examQuestion?: ExamQuestionOmit
     examOption?: ExamOptionOmit
     examResult?: ExamResultOmit
-    leaderboard?: leaderboardOmit
     session?: SessionOmit
   }
 
@@ -2333,37 +2242,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type LeaderboardCountOutputType
-   */
-
-  export type LeaderboardCountOutputType = {
-    user: number
-  }
-
-  export type LeaderboardCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | LeaderboardCountOutputTypeCountUserArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * LeaderboardCountOutputType without action
-   */
-  export type LeaderboardCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the LeaderboardCountOutputType
-     */
-    select?: LeaderboardCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * LeaderboardCountOutputType without action
-   */
-  export type LeaderboardCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
-  }
-
-
-  /**
    * Models
    */
 
@@ -2385,7 +2263,6 @@ export namespace Prisma {
     password: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    leaderboardId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2396,7 +2273,6 @@ export namespace Prisma {
     password: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    leaderboardId: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2407,7 +2283,6 @@ export namespace Prisma {
     password: number
     createdAt: number
     updatedAt: number
-    leaderboardId: number
     _all: number
   }
 
@@ -2420,7 +2295,6 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
-    leaderboardId?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2431,7 +2305,6 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
-    leaderboardId?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2442,7 +2315,6 @@ export namespace Prisma {
     password?: true
     createdAt?: true
     updatedAt?: true
-    leaderboardId?: true
     _all?: true
   }
 
@@ -2526,7 +2398,6 @@ export namespace Prisma {
     password: string
     createdAt: Date
     updatedAt: Date
-    leaderboardId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2554,14 +2425,12 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    leaderboardId?: boolean
     comments?: boolean | User$commentsArgs<ExtArgs>
     questions?: boolean | User$questionsArgs<ExtArgs>
     enrolledCourses?: boolean | User$enrolledCoursesArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     ExamResult?: boolean | User$ExamResultArgs<ExtArgs>
     LessonCompletion?: boolean | User$LessonCompletionArgs<ExtArgs>
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2573,8 +2442,6 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    leaderboardId?: boolean
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2585,8 +2452,6 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    leaderboardId?: boolean
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2597,10 +2462,9 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    leaderboardId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "createdAt" | "updatedAt" | "leaderboardId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | User$commentsArgs<ExtArgs>
     questions?: boolean | User$questionsArgs<ExtArgs>
@@ -2608,15 +2472,10 @@ export namespace Prisma {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     ExamResult?: boolean | User$ExamResultArgs<ExtArgs>
     LessonCompletion?: boolean | User$LessonCompletionArgs<ExtArgs>
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
-  }
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    leaderboard?: boolean | User$leaderboardArgs<ExtArgs>
-  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -2627,7 +2486,6 @@ export namespace Prisma {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       ExamResult: Prisma.$ExamResultPayload<ExtArgs>[]
       LessonCompletion: Prisma.$LessonCompletionPayload<ExtArgs>[]
-      leaderboard: Prisma.$leaderboardPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2637,7 +2495,6 @@ export namespace Prisma {
       password: string
       createdAt: Date
       updatedAt: Date
-      leaderboardId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3038,7 +2895,6 @@ export namespace Prisma {
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ExamResult<T extends User$ExamResultArgs<ExtArgs> = {}>(args?: Subset<T, User$ExamResultArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExamResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     LessonCompletion<T extends User$LessonCompletionArgs<ExtArgs> = {}>(args?: Subset<T, User$LessonCompletionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonCompletionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    leaderboard<T extends User$leaderboardArgs<ExtArgs> = {}>(args?: Subset<T, User$leaderboardArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3075,7 +2931,6 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
-    readonly leaderboardId: FieldRef<"User", 'String'>
   }
     
 
@@ -3325,10 +3180,6 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3399,10 +3250,6 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3613,25 +3460,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LessonCompletionScalarFieldEnum | LessonCompletionScalarFieldEnum[]
-  }
-
-  /**
-   * User.leaderboard
-   */
-  export type User$leaderboardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    where?: leaderboardWhereInput
   }
 
   /**
@@ -5938,6 +5766,7 @@ export namespace Prisma {
     period: string | null
     type: $Enums.Type | null
     name: string | null
+    url: string | null
     courseId: string | null
     curriculumId: string | null
   }
@@ -5947,6 +5776,7 @@ export namespace Prisma {
     period: string | null
     type: $Enums.Type | null
     name: string | null
+    url: string | null
     courseId: string | null
     curriculumId: string | null
   }
@@ -5956,6 +5786,7 @@ export namespace Prisma {
     period: number
     type: number
     name: number
+    url: number
     courseId: number
     curriculumId: number
     _all: number
@@ -5967,6 +5798,7 @@ export namespace Prisma {
     period?: true
     type?: true
     name?: true
+    url?: true
     courseId?: true
     curriculumId?: true
   }
@@ -5976,6 +5808,7 @@ export namespace Prisma {
     period?: true
     type?: true
     name?: true
+    url?: true
     courseId?: true
     curriculumId?: true
   }
@@ -5985,6 +5818,7 @@ export namespace Prisma {
     period?: true
     type?: true
     name?: true
+    url?: true
     courseId?: true
     curriculumId?: true
     _all?: true
@@ -6067,6 +5901,7 @@ export namespace Prisma {
     period: string
     type: $Enums.Type
     name: string
+    url: string
     courseId: string
     curriculumId: string
     _count: LessonCountAggregateOutputType | null
@@ -6093,6 +5928,7 @@ export namespace Prisma {
     period?: boolean
     type?: boolean
     name?: boolean
+    url?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -6105,6 +5941,7 @@ export namespace Prisma {
     period?: boolean
     type?: boolean
     name?: boolean
+    url?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -6115,6 +5952,7 @@ export namespace Prisma {
     period?: boolean
     type?: boolean
     name?: boolean
+    url?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -6125,11 +5963,12 @@ export namespace Prisma {
     period?: boolean
     type?: boolean
     name?: boolean
+    url?: boolean
     courseId?: boolean
     curriculumId?: boolean
   }
 
-  export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "period" | "type" | "name" | "courseId" | "curriculumId", ExtArgs["result"]["lesson"]>
+  export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "period" | "type" | "name" | "url" | "courseId" | "curriculumId", ExtArgs["result"]["lesson"]>
   export type LessonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
     LessonCompletion?: boolean | Lesson$LessonCompletionArgs<ExtArgs>
@@ -6153,6 +5992,7 @@ export namespace Prisma {
       period: string
       type: $Enums.Type
       name: string
+      url: string
       courseId: string
       curriculumId: string
     }, ExtArgs["result"]["lesson"]>
@@ -6584,6 +6424,7 @@ export namespace Prisma {
     readonly period: FieldRef<"Lesson", 'String'>
     readonly type: FieldRef<"Lesson", 'Type'>
     readonly name: FieldRef<"Lesson", 'String'>
+    readonly url: FieldRef<"Lesson", 'String'>
     readonly courseId: FieldRef<"Lesson", 'String'>
     readonly curriculumId: FieldRef<"Lesson", 'String'>
   }
@@ -15603,1114 +15444,6 @@ export namespace Prisma {
 
 
   /**
-   * Model leaderboard
-   */
-
-  export type AggregateLeaderboard = {
-    _count: LeaderboardCountAggregateOutputType | null
-    _avg: LeaderboardAvgAggregateOutputType | null
-    _sum: LeaderboardSumAggregateOutputType | null
-    _min: LeaderboardMinAggregateOutputType | null
-    _max: LeaderboardMaxAggregateOutputType | null
-  }
-
-  export type LeaderboardAvgAggregateOutputType = {
-    rank: number | null
-    score: number | null
-  }
-
-  export type LeaderboardSumAggregateOutputType = {
-    rank: number | null
-    score: number | null
-  }
-
-  export type LeaderboardMinAggregateOutputType = {
-    id: string | null
-    rank: number | null
-    score: number | null
-    courseId: string | null
-    createdAt: Date | null
-  }
-
-  export type LeaderboardMaxAggregateOutputType = {
-    id: string | null
-    rank: number | null
-    score: number | null
-    courseId: string | null
-    createdAt: Date | null
-  }
-
-  export type LeaderboardCountAggregateOutputType = {
-    id: number
-    rank: number
-    score: number
-    courseId: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type LeaderboardAvgAggregateInputType = {
-    rank?: true
-    score?: true
-  }
-
-  export type LeaderboardSumAggregateInputType = {
-    rank?: true
-    score?: true
-  }
-
-  export type LeaderboardMinAggregateInputType = {
-    id?: true
-    rank?: true
-    score?: true
-    courseId?: true
-    createdAt?: true
-  }
-
-  export type LeaderboardMaxAggregateInputType = {
-    id?: true
-    rank?: true
-    score?: true
-    courseId?: true
-    createdAt?: true
-  }
-
-  export type LeaderboardCountAggregateInputType = {
-    id?: true
-    rank?: true
-    score?: true
-    courseId?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type LeaderboardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which leaderboard to aggregate.
-     */
-    where?: leaderboardWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of leaderboards to fetch.
-     */
-    orderBy?: leaderboardOrderByWithRelationInput | leaderboardOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: leaderboardWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` leaderboards from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` leaderboards.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned leaderboards
-    **/
-    _count?: true | LeaderboardCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: LeaderboardAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: LeaderboardSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: LeaderboardMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: LeaderboardMaxAggregateInputType
-  }
-
-  export type GetLeaderboardAggregateType<T extends LeaderboardAggregateArgs> = {
-        [P in keyof T & keyof AggregateLeaderboard]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateLeaderboard[P]>
-      : GetScalarType<T[P], AggregateLeaderboard[P]>
-  }
-
-
-
-
-  export type leaderboardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: leaderboardWhereInput
-    orderBy?: leaderboardOrderByWithAggregationInput | leaderboardOrderByWithAggregationInput[]
-    by: LeaderboardScalarFieldEnum[] | LeaderboardScalarFieldEnum
-    having?: leaderboardScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: LeaderboardCountAggregateInputType | true
-    _avg?: LeaderboardAvgAggregateInputType
-    _sum?: LeaderboardSumAggregateInputType
-    _min?: LeaderboardMinAggregateInputType
-    _max?: LeaderboardMaxAggregateInputType
-  }
-
-  export type LeaderboardGroupByOutputType = {
-    id: string
-    rank: number | null
-    score: number | null
-    courseId: string | null
-    createdAt: Date
-    _count: LeaderboardCountAggregateOutputType | null
-    _avg: LeaderboardAvgAggregateOutputType | null
-    _sum: LeaderboardSumAggregateOutputType | null
-    _min: LeaderboardMinAggregateOutputType | null
-    _max: LeaderboardMaxAggregateOutputType | null
-  }
-
-  type GetLeaderboardGroupByPayload<T extends leaderboardGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<LeaderboardGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof LeaderboardGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], LeaderboardGroupByOutputType[P]>
-            : GetScalarType<T[P], LeaderboardGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type leaderboardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    rank?: boolean
-    score?: boolean
-    courseId?: boolean
-    createdAt?: boolean
-    user?: boolean | leaderboard$userArgs<ExtArgs>
-    _count?: boolean | LeaderboardCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["leaderboard"]>
-
-  export type leaderboardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    rank?: boolean
-    score?: boolean
-    courseId?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["leaderboard"]>
-
-  export type leaderboardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    rank?: boolean
-    score?: boolean
-    courseId?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["leaderboard"]>
-
-  export type leaderboardSelectScalar = {
-    id?: boolean
-    rank?: boolean
-    score?: boolean
-    courseId?: boolean
-    createdAt?: boolean
-  }
-
-  export type leaderboardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rank" | "score" | "courseId" | "createdAt", ExtArgs["result"]["leaderboard"]>
-  export type leaderboardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | leaderboard$userArgs<ExtArgs>
-    _count?: boolean | LeaderboardCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type leaderboardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type leaderboardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $leaderboardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "leaderboard"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      rank: number | null
-      score: number | null
-      courseId: string | null
-      createdAt: Date
-    }, ExtArgs["result"]["leaderboard"]>
-    composites: {}
-  }
-
-  type leaderboardGetPayload<S extends boolean | null | undefined | leaderboardDefaultArgs> = $Result.GetResult<Prisma.$leaderboardPayload, S>
-
-  type leaderboardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<leaderboardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: LeaderboardCountAggregateInputType | true
-    }
-
-  export interface leaderboardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['leaderboard'], meta: { name: 'leaderboard' } }
-    /**
-     * Find zero or one Leaderboard that matches the filter.
-     * @param {leaderboardFindUniqueArgs} args - Arguments to find a Leaderboard
-     * @example
-     * // Get one Leaderboard
-     * const leaderboard = await prisma.leaderboard.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends leaderboardFindUniqueArgs>(args: SelectSubset<T, leaderboardFindUniqueArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Leaderboard that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {leaderboardFindUniqueOrThrowArgs} args - Arguments to find a Leaderboard
-     * @example
-     * // Get one Leaderboard
-     * const leaderboard = await prisma.leaderboard.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends leaderboardFindUniqueOrThrowArgs>(args: SelectSubset<T, leaderboardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Leaderboard that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardFindFirstArgs} args - Arguments to find a Leaderboard
-     * @example
-     * // Get one Leaderboard
-     * const leaderboard = await prisma.leaderboard.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends leaderboardFindFirstArgs>(args?: SelectSubset<T, leaderboardFindFirstArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Leaderboard that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardFindFirstOrThrowArgs} args - Arguments to find a Leaderboard
-     * @example
-     * // Get one Leaderboard
-     * const leaderboard = await prisma.leaderboard.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends leaderboardFindFirstOrThrowArgs>(args?: SelectSubset<T, leaderboardFindFirstOrThrowArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Leaderboards that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Leaderboards
-     * const leaderboards = await prisma.leaderboard.findMany()
-     * 
-     * // Get first 10 Leaderboards
-     * const leaderboards = await prisma.leaderboard.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const leaderboardWithIdOnly = await prisma.leaderboard.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends leaderboardFindManyArgs>(args?: SelectSubset<T, leaderboardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Leaderboard.
-     * @param {leaderboardCreateArgs} args - Arguments to create a Leaderboard.
-     * @example
-     * // Create one Leaderboard
-     * const Leaderboard = await prisma.leaderboard.create({
-     *   data: {
-     *     // ... data to create a Leaderboard
-     *   }
-     * })
-     * 
-     */
-    create<T extends leaderboardCreateArgs>(args: SelectSubset<T, leaderboardCreateArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Leaderboards.
-     * @param {leaderboardCreateManyArgs} args - Arguments to create many Leaderboards.
-     * @example
-     * // Create many Leaderboards
-     * const leaderboard = await prisma.leaderboard.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends leaderboardCreateManyArgs>(args?: SelectSubset<T, leaderboardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Leaderboards and returns the data saved in the database.
-     * @param {leaderboardCreateManyAndReturnArgs} args - Arguments to create many Leaderboards.
-     * @example
-     * // Create many Leaderboards
-     * const leaderboard = await prisma.leaderboard.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Leaderboards and only return the `id`
-     * const leaderboardWithIdOnly = await prisma.leaderboard.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends leaderboardCreateManyAndReturnArgs>(args?: SelectSubset<T, leaderboardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Leaderboard.
-     * @param {leaderboardDeleteArgs} args - Arguments to delete one Leaderboard.
-     * @example
-     * // Delete one Leaderboard
-     * const Leaderboard = await prisma.leaderboard.delete({
-     *   where: {
-     *     // ... filter to delete one Leaderboard
-     *   }
-     * })
-     * 
-     */
-    delete<T extends leaderboardDeleteArgs>(args: SelectSubset<T, leaderboardDeleteArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Leaderboard.
-     * @param {leaderboardUpdateArgs} args - Arguments to update one Leaderboard.
-     * @example
-     * // Update one Leaderboard
-     * const leaderboard = await prisma.leaderboard.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends leaderboardUpdateArgs>(args: SelectSubset<T, leaderboardUpdateArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Leaderboards.
-     * @param {leaderboardDeleteManyArgs} args - Arguments to filter Leaderboards to delete.
-     * @example
-     * // Delete a few Leaderboards
-     * const { count } = await prisma.leaderboard.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends leaderboardDeleteManyArgs>(args?: SelectSubset<T, leaderboardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Leaderboards.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Leaderboards
-     * const leaderboard = await prisma.leaderboard.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends leaderboardUpdateManyArgs>(args: SelectSubset<T, leaderboardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Leaderboards and returns the data updated in the database.
-     * @param {leaderboardUpdateManyAndReturnArgs} args - Arguments to update many Leaderboards.
-     * @example
-     * // Update many Leaderboards
-     * const leaderboard = await prisma.leaderboard.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Leaderboards and only return the `id`
-     * const leaderboardWithIdOnly = await prisma.leaderboard.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends leaderboardUpdateManyAndReturnArgs>(args: SelectSubset<T, leaderboardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Leaderboard.
-     * @param {leaderboardUpsertArgs} args - Arguments to update or create a Leaderboard.
-     * @example
-     * // Update or create a Leaderboard
-     * const leaderboard = await prisma.leaderboard.upsert({
-     *   create: {
-     *     // ... data to create a Leaderboard
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Leaderboard we want to update
-     *   }
-     * })
-     */
-    upsert<T extends leaderboardUpsertArgs>(args: SelectSubset<T, leaderboardUpsertArgs<ExtArgs>>): Prisma__leaderboardClient<$Result.GetResult<Prisma.$leaderboardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Leaderboards.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardCountArgs} args - Arguments to filter Leaderboards to count.
-     * @example
-     * // Count the number of Leaderboards
-     * const count = await prisma.leaderboard.count({
-     *   where: {
-     *     // ... the filter for the Leaderboards we want to count
-     *   }
-     * })
-    **/
-    count<T extends leaderboardCountArgs>(
-      args?: Subset<T, leaderboardCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], LeaderboardCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Leaderboard.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {LeaderboardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends LeaderboardAggregateArgs>(args: Subset<T, LeaderboardAggregateArgs>): Prisma.PrismaPromise<GetLeaderboardAggregateType<T>>
-
-    /**
-     * Group by Leaderboard.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {leaderboardGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends leaderboardGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: leaderboardGroupByArgs['orderBy'] }
-        : { orderBy?: leaderboardGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, leaderboardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLeaderboardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the leaderboard model
-   */
-  readonly fields: leaderboardFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for leaderboard.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__leaderboardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends leaderboard$userArgs<ExtArgs> = {}>(args?: Subset<T, leaderboard$userArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the leaderboard model
-   */
-  interface leaderboardFieldRefs {
-    readonly id: FieldRef<"leaderboard", 'String'>
-    readonly rank: FieldRef<"leaderboard", 'Int'>
-    readonly score: FieldRef<"leaderboard", 'Float'>
-    readonly courseId: FieldRef<"leaderboard", 'String'>
-    readonly createdAt: FieldRef<"leaderboard", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * leaderboard findUnique
-   */
-  export type leaderboardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter, which leaderboard to fetch.
-     */
-    where: leaderboardWhereUniqueInput
-  }
-
-  /**
-   * leaderboard findUniqueOrThrow
-   */
-  export type leaderboardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter, which leaderboard to fetch.
-     */
-    where: leaderboardWhereUniqueInput
-  }
-
-  /**
-   * leaderboard findFirst
-   */
-  export type leaderboardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter, which leaderboard to fetch.
-     */
-    where?: leaderboardWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of leaderboards to fetch.
-     */
-    orderBy?: leaderboardOrderByWithRelationInput | leaderboardOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for leaderboards.
-     */
-    cursor?: leaderboardWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` leaderboards from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` leaderboards.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of leaderboards.
-     */
-    distinct?: LeaderboardScalarFieldEnum | LeaderboardScalarFieldEnum[]
-  }
-
-  /**
-   * leaderboard findFirstOrThrow
-   */
-  export type leaderboardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter, which leaderboard to fetch.
-     */
-    where?: leaderboardWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of leaderboards to fetch.
-     */
-    orderBy?: leaderboardOrderByWithRelationInput | leaderboardOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for leaderboards.
-     */
-    cursor?: leaderboardWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` leaderboards from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` leaderboards.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of leaderboards.
-     */
-    distinct?: LeaderboardScalarFieldEnum | LeaderboardScalarFieldEnum[]
-  }
-
-  /**
-   * leaderboard findMany
-   */
-  export type leaderboardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter, which leaderboards to fetch.
-     */
-    where?: leaderboardWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of leaderboards to fetch.
-     */
-    orderBy?: leaderboardOrderByWithRelationInput | leaderboardOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing leaderboards.
-     */
-    cursor?: leaderboardWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` leaderboards from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` leaderboards.
-     */
-    skip?: number
-    distinct?: LeaderboardScalarFieldEnum | LeaderboardScalarFieldEnum[]
-  }
-
-  /**
-   * leaderboard create
-   */
-  export type leaderboardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * The data needed to create a leaderboard.
-     */
-    data?: XOR<leaderboardCreateInput, leaderboardUncheckedCreateInput>
-  }
-
-  /**
-   * leaderboard createMany
-   */
-  export type leaderboardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many leaderboards.
-     */
-    data: leaderboardCreateManyInput | leaderboardCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * leaderboard createManyAndReturn
-   */
-  export type leaderboardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * The data used to create many leaderboards.
-     */
-    data: leaderboardCreateManyInput | leaderboardCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * leaderboard update
-   */
-  export type leaderboardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * The data needed to update a leaderboard.
-     */
-    data: XOR<leaderboardUpdateInput, leaderboardUncheckedUpdateInput>
-    /**
-     * Choose, which leaderboard to update.
-     */
-    where: leaderboardWhereUniqueInput
-  }
-
-  /**
-   * leaderboard updateMany
-   */
-  export type leaderboardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update leaderboards.
-     */
-    data: XOR<leaderboardUpdateManyMutationInput, leaderboardUncheckedUpdateManyInput>
-    /**
-     * Filter which leaderboards to update
-     */
-    where?: leaderboardWhereInput
-    /**
-     * Limit how many leaderboards to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * leaderboard updateManyAndReturn
-   */
-  export type leaderboardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * The data used to update leaderboards.
-     */
-    data: XOR<leaderboardUpdateManyMutationInput, leaderboardUncheckedUpdateManyInput>
-    /**
-     * Filter which leaderboards to update
-     */
-    where?: leaderboardWhereInput
-    /**
-     * Limit how many leaderboards to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * leaderboard upsert
-   */
-  export type leaderboardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * The filter to search for the leaderboard to update in case it exists.
-     */
-    where: leaderboardWhereUniqueInput
-    /**
-     * In case the leaderboard found by the `where` argument doesn't exist, create a new leaderboard with this data.
-     */
-    create: XOR<leaderboardCreateInput, leaderboardUncheckedCreateInput>
-    /**
-     * In case the leaderboard was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<leaderboardUpdateInput, leaderboardUncheckedUpdateInput>
-  }
-
-  /**
-   * leaderboard delete
-   */
-  export type leaderboardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-    /**
-     * Filter which leaderboard to delete.
-     */
-    where: leaderboardWhereUniqueInput
-  }
-
-  /**
-   * leaderboard deleteMany
-   */
-  export type leaderboardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which leaderboards to delete
-     */
-    where?: leaderboardWhereInput
-    /**
-     * Limit how many leaderboards to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * leaderboard.user
-   */
-  export type leaderboard$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * leaderboard without action
-   */
-  export type leaderboardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the leaderboard
-     */
-    select?: leaderboardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the leaderboard
-     */
-    omit?: leaderboardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: leaderboardInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Session
    */
 
@@ -17802,8 +16535,7 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     password: 'password',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    leaderboardId: 'leaderboardId'
+    updatedAt: 'updatedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -17836,6 +16568,7 @@ export namespace Prisma {
     period: 'period',
     type: 'type',
     name: 'name',
+    url: 'url',
     courseId: 'courseId',
     curriculumId: 'curriculumId'
   };
@@ -17925,17 +16658,6 @@ export namespace Prisma {
   };
 
   export type ExamResultScalarFieldEnum = (typeof ExamResultScalarFieldEnum)[keyof typeof ExamResultScalarFieldEnum]
-
-
-  export const LeaderboardScalarFieldEnum: {
-    id: 'id',
-    rank: 'rank',
-    score: 'score',
-    courseId: 'courseId',
-    createdAt: 'createdAt'
-  };
-
-  export type LeaderboardScalarFieldEnum = (typeof LeaderboardScalarFieldEnum)[keyof typeof LeaderboardScalarFieldEnum]
 
 
   export const SessionScalarFieldEnum: {
@@ -18070,14 +16792,12 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    leaderboardId?: StringNullableFilter<"User"> | string | null
     comments?: CommentListRelationFilter
     questions?: QuestionListRelationFilter
     enrolledCourses?: EnrollmentListRelationFilter
     sessions?: SessionListRelationFilter
     ExamResult?: ExamResultListRelationFilter
     LessonCompletion?: LessonCompletionListRelationFilter
-    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18088,14 +16808,12 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    leaderboardId?: SortOrderInput | SortOrder
     comments?: CommentOrderByRelationAggregateInput
     questions?: QuestionOrderByRelationAggregateInput
     enrolledCourses?: EnrollmentOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     ExamResult?: ExamResultOrderByRelationAggregateInput
     LessonCompletion?: LessonCompletionOrderByRelationAggregateInput
-    leaderboard?: leaderboardOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18109,14 +16827,12 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    leaderboardId?: StringNullableFilter<"User"> | string | null
     comments?: CommentListRelationFilter
     questions?: QuestionListRelationFilter
     enrolledCourses?: EnrollmentListRelationFilter
     sessions?: SessionListRelationFilter
     ExamResult?: ExamResultListRelationFilter
     LessonCompletion?: LessonCompletionListRelationFilter
-    leaderboard?: XOR<LeaderboardNullableScalarRelationFilter, leaderboardWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18127,7 +16843,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    leaderboardId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -18144,7 +16859,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    leaderboardId?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type CourseWhereInput = {
@@ -18280,6 +16994,7 @@ export namespace Prisma {
     period?: StringFilter<"Lesson"> | string
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
+    url?: StringFilter<"Lesson"> | string
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
     curriculum?: XOR<CurriculumScalarRelationFilter, CurriculumWhereInput>
@@ -18291,6 +17006,7 @@ export namespace Prisma {
     period?: SortOrder
     type?: SortOrder
     name?: SortOrder
+    url?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
     curriculum?: CurriculumOrderByWithRelationInput
@@ -18305,6 +17021,7 @@ export namespace Prisma {
     period?: StringFilter<"Lesson"> | string
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
+    url?: StringFilter<"Lesson"> | string
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
     curriculum?: XOR<CurriculumScalarRelationFilter, CurriculumWhereInput>
@@ -18316,6 +17033,7 @@ export namespace Prisma {
     period?: SortOrder
     type?: SortOrder
     name?: SortOrder
+    url?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
     _count?: LessonCountOrderByAggregateInput
@@ -18331,6 +17049,7 @@ export namespace Prisma {
     period?: StringWithAggregatesFilter<"Lesson"> | string
     type?: EnumTypeWithAggregatesFilter<"Lesson"> | $Enums.Type
     name?: StringWithAggregatesFilter<"Lesson"> | string
+    url?: StringWithAggregatesFilter<"Lesson"> | string
     courseId?: StringWithAggregatesFilter<"Lesson"> | string
     curriculumId?: StringWithAggregatesFilter<"Lesson"> | string
   }
@@ -18784,63 +17503,6 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ExamResult"> | Date | string
   }
 
-  export type leaderboardWhereInput = {
-    AND?: leaderboardWhereInput | leaderboardWhereInput[]
-    OR?: leaderboardWhereInput[]
-    NOT?: leaderboardWhereInput | leaderboardWhereInput[]
-    id?: StringFilter<"leaderboard"> | string
-    rank?: IntNullableFilter<"leaderboard"> | number | null
-    score?: FloatNullableFilter<"leaderboard"> | number | null
-    courseId?: StringNullableFilter<"leaderboard"> | string | null
-    createdAt?: DateTimeFilter<"leaderboard"> | Date | string
-    user?: UserListRelationFilter
-  }
-
-  export type leaderboardOrderByWithRelationInput = {
-    id?: SortOrder
-    rank?: SortOrderInput | SortOrder
-    score?: SortOrderInput | SortOrder
-    courseId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    user?: UserOrderByRelationAggregateInput
-  }
-
-  export type leaderboardWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: leaderboardWhereInput | leaderboardWhereInput[]
-    OR?: leaderboardWhereInput[]
-    NOT?: leaderboardWhereInput | leaderboardWhereInput[]
-    rank?: IntNullableFilter<"leaderboard"> | number | null
-    score?: FloatNullableFilter<"leaderboard"> | number | null
-    courseId?: StringNullableFilter<"leaderboard"> | string | null
-    createdAt?: DateTimeFilter<"leaderboard"> | Date | string
-    user?: UserListRelationFilter
-  }, "id">
-
-  export type leaderboardOrderByWithAggregationInput = {
-    id?: SortOrder
-    rank?: SortOrderInput | SortOrder
-    score?: SortOrderInput | SortOrder
-    courseId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    _count?: leaderboardCountOrderByAggregateInput
-    _avg?: leaderboardAvgOrderByAggregateInput
-    _max?: leaderboardMaxOrderByAggregateInput
-    _min?: leaderboardMinOrderByAggregateInput
-    _sum?: leaderboardSumOrderByAggregateInput
-  }
-
-  export type leaderboardScalarWhereWithAggregatesInput = {
-    AND?: leaderboardScalarWhereWithAggregatesInput | leaderboardScalarWhereWithAggregatesInput[]
-    OR?: leaderboardScalarWhereWithAggregatesInput[]
-    NOT?: leaderboardScalarWhereWithAggregatesInput | leaderboardScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"leaderboard"> | string
-    rank?: IntNullableWithAggregatesFilter<"leaderboard"> | number | null
-    score?: FloatNullableWithAggregatesFilter<"leaderboard"> | number | null
-    courseId?: StringNullableWithAggregatesFilter<"leaderboard"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"leaderboard"> | Date | string
-  }
-
   export type SessionWhereInput = {
     AND?: SessionWhereInput | SessionWhereInput[]
     OR?: SessionWhereInput[]
@@ -18915,7 +17577,6 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -18926,7 +17587,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
@@ -18949,7 +17609,6 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -18960,7 +17619,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
@@ -18977,7 +17635,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -18998,7 +17655,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CourseCreateInput = {
@@ -19141,6 +17797,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
@@ -19151,6 +17808,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     curriculumId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
@@ -19161,6 +17819,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     curriculum?: CurriculumUpdateOneRequiredWithoutLessonsNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutLessonNestedInput
@@ -19171,6 +17830,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutLessonNestedInput
@@ -19181,6 +17841,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     curriculumId: string
   }
@@ -19190,6 +17851,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -19198,6 +17860,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
   }
@@ -19621,66 +18284,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type leaderboardCreateInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-    user?: UserCreateNestedManyWithoutLeaderboardInput
-  }
-
-  export type leaderboardUncheckedCreateInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-    user?: UserUncheckedCreateNestedManyWithoutLeaderboardInput
-  }
-
-  export type leaderboardUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateManyWithoutLeaderboardNestedInput
-  }
-
-  export type leaderboardUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUncheckedUpdateManyWithoutLeaderboardNestedInput
-  }
-
-  export type leaderboardCreateManyInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type leaderboardUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type leaderboardUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type SessionCreateInput = {
     id?: string
     sessionToken: string
@@ -19780,21 +18383,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type CommentListRelationFilter = {
     every?: CommentWhereInput
     some?: CommentWhereInput
@@ -19829,11 +18417,6 @@ export namespace Prisma {
     every?: LessonCompletionWhereInput
     some?: LessonCompletionWhereInput
     none?: LessonCompletionWhereInput
-  }
-
-  export type LeaderboardNullableScalarRelationFilter = {
-    is?: leaderboardWhereInput | null
-    isNot?: leaderboardWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -19873,7 +18456,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    leaderboardId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -19884,7 +18466,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    leaderboardId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -19895,7 +18476,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    leaderboardId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -19942,24 +18522,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type CurriculumListRelationFilter = {
@@ -20062,6 +18624,7 @@ export namespace Prisma {
     period?: SortOrder
     type?: SortOrder
     name?: SortOrder
+    url?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
   }
@@ -20071,6 +18634,7 @@ export namespace Prisma {
     period?: SortOrder
     type?: SortOrder
     name?: SortOrder
+    url?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
   }
@@ -20080,6 +18644,7 @@ export namespace Prisma {
     period?: SortOrder
     type?: SortOrder
     name?: SortOrder
+    url?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
   }
@@ -20251,6 +18816,21 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type ExamOptionListRelationFilter = {
     every?: ExamOptionWhereInput
     some?: ExamOptionWhereInput
@@ -20285,6 +18865,24 @@ export namespace Prisma {
     text?: SortOrder
     correctId?: SortOrder
     examId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type ExamQuestionScalarRelationFilter = {
@@ -20406,77 +19004,6 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
-  export type UserOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type leaderboardCountOrderByAggregateInput = {
-    id?: SortOrder
-    rank?: SortOrder
-    score?: SortOrder
-    courseId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type leaderboardAvgOrderByAggregateInput = {
-    rank?: SortOrder
-    score?: SortOrder
-  }
-
-  export type leaderboardMaxOrderByAggregateInput = {
-    id?: SortOrder
-    rank?: SortOrder
-    score?: SortOrder
-    courseId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type leaderboardMinOrderByAggregateInput = {
-    id?: SortOrder
-    rank?: SortOrder
-    score?: SortOrder
-    courseId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type leaderboardSumOrderByAggregateInput = {
-    rank?: SortOrder
-    score?: SortOrder
-  }
-
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
   export type SessionCountOrderByAggregateInput = {
     id?: SortOrder
     sessionToken?: SortOrder
@@ -20544,12 +19071,6 @@ export namespace Prisma {
     connectOrCreate?: LessonCompletionCreateOrConnectWithoutUserInput | LessonCompletionCreateOrConnectWithoutUserInput[]
     createMany?: LessonCompletionCreateManyUserInputEnvelope
     connect?: LessonCompletionWhereUniqueInput | LessonCompletionWhereUniqueInput[]
-  }
-
-  export type leaderboardCreateNestedOneWithoutUserInput = {
-    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
-    connect?: leaderboardWhereUniqueInput
   }
 
   export type CommentUncheckedCreateNestedManyWithoutUserInput = {
@@ -20688,20 +19209,6 @@ export namespace Prisma {
     update?: LessonCompletionUpdateWithWhereUniqueWithoutUserInput | LessonCompletionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: LessonCompletionUpdateManyWithWhereWithoutUserInput | LessonCompletionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: LessonCompletionScalarWhereInput | LessonCompletionScalarWhereInput[]
-  }
-
-  export type leaderboardUpdateOneWithoutUserNestedInput = {
-    create?: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    connectOrCreate?: leaderboardCreateOrConnectWithoutUserInput
-    upsert?: leaderboardUpsertWithoutUserInput
-    disconnect?: leaderboardWhereInput | boolean
-    delete?: leaderboardWhereInput | boolean
-    connect?: leaderboardWhereUniqueInput
-    update?: XOR<XOR<leaderboardUpdateToOneWithWhereWithoutUserInput, leaderboardUpdateWithoutUserInput>, leaderboardUncheckedUpdateWithoutUserInput>
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type CommentUncheckedUpdateManyWithoutUserNestedInput = {
@@ -21348,6 +19855,10 @@ export namespace Prisma {
     connect?: ExamOptionWhereUniqueInput | ExamOptionWhereUniqueInput[]
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type ExamOptionUpdateManyWithoutQuestionNestedInput = {
     create?: XOR<ExamOptionCreateWithoutQuestionInput, ExamOptionUncheckedCreateWithoutQuestionInput> | ExamOptionCreateWithoutQuestionInput[] | ExamOptionUncheckedCreateWithoutQuestionInput[]
     connectOrCreate?: ExamOptionCreateOrConnectWithoutQuestionInput | ExamOptionCreateOrConnectWithoutQuestionInput[]
@@ -21442,56 +19953,6 @@ export namespace Prisma {
     update?: XOR<XOR<ExamUpdateToOneWithWhereWithoutResultsInput, ExamUpdateWithoutResultsInput>, ExamUncheckedUpdateWithoutResultsInput>
   }
 
-  export type UserCreateNestedManyWithoutLeaderboardInput = {
-    create?: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput> | UserCreateWithoutLeaderboardInput[] | UserUncheckedCreateWithoutLeaderboardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLeaderboardInput | UserCreateOrConnectWithoutLeaderboardInput[]
-    createMany?: UserCreateManyLeaderboardInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
-  export type UserUncheckedCreateNestedManyWithoutLeaderboardInput = {
-    create?: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput> | UserCreateWithoutLeaderboardInput[] | UserUncheckedCreateWithoutLeaderboardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLeaderboardInput | UserCreateOrConnectWithoutLeaderboardInput[]
-    createMany?: UserCreateManyLeaderboardInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type UserUpdateManyWithoutLeaderboardNestedInput = {
-    create?: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput> | UserCreateWithoutLeaderboardInput[] | UserUncheckedCreateWithoutLeaderboardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLeaderboardInput | UserCreateOrConnectWithoutLeaderboardInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutLeaderboardInput | UserUpsertWithWhereUniqueWithoutLeaderboardInput[]
-    createMany?: UserCreateManyLeaderboardInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutLeaderboardInput | UserUpdateWithWhereUniqueWithoutLeaderboardInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutLeaderboardInput | UserUpdateManyWithWhereWithoutLeaderboardInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
-  export type UserUncheckedUpdateManyWithoutLeaderboardNestedInput = {
-    create?: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput> | UserCreateWithoutLeaderboardInput[] | UserUncheckedCreateWithoutLeaderboardInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLeaderboardInput | UserCreateOrConnectWithoutLeaderboardInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutLeaderboardInput | UserUpsertWithWhereUniqueWithoutLeaderboardInput[]
-    createMany?: UserCreateManyLeaderboardInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutLeaderboardInput | UserUpdateWithWhereUniqueWithoutLeaderboardInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutLeaderboardInput | UserUpdateManyWithWhereWithoutLeaderboardInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
   export type UserCreateNestedOneWithoutSessionsInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
@@ -21540,20 +20001,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -21623,23 +20070,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.Type | EnumTypeFieldRefInput<$PrismaModel>
     in?: $Enums.Type[] | ListEnumTypeFieldRefInput<$PrismaModel>
@@ -21668,6 +20098,37 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -21722,22 +20183,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type CommentCreateWithoutUserInput = {
@@ -21884,27 +20329,6 @@ export namespace Prisma {
   export type LessonCompletionCreateManyUserInputEnvelope = {
     data: LessonCompletionCreateManyUserInput | LessonCompletionCreateManyUserInput[]
     skipDuplicates?: boolean
-  }
-
-  export type leaderboardCreateWithoutUserInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type leaderboardUncheckedCreateWithoutUserInput = {
-    id?: string
-    rank?: number | null
-    score?: number | null
-    courseId?: string | null
-    createdAt?: Date | string
-  }
-
-  export type leaderboardCreateOrConnectWithoutUserInput = {
-    where: leaderboardWhereUniqueInput
-    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
   }
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -22068,33 +20492,6 @@ export namespace Prisma {
     lessonId?: StringFilter<"LessonCompletion"> | string
     completed?: BoolFilter<"LessonCompletion"> | boolean
     updatedAt?: DateTimeFilter<"LessonCompletion"> | Date | string
-  }
-
-  export type leaderboardUpsertWithoutUserInput = {
-    update: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
-    create: XOR<leaderboardCreateWithoutUserInput, leaderboardUncheckedCreateWithoutUserInput>
-    where?: leaderboardWhereInput
-  }
-
-  export type leaderboardUpdateToOneWithWhereWithoutUserInput = {
-    where?: leaderboardWhereInput
-    data: XOR<leaderboardUpdateWithoutUserInput, leaderboardUncheckedUpdateWithoutUserInput>
-  }
-
-  export type leaderboardUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type leaderboardUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rank?: NullableIntFieldUpdateOperationsInput | number | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CurriculumCreateWithoutCourseInput = {
@@ -22353,6 +20750,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
   }
@@ -22362,6 +20760,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
   }
@@ -22437,6 +20836,7 @@ export namespace Prisma {
     period?: StringFilter<"Lesson"> | string
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
+    url?: StringFilter<"Lesson"> | string
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
   }
@@ -22538,7 +20938,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLessonCompletionInput = {
@@ -22549,7 +20948,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
@@ -22567,6 +20965,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
   }
@@ -22576,6 +20975,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
     curriculumId: string
   }
@@ -22609,7 +21009,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLessonCompletionInput = {
@@ -22620,7 +21019,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
@@ -22644,6 +21042,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     curriculum?: CurriculumUpdateOneRequiredWithoutLessonsNestedInput
   }
@@ -22653,6 +21052,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
   }
@@ -22670,7 +21070,6 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -22681,7 +21080,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -22749,7 +21147,6 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -22760,7 +21157,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -22818,7 +21214,6 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuestionsInput = {
@@ -22829,7 +21224,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -22897,7 +21291,6 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuestionsInput = {
@@ -22908,7 +21301,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -22966,7 +21358,6 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnrolledCoursesInput = {
@@ -22977,7 +21368,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -23045,7 +21435,6 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnrolledCoursesInput = {
@@ -23056,7 +21445,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -23411,7 +21799,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutExamResultInput = {
@@ -23422,7 +21809,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
@@ -23480,7 +21866,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamResultInput = {
@@ -23491,7 +21876,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
@@ -23526,78 +21910,6 @@ export namespace Prisma {
     questions?: ExamQuestionUncheckedUpdateManyWithoutExamNestedInput
   }
 
-  export type UserCreateWithoutLeaderboardInput = {
-    id?: string
-    name: string
-    email: string
-    emailVerified?: Date | string | null
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    comments?: CommentCreateNestedManyWithoutUserInput
-    questions?: QuestionCreateNestedManyWithoutUserInput
-    enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    ExamResult?: ExamResultCreateNestedManyWithoutUserInput
-    LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutLeaderboardInput = {
-    id?: string
-    name: string
-    email: string
-    emailVerified?: Date | string | null
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
-    enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    ExamResult?: ExamResultUncheckedCreateNestedManyWithoutUserInput
-    LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutLeaderboardInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput>
-  }
-
-  export type UserCreateManyLeaderboardInputEnvelope = {
-    data: UserCreateManyLeaderboardInput | UserCreateManyLeaderboardInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithWhereUniqueWithoutLeaderboardInput = {
-    where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutLeaderboardInput, UserUncheckedUpdateWithoutLeaderboardInput>
-    create: XOR<UserCreateWithoutLeaderboardInput, UserUncheckedCreateWithoutLeaderboardInput>
-  }
-
-  export type UserUpdateWithWhereUniqueWithoutLeaderboardInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutLeaderboardInput, UserUncheckedUpdateWithoutLeaderboardInput>
-  }
-
-  export type UserUpdateManyWithWhereWithoutLeaderboardInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutLeaderboardInput>
-  }
-
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
-    password?: StringFilter<"User"> | string
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
-    leaderboardId?: StringNullableFilter<"User"> | string | null
-  }
-
   export type UserCreateWithoutSessionsInput = {
     id?: string
     name: string
@@ -23611,7 +21923,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentCreateNestedManyWithoutUserInput
     ExamResult?: ExamResultCreateNestedManyWithoutUserInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutUserInput
-    leaderboard?: leaderboardCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -23622,7 +21933,6 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    leaderboardId?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     questions?: QuestionUncheckedCreateNestedManyWithoutUserInput
     enrolledCourses?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
@@ -23659,7 +21969,6 @@ export namespace Prisma {
     enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
     ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-    leaderboard?: leaderboardUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -23670,7 +21979,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    leaderboardId?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
@@ -23989,6 +22297,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
+    url?: string
     courseId: string
   }
 
@@ -23997,6 +22306,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUpdateManyWithoutLessonNestedInput
   }
@@ -24006,6 +22316,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutLessonNestedInput
   }
@@ -24015,6 +22326,7 @@ export namespace Prisma {
     period?: StringFieldUpdateOperationsInput | string
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -24122,58 +22434,6 @@ export namespace Prisma {
   export type ExamOptionUncheckedUpdateManyWithoutQuestionInput = {
     id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type UserCreateManyLeaderboardInput = {
-    id?: string
-    name: string
-    email: string
-    emailVerified?: Date | string | null
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserUpdateWithoutLeaderboardInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    questions?: QuestionUpdateManyWithoutUserNestedInput
-    enrolledCourses?: EnrollmentUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    ExamResult?: ExamResultUpdateManyWithoutUserNestedInput
-    LessonCompletion?: LessonCompletionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutLeaderboardInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    questions?: QuestionUncheckedUpdateManyWithoutUserNestedInput
-    enrolledCourses?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    ExamResult?: ExamResultUncheckedUpdateManyWithoutUserNestedInput
-    LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutLeaderboardInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

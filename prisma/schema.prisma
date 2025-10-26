@@ -25,9 +25,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  leaderboard   leaderboard? @relation(fields: [leaderboardId], references: [id])
-  leaderboardId String?
-
   @@index([email])
 }
 
@@ -63,6 +60,7 @@ model Lesson {
   period           String
   type             Type               @default(VIDEO)
   name             String
+  url              String
   courseId         String
   curriculumId     String
   curriculum       Curriculum         @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
@@ -173,15 +171,6 @@ model ExamResult {
   @@unique([userId, examId])
   @@index([examId])
   @@index([userId])
-}
-
-model leaderboard {
-  id        String   @id @default(cuid())
-  user      User[]
-  rank      Int?
-  score     Float?
-  courseId  String?
-  createdAt DateTime @default(now())
 }
 
 model Session {
