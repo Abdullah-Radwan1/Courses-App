@@ -17797,7 +17797,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
@@ -17808,7 +17808,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     curriculumId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
@@ -17841,7 +17841,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     curriculumId: string
   }
@@ -20750,7 +20750,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
   }
@@ -20760,7 +20760,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
   }
@@ -20965,7 +20965,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
   }
@@ -20975,7 +20975,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
     curriculumId: string
   }
@@ -22297,7 +22297,7 @@ export namespace Prisma {
     period: string
     type?: $Enums.Type
     name: string
-    url?: string
+    url: string
     courseId: string
   }
 
