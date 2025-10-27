@@ -1,17 +1,25 @@
-import { getLeaderboard } from "@/lib/actions/leaderboard";
+"use client";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Crown, Flame, Star, ThumbsUp, Trophy } from "lucide-react";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
+import { LeaderboardResult } from "@/lib/types";
+import { getLeaderboard } from "@/lib/actions/leaderboard";
+import { useEffect, useState } from "react";
+import CustomSkeleton from "@/components/CustomSkeleton";
 
-// 🔥 رسائل تشجيعية حسب درجة الطالب
+interface LeaderboardProps {
+  courseId: string;
+}
+
 function getMessageForScore(score: number) {
   if (score >= 90)
     return {
@@ -34,18 +42,38 @@ function getMessageForScore(score: number) {
   };
 }
 
-export default async function LeaderboardPage({
-  leaderboard,
-}: {
-  leaderboard: any;
-}) {
+export default function LeaderboardPage({ courseId }: LeaderboardProps) {
+  const [open, setOpen] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
+  useEffect(() => {
+    if (!open || fetched) return; // ✅ only fetch once when dialog opens
+
+    const fetchLeaderboard = async () => {
+      setLoading(true);
+      try {
+        const data = await getLeaderboard(courseId);
+        setLeaderboard(data.leaderboard);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+        setFetched(true);
+      }
+    };
+
+    fetchLeaderboard();
+  }, [fetched, open, courseId]);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <Crown />
         </Button>
       </DialogTrigger>
+
       <DialogContent className="max-w-md w-full p-6 rounded-2xl bg-card shadow-xl">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold text-foreground">
@@ -54,13 +82,16 @@ export default async function LeaderboardPage({
         </DialogHeader>
 
         <div className="space-y-3 mt-4">
-          {leaderboard.length === 0 ? (
+          {loading && <CustomSkeleton />}
+
+          {!loading && leaderboard.length === 0 && (
             <h2 className="text-center">
-              {" "}
               Be the First to be on the BOOOARD 🦅
             </h2>
-          ) : (
-            leaderboard.map((entry: any, index: number) => {
+          )}
+
+          {!loading &&
+            leaderboard.map((entry, index) => {
               const message = getMessageForScore(entry.score);
               return (
                 <Card
@@ -102,8 +133,7 @@ export default async function LeaderboardPage({
                   </div>
                 </Card>
               );
-            })
-          )}
+            })}
         </div>
       </DialogContent>
     </Dialog>

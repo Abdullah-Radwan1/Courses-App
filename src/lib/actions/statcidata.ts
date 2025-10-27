@@ -2,34 +2,19 @@ import { cache } from "react";
 import { db } from "../../../prisma/db";
 
 export const getStaticCourseData = cache(async (courseId: string) => {
-  const takeQ = 3;
-  const pageQ = 1;
-  const skipQ = (pageQ - 1) * takeQ;
-
   const takeC = 3;
   const pageC = 1;
   const skipC = (pageC - 1) * takeC;
 
-  const takeL = 6; // ✅ leaderboard page size
-  const pageL = 1;
-  const skipL = (pageL - 1) * takeL;
-
   // ✅ Execute all queries in a single transaction for performance
-  const [
-    course,
-    exam,
-    questionWithUser,
-    totalQuestions,
-    commentsWithUser,
-    totalComments,
-    leaderboard,
-  ] = await db.$transaction([
+  const [course, commentsWithUser, totalComments] = await db.$transaction([
     db.course.findUnique({
       where: { id: courseId },
       select: {
         instructor: true,
         duration: true,
         language: true,
+        Exam: { select: { id: true } },
         _count: {
           select: { enrollments: true, curriculums: true },
         },
@@ -53,34 +38,6 @@ export const getStaticCourseData = cache(async (courseId: string) => {
       },
     }),
 
-    db.exam.findFirst({
-      where: { courseId },
-      include: {
-        questions: {
-          include: {
-            options: true,
-          },
-        },
-      },
-    }),
-
-    db.question.findMany({
-      where: { courseId },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-      skip: skipQ,
-      take: takeQ,
-    }),
-
-    db.question.count({ where: { courseId } }),
-
     db.comment.findMany({
       where: { courseId },
       include: {
@@ -97,36 +54,15 @@ export const getStaticCourseData = cache(async (courseId: string) => {
     }),
 
     db.comment.count({ where: { courseId } }),
-
-    // ✅ Leaderboard query
-    db.examResult.findMany({
-      where: { exam: { courseId } },
-      orderBy: { score: "desc" },
-      skip: skipL,
-      take: takeL,
-      select: {
-        score: true,
-        rank: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-        createdAt: true,
-      },
-    }),
   ]);
 
-  if (!course || !exam) throw new Error("Course or exam not found");
+  if (!course) throw new Error("Course or examId not found");
 
   const totalLessons = course.curriculums.reduce(
     (sum, c) => sum + c.Lessons.length,
     0
   );
 
-  const hasMoreQuestions = pageQ * takeQ < totalQuestions;
   const hasMoreComments = pageC * takeC < totalComments;
 
   return {
@@ -139,33 +75,13 @@ export const getStaticCourseData = cache(async (courseId: string) => {
         lessons: totalLessons,
       },
     },
+    examId: course.Exam[0].id,
+
     curriculum: course.curriculums,
-    examData: {
-      examId: exam.id,
-      title: exam.title,
-      questions: exam.questions.map((q) => ({
-        id: q.id,
-        text: q.text,
-        options: q.options.map((o) => ({
-          id: o.id,
-          text: o.text,
-        })),
-      })),
-    },
-    questionsData: {
-      questionWithUser,
-      hasMore: hasMoreQuestions,
-    },
+
     comments: {
       commentsWithUser,
       hasMore: hasMoreComments,
-    },
-    leaderboard: {
-      leaderboard,
-      pagination: {
-        currentPage: pageL,
-        take: takeL,
-      },
     },
   };
 });

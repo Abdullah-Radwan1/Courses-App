@@ -1,9 +1,6 @@
 "use server";
-import { cache } from "react";
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
-import { revalidatePath } from "next/cache";
-import { Type } from "@/generated/prisma";
 
 // server action
 

@@ -1,4 +1,4 @@
-// app/lib/getLeaderboard.ts
+"use server";
 
 import { cache } from "react";
 import { db } from "../../../prisma/db";

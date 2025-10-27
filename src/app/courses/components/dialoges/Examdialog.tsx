@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState, useCallback, memo, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import { submitExamAction } from "@/lib/actions/examActions";
 import { Exam, ExamOption, ExamQuestion } from "@/generated/prisma";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import Loading from "@/app/loading";
+import Confetti from "react-confetti-boom";
 
 interface ExamDialogProps {
   open: boolean;
@@ -22,12 +22,9 @@ interface ExamDialogProps {
   examData: Exam & {
     questions: (ExamQuestion & { options: ExamOption[] })[];
     examId: string;
-    courseId: string;
   };
-  lessonId: string;
 }
 
-// ✅ Timer component is memoized so it only re-renders when timeLeft changes
 const Timer = memo(({ timeLeft }: { timeLeft: number }) => {
   const minutes = Math.floor(timeLeft / 60)
     .toString()
@@ -35,7 +32,7 @@ const Timer = memo(({ timeLeft }: { timeLeft: number }) => {
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
 
   return (
-    <div className="flex items-center bg-amber-300 gap-2 rounded-xl py-2 px-8 text-white text-xl shadow-lg shadow-amber-300 font-semibold">
+    <div className="flex items-center gap-2 rounded-xl py-2 px-6 bg-primary text-primary-foreground text-lg font-semibold shadow-md">
       <Clock className="w-5 h-5" />
       <span>
         {minutes}:{seconds}
@@ -43,6 +40,7 @@ const Timer = memo(({ timeLeft }: { timeLeft: number }) => {
     </div>
   );
 });
+Timer.displayName = "Timer";
 
 export default function ExamDialog({
   open,
@@ -55,28 +53,7 @@ export default function ExamDialog({
   >({});
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
   const [submitted, setSubmitted] = useState(false);
-
-  // Timer effect
-  useEffect(() => {
-    if (!open) return;
-
-    setTimeLeft(600); // reset when dialog opens
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [open]);
-
-  // Auto-submit when timer reaches 0
-  useEffect(() => {
-    if (timeLeft === 0 && !submitted) {
-      handleSubmit();
-    }
-  }, [timeLeft]);
-
-  if (!examData) return <Loading />;
-
+  const [showConfetti, setShowConfetti] = useState(false);
   const question = examData.questions[currentIndex];
 
   const handleSelectOption = useCallback(
@@ -95,7 +72,7 @@ export default function ExamDialog({
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (submitted || !examData) return;
     setSubmitted(true);
 
@@ -105,66 +82,85 @@ export default function ExamDialog({
     }));
 
     try {
-      const result = await submitExamAction({
+      const { score } = await submitExamAction({
         examId: examData.examId,
         answers,
         courseId: examData.courseId,
       });
-      toast(`You scored ${result.score.toFixed(2)}%.`);
+      setShowConfetti(true);
+      toast.success(`Congratulations! Your score is ${score}%`);
     } catch (error) {
+      toast.error("Exam submission failed.");
       console.error("Exam submit failed", error);
     }
 
     onClose();
-  };
+  }, [submitted, examData, selectedOptions, onClose]);
+  useEffect(() => {
+    if (!open || submitted) return; // don't start if dialog is closed or exam submitted
 
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleSubmit(); // auto-submit when timer ends
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer); // cleanup on unmount or dialog close
+  }, [open, submitted, handleSubmit]);
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <DialogContent isExam={open} className="p-6 h-screen bg-blue-700 w-full">
-        <DialogHeader className="mx-auto">
+      <DialogContent
+        isExam={open}
+        className="p-6 h-screen w-full bg-background text-foreground border-none"
+      >
+        <DialogHeader className="mx-auto mb-4">
           <VisuallyHidden>
-            <DialogTitle className="text-white">{"Exam"}</DialogTitle>
+            <DialogTitle>Exam</DialogTitle>
           </VisuallyHidden>
-
-          {/* Timer */}
           <Timer timeLeft={timeLeft} />
         </DialogHeader>
 
         <section>
-          <div className="flex content-center justify-center m-4 gap-2">
+          {/* Question Navigator */}
+          <div className="flex justify-center flex-wrap gap-2 mb-6">
             {examData.questions.map((_, idx) => (
               <div
                 key={idx}
-                className={cn(
-                  "w-12 h-12 flex items-center justify-center rounded-full border cursor-pointer",
-                  idx === currentIndex
-                    ? "bg-white text-blue-700"
-                    : selectedOptions[examData.questions[idx].id]
-                    ? "bg-blue-600 text-white border-accent"
-                    : "border-muted bg-blue-700 text-white"
-                )}
                 onClick={() => setCurrentIndex(idx)}
+                className={cn(
+                  "w-10 h-10 flex items-center justify-center rounded-full border text-sm font-medium transition-colors",
+                  idx === currentIndex
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : selectedOptions[examData.questions[idx].id]
+                    ? "bg-secondary text-secondary-foreground border-secondary"
+                    : "bg-muted text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground"
+                )}
               >
                 {idx + 1}
               </div>
             ))}
           </div>
 
-          {/* Question */}
-          <div className="p-4 border rounded-lg bg-card mb-4">
-            <p className="font-medium mb-3">
+          {/* Question Card */}
+          <div className="p-4 card mb-4 transition-all duration-300">
+            <p className="font-medium mb-4">
               {currentIndex + 1}. {question.text}
             </p>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid gap-3">
               {question.options.map((opt) => (
                 <div
                   key={opt.id}
                   onClick={() => handleSelectOption(question.id, opt.id)}
                   className={cn(
-                    "p-3 border rounded-lg cursor-pointer transition-all",
+                    "p-3 rounded-lg border transition-colors cursor-pointer",
                     selectedOptions[question.id] === opt.id
-                      ? "border-primary bg-blue-500 text-white"
-                      : "border-muted hover:border-primary/70 hover:bg-muted/50"
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "hover:bg-muted border-border"
                   )}
                 >
                   {opt.text}
@@ -186,7 +182,7 @@ export default function ExamDialog({
           <div className="space-x-2">
             {currentIndex < examData.questions.length - 1 && (
               <Button
-                className="bg-white text-black hover:bg-accent"
+                variant="secondary"
                 onClick={handleNext}
                 disabled={!selectedOptions[question.id]}
               >
@@ -203,6 +199,11 @@ export default function ExamDialog({
           </div>
         </div>
       </DialogContent>
+      {showConfetti && (
+        <div className="fixed inset-0 z-[9999] pointer-events-none flex items-start justify-center pt-10">
+          <Confetti mode="boom" particleCount={200} />
+        </div>
+      )}
     </Dialog>
   );
 }

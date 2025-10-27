@@ -1,12 +1,4 @@
-import {
-  BookOpen,
-  Play,
-  Star,
-  Users,
-  Clock,
-  Award,
-  ArrowRight,
-} from "lucide-react";
+import { BookOpen, Star, Users, Clock, Award, ArrowRight } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -54,8 +46,8 @@ export default async function Home() {
 
             <p className="text-lg text-muted-foreground leading-relaxed max-w-prose">
               Join thousands of students learning the latest web technologies.
-              From fundamentals to advanced concepts, we've got you covered with
-              hands-on projects and expert guidance.
+              From fundamentals to advanced concepts, we&apos;ve got you covered
+              with hands-on projects and expert guidance.
             </p>
 
             {/* Stats */}
@@ -126,7 +118,7 @@ export default async function Home() {
 
               <div className="space-y-4">
                 <CardTitle className="text-2xl text-card-foreground">
-                  What You'll Learn
+                  What You w&apos;ll Learn
                 </CardTitle>
                 <ul className="space-y-3 text-muted-foreground">
                   {[

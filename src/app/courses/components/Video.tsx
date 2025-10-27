@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Play } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 const VideoPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -14,7 +15,9 @@ const VideoPlayer = () => {
     if (!url) return;
 
     try {
-      const parsedUrl = new URL(url);
+      const parsedUrl = new URL(
+        url || "https://www.youtube.com/watch?v=E4Rgr7TOKLA"
+      );
       const id =
         parsedUrl.searchParams.get("v") ||
         // Support youtu.be short links like https://youtu.be/abc123
@@ -54,8 +57,9 @@ const VideoPlayer = () => {
           className="relative w-full h-full cursor-pointer group"
           onClick={handlePlay}
         >
-          <img
-            src={getThumbnailUrl(videoId)}
+          <Image
+            fill
+            src={getThumbnailUrl(videoId) || ""}
             alt="Video thumbnail"
             className="w-full h-full object-cover"
             onError={(e) =>

@@ -7,11 +7,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getCommentsByCourseAction } from "@/lib/actions/commentsAction";
 import CustomSkeleton from "@/components/CustomSkeleton";
-import { Prisma } from "@/generated/prisma";
 import AddComment from "./AddComment"; // 👈 new component
-export type CommentWithUser = Prisma.CommentGetPayload<{
-  include: { user: true }; // match exactly what `include: { user: true }` returns
-}>;
+import { CommentWithUser } from "@/lib/types";
 
 export default function CommentsSection({
   courseId,
@@ -19,7 +16,7 @@ export default function CommentsSection({
   initialHasMore,
 }: {
   courseId: string;
-  initialComments: any;
+  initialComments: CommentWithUser[];
   initialHasMore: boolean;
 }) {
   const [comments, setComments] = useState<CommentWithUser[]>(initialComments);
@@ -37,7 +34,6 @@ export default function CommentsSection({
         const { comments: newComments, hasMore: more } =
           await getCommentsByCourseAction({ courseId, page, take });
         // todo
-        //@ts-ignore
         setComments((prev) => [
           ...prev,
           ...newComments.filter((c) => !prev.find((p) => p.id === c.id)),

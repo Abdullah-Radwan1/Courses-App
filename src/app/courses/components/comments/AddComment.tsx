@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { createCommentAction } from "@/lib/actions/commentsAction";
-import { CommentWithUser } from "./Comments";
+import { CommentWithUser } from "@/lib/types";
 
 interface AddCommentProps {
   courseId: string;

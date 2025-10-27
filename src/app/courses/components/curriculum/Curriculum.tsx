@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo, useRef, useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,9 +16,10 @@ import {
   Circle,
 } from "lucide-react";
 import { toggleLessonCompletion } from "@/lib/actions/courseActions";
-import { Type } from "@/generated/prisma";
 import ProgressCircle from "../animatedCricle";
 import dynamic from "next/dynamic";
+import { LessonWithCompletion, Props } from "@/lib/types";
+import { ExamWarningDialogRef } from "../dialoges/ExamWarning";
 // Lazy load your modals
 const PdfDialog = dynamic(() => import("../dialoges/PdfDialog"), {
   ssr: false,
@@ -26,32 +27,6 @@ const PdfDialog = dynamic(() => import("../dialoges/PdfDialog"), {
 const ExamWarningDialog = dynamic(() => import("../dialoges/ExamWarning"), {
   ssr: false,
 });
-const ExamDialog = dynamic(() => import("../dialoges/Examdialog"), {
-  ssr: false,
-});
-type LessonWithCompletion = {
-  LessonCompletion?: { completed: boolean }[]; // optional now
-  type: Type;
-  name: string;
-  id: string;
-  period: string;
-  url: string;
-  completed?: boolean;
-};
-
-interface CurriculumWithLessons {
-  id: string;
-  title: string;
-  period: string;
-  Lessons: LessonWithCompletion[];
-}
-
-interface Props {
-  curriculum: CurriculumWithLessons[];
-  ExamData: any;
-  alreadyExamed: boolean;
-  completedLessonIds: string[];
-}
 
 const LessonIcon = memo(({ lesson }: { lesson: LessonWithCompletion }) => {
   switch (lesson.type) {
@@ -66,7 +41,6 @@ const LessonIcon = memo(({ lesson }: { lesson: LessonWithCompletion }) => {
   }
 });
 LessonIcon.displayName = "LessonIcon";
-
 const CompletionIcon = memo(
   ({
     lesson,
@@ -92,43 +66,12 @@ const CompletionIcon = memo(
     );
   }
 );
-
-// const ProgressCircle = ({ progress }: { progress: number }) => (
-//   <div className="animate-accordion-up relative w-14 h-14">
-//     <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 36 36">
-//       <circle
-//         cx="18"
-//         cy="18"
-//         r="15.9155"
-//         fill="none"
-//         stroke="currentColor"
-//         strokeWidth="2"
-//         className="text-muted"
-//       />
-//       <circle
-//         cx="18"
-//         cy="18"
-//         r="15.9155"
-//         fill="none"
-//         stroke="currentColor"
-//         strokeWidth="2"
-//         strokeLinecap="round"
-//         className="text-primary"
-//         strokeDasharray="100"
-//         strokeDashoffset={100 - progress}
-//       />
-//     </svg>
-//     <div className="absolute inset-0 flex items-center justify-center">
-//       <span className="text-xs font-semibold text-primary">{progress}%</span>
-//     </div>
-//   </div>
-// );
-
+CompletionIcon.displayName = "CompletionIcon";
 const CourseCurriculum = ({
   curriculum,
-  ExamData,
   alreadyExamed,
   completedLessonIds,
+  courseId,
 }: Props) => {
   const [openWeeks, setOpenWeeks] = useState<number[]>([0, 1]);
   const [localCurriculum, setLocalCurriculum] = useState(
@@ -141,13 +84,8 @@ const CourseCurriculum = ({
     }))
   );
 
-  const [modals, setModals] = useState({
-    pdf: false,
-    examWarning: false,
-    examStarted: false,
-    selectedExamLessonId: null as string | null,
-    loadingExam: false,
-  });
+  const [pdfOpen, setPdfOpen] = useState(false);
+  const examDialogRef = useRef<ExamWarningDialogRef>(null);
 
   const toggleWeek = (index: number) =>
     setOpenWeeks((prev) =>
@@ -175,59 +113,12 @@ const CourseCurriculum = ({
     window.history.replaceState(null, "", `?${params.toString()}`);
     if (lesson.type === "EXAM" && alreadyExamed === true) return;
 
-    if (lesson.type === "PDF") setModals((p) => ({ ...p, pdf: true }));
-    else if (lesson.type === "EXAM")
-      setModals((p) => ({
-        ...p,
-        selectedExamLessonId: lesson.id,
-        examWarning: true,
-      }));
-  };
-
-  const handleStartExam = () => {
-    setModals((p) => ({ ...p, loadingExam: true }));
-    setTimeout(() => {
-      setModals((p) => ({
-        ...p,
-        loadingExam: false,
-        examWarning: false,
-        examStarted: true,
-      }));
-    }, 800);
-  };
-
-  const LessonRow = memo(
-    ({ lesson, alreadyExamed, onLessonClick, onCompleteClick }: any) => {
-      return (
-        <div
-          key={lesson.id}
-          onClick={onLessonClick}
-          className={`w-full hover:cursor-pointer flex items-center justify-end gap-3 py-3 px-3 rounded-lg transition-all hover:bg-primary/10 focus-visible:outline-ring ${
-            lesson.completed
-              ? "opacity-60 text-muted-foreground"
-              : "text-foreground"
-          }`}
-        >
-          <LessonIcon lesson={lesson} />
-          <div className="flex-1 text-left">
-            <p
-              className={`text-sm ${
-                lesson.completed && "line-through text-muted-foreground"
-              }`}
-            >
-              {lesson.name}
-            </p>
-            <p className="text-[10px] text-muted-foreground">{lesson.period}</p>
-          </div>
-          <CompletionIcon
-            lesson={lesson}
-            alreadyExamed={alreadyExamed}
-            onClick={onCompleteClick}
-          />
-        </div>
-      );
+    if (lesson.type === "PDF") {
+      setPdfOpen(true);
+    } else if (lesson.type === "EXAM" && !alreadyExamed) {
+      examDialogRef.current?.openDialog(courseId);
     }
-  );
+  };
 
   //optimistic progress count
   const completedLessonsCount = localCurriculum.reduce(
@@ -272,7 +163,6 @@ const CourseCurriculum = ({
           <p className="text-sm font-medium text-foreground">Course Progress</p>
         </div>
       </div>
-
       {/* Curriculum */}
       {localCurriculum.map((week, index) => (
         <Collapsible
@@ -295,45 +185,46 @@ const CourseCurriculum = ({
           <CollapsibleContent>
             <div className="pb-3 pt-1 space-y-2">
               {week.Lessons.map((lesson) => (
-                <LessonRow
+                <div
                   key={lesson.id}
-                  lesson={lesson}
-                  alreadyExamed={alreadyExamed}
-                  onLessonClick={() => handleLessonClick(lesson)}
-                  onCompleteClick={() =>
-                    handleCompleteLesson(lesson.id, lesson.completed)
-                  }
-                />
+                  onClick={() => handleLessonClick(lesson)}
+                  className={`w-full hover:cursor-pointer flex items-center justify-end gap-3 py-3 px-3 rounded-lg transition-all hover:bg-primary/10 focus-visible:outline-ring ${
+                    lesson.completed
+                      ? "opacity-60 text-muted-foreground"
+                      : "text-foreground"
+                  }`}
+                >
+                  <LessonIcon lesson={lesson} />
+                  <div className="flex-1 text-left">
+                    <p
+                      className={`text-sm ${
+                        lesson.completed && "line-through text-muted-foreground"
+                      }`}
+                    >
+                      {lesson.name}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground">
+                      {lesson.period}
+                    </p>
+                  </div>
+
+                  <CompletionIcon
+                    lesson={lesson}
+                    alreadyExamed={alreadyExamed}
+                    onClick={() =>
+                      handleCompleteLesson(lesson.id, lesson.completed ?? false)
+                    }
+                  />
+                </div>
               ))}
             </div>
           </CollapsibleContent>
         </Collapsible>
       ))}
-
       {/* PDF Modal */}
-
-      <PdfDialog
-        src="/SA.pdf"
-        open={modals.pdf}
-        onOpenChange={(v) => setModals((p) => ({ ...p, pdf: v }))}
-      />
-
+      <PdfDialog src="/SA.pdf" open={pdfOpen} onOpenChange={setPdfOpen} />
       {/* Exam Warning */}
-
-      <ExamWarningDialog
-        open={modals.examWarning}
-        loadingExam={modals.loadingExam}
-        onCancel={() => setModals((p) => ({ ...p, examWarning: false }))}
-        onConfirm={handleStartExam}
-      />
-
-      {/* Exam Modal */}
-      <ExamDialog
-        open={modals.examStarted}
-        onClose={() => setModals((p) => ({ ...p, examStarted: false }))}
-        examData={ExamData}
-        lessonId={modals.selectedExamLessonId!}
-      />
+      <ExamWarningDialog ref={examDialogRef} />
     </div>
   );
 };

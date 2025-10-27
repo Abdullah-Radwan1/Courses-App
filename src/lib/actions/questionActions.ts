@@ -32,24 +32,19 @@ export const getQuestionsByCourseAction = cache(
   }) => {
     const skip = (page - 1) * take;
 
-    const questionWithUser = await db.question.findMany({
-      where: { courseId },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true, // optional — only if you need it
-            // ❌ no password, no emailVerified, etc.
-          },
+    const [questionWithUser, totalQuestions] = await Promise.all([
+      db.question.findMany({
+        where: { courseId },
+        include: {
+          user: { select: { name: true } },
         },
-      },
-      orderBy: { createdAt: "desc" },
-      skip,
-      take,
-    });
+        orderBy: { createdAt: "desc" },
+        skip,
+        take,
+      }),
+      db.question.count({ where: { courseId } }),
+    ]);
 
-    const totalQuestions = await db.question.count({ where: { courseId } });
     const hasMore = page * take < totalQuestions;
 
     return { questionWithUser, hasMore };

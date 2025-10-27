@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import z, { ZodError, treeifyError } from "zod";
+import { ZodError, treeifyError } from "zod";
 import { signUpSchema } from "@/lib/auth/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

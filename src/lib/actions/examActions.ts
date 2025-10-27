@@ -1,66 +1,46 @@
 "use server";
-import { cache } from "react";
 import { db } from "../../../prisma/db";
 import { getCurrentUser } from "./userAction";
-import { getLeaderboard } from "./leaderboard";
 import { revalidatePath } from "next/cache";
 
-// export async function getExamByCourseId(courseId: string) {
-//   try {
-//     const user = await getCurrentUser();
-//     if (!user) throw new Error("Unauthorized");
+export async function getExamByCourseId(courseId: string) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) throw new Error("Unauthorized");
 
-//     // ✅ Find the exam for this course
-//     const exam = await db.exam.findFirst({
-//       where: { courseId },
-//       include: {
-//         questions: {
-//           include: { options: true },
-//         },
-//       },
-//     });
+    // ✅ Find the exam for this course
+    const exam = await db.exam.findFirst({
+      where: { courseId },
+      include: {
+        questions: {
+          include: { options: true },
+        },
+      },
+    });
 
-//     if (!exam) throw new Error("No exam found for this course");
+    if (!exam) throw new Error("No exam found for this course");
 
-//     // ✅ Check if user already has a result record
-//     const existingResult = await db.examResult.findUnique({
-//       where: {
-//         userId_examId: {
-//           userId: user.id,
-//           examId: exam.id,
-//         },
-//       },
-//     });
-
-//     // ✅ If not, create a new result record
-//     if (!existingResult) {
-//       await db.examResult.create({
-//         data: {
-//           userId: user.id,
-//           examId: exam.id,
-//           score: 0, // initialize to 0 until submit
-//         },
-//       });
-//     }
-
-//     // ✅ Return minimal frontend data
-//     return {
-//       examId: exam.id,
-//       title: exam.title,
-//       questions: exam.questions.map((q) => ({
-//         id: q.id,
-//         text: q.text,
-//         options: q.options.map((opt) => ({
-//           id: opt.id,
-//           text: opt.text,
-//         })),
-//       })),
-//     };
-//   } catch (error: any) {
-//     console.error("Error starting exam:", error);
-//     throw new Error(error.message || "Failed to start exam");
-//   }
-// }
+    // ✅ Return minimal frontend data
+    return {
+      examId: exam.id,
+      title: exam.title,
+      questions: exam.questions.map((q) => ({
+        id: q.id,
+        text: q.text,
+        options: q.options.map((opt) => ({
+          id: opt.id,
+          text: opt.text,
+        })),
+      })),
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Failed to fetch exam");
+    }
+  }
+}
 
 // ✅ Fixed: no need to pass a full ExamResult object — just the score and rank
 export async function submitExamAction({

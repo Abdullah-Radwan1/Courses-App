@@ -4,7 +4,7 @@ import CommentsSection from "@/app/courses/components/comments/Comments";
 import CourseMetadata from "@/app/courses/components/CourseMetaData";
 import Video from "@/app/courses/components/Video";
 
-import { getUserSpecificData } from "@/lib/actions/fullcoursedata";
+import { getUserSpecificData } from "@/lib/actions/userSpecificData";
 import { getStaticCourseData } from "@/lib/actions/statcidata";
 import { ScrollButton } from "../components/tabs/ScrollButton";
 import LeaderboardPage from "../components/tabs/LeaderboardTab";
@@ -15,13 +15,14 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
   // ✅ Fetch cached static data (course, curriculum, exam)
-  const { examData, course, curriculum, questionsData, comments, leaderboard } =
-    await getStaticCourseData(id);
+  const { examId, course, curriculum, comments } = await getStaticCourseData(
+    id
+  );
 
   // ✅ Fetch user-specific data (progress, lesson completion, comments, exam status)
   const { alreadyExamed, completedLessons } = await getUserSpecificData(
     id,
-    examData.examId
+    examId
   );
   const completedLessonIds = completedLessons.map((l) => l.lessonId);
   return (
@@ -36,12 +37,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="flex flex-wrap items-center justify-center gap-3">
                 {/* Scroll buttons as client components */}
                 <ScrollButton targetId="curriculum" icon={<BookOpenCheck />} />
-                <LeaderboardPage leaderboard={leaderboard.leaderboard} />
-                <QuestionModal
-                  initialQuestions={questionsData.questionWithUser}
-                  initialHasMore={questionsData.hasMore}
-                  courseId={id}
-                />
+                <LeaderboardPage courseId={id} />
+                <QuestionModal courseId={id} />
                 <ScrollButton
                   targetId="comments"
                   icon={<MessageCircleMore />}
@@ -60,8 +57,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <aside id="curriculum" className="lg:col-span-1">
             <div className="sticky top-28">
               <CourseCurriculum
+                courseId={id}
                 alreadyExamed={alreadyExamed}
-                ExamData={examData}
                 curriculum={curriculum}
                 completedLessonIds={completedLessonIds}
               />
