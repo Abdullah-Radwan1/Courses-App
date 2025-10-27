@@ -61,6 +61,7 @@ model Lesson {
   type             Type               @default(VIDEO)
   name             String
   url              String
+  order            Int                @default(0)
   courseId         String
   curriculumId     String
   curriculum       Curriculum         @relation(fields: [curriculumId], references: [id], onDelete: Cascade)

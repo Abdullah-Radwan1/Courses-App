@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -74,6 +74,8 @@ const CourseCurriculum = ({
   courseId,
 }: Props) => {
   const [openWeeks, setOpenWeeks] = useState<number[]>([0, 1]);
+  const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
+
   const [localCurriculum, setLocalCurriculum] = useState(
     curriculum.map((week) => ({
       ...week,
@@ -92,51 +94,122 @@ const CourseCurriculum = ({
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
 
-  const handleCompleteLesson = async (lessonId: string, completed: boolean) => {
-    if (completed) return;
-    setLocalCurriculum((prev) =>
-      prev.map((week) => ({
-        ...week,
-        Lessons: week.Lessons.map((l) =>
-          l.id === lessonId ? { ...l, completed: true } : l
-        ),
-      }))
-    );
-    toggleLessonCompletion(lessonId);
-  };
-  const handleLessonClick = (lesson: LessonWithCompletion) => {
-    // Update query params without refreshing
-    const params = new URLSearchParams(window.location.search);
-    params.set("url", lesson.url);
-    console.log(lesson);
-    // This updates the URL without reloading the page
-    window.history.replaceState(null, "", `?${params.toString()}`);
-    if (lesson.type === "EXAM" && alreadyExamed === true) return;
+  const handleCompleteLesson = useCallback(
+    async (lessonId: string, completed: boolean) => {
+      if (completed) return;
+      setLocalCurriculum((prev) =>
+        prev.map((week) => ({
+          ...week,
+          Lessons: week.Lessons.map((l) =>
+            l.id === lessonId ? { ...l, completed: true } : l
+          ),
+        }))
+      );
+      toggleLessonCompletion(lessonId);
+    },
+    []
+  );
+  const handleLessonClick = useCallback(
+    (lesson: LessonWithCompletion) => {
+      // Update query params without refreshing
+      setSelectedUrl(lesson.url);
+      const params = new URLSearchParams(window.location.search);
+      params.set("url", lesson.url);
+      // This updates the URL without reloading the page
+      window.history.replaceState(null, "", `?${params.toString()}`);
+      if (lesson.type === "EXAM" && alreadyExamed === true) return;
 
-    if (lesson.type === "PDF") {
-      setPdfOpen(true);
-    } else if (lesson.type === "EXAM" && !alreadyExamed) {
-      examDialogRef.current?.openDialog(courseId);
-    }
-  };
+      if (lesson.type === "PDF") {
+        setPdfOpen(true);
+      } else if (lesson.type === "EXAM" && !alreadyExamed) {
+        examDialogRef.current?.openDialog(courseId);
+      }
+    },
+    [alreadyExamed, courseId]
+  );
 
   //optimistic progress count
-  const completedLessonsCount = localCurriculum.reduce(
-    (sum, week) =>
-      sum +
-      week.Lessons.filter((l) => l.completed && l.type === "VIDEO").length,
-    0
-  );
 
-  const totalLessonsCount = localCurriculum.reduce(
-    (sum, week) => sum + week.Lessons.filter((l) => l.type === "VIDEO").length,
-    0
+  const LessonRow = memo(
+    ({
+      lesson,
+      selectedUrl,
+      alreadyExamed,
+      onLessonClick,
+      onComplete,
+    }: {
+      lesson: LessonWithCompletion;
+      selectedUrl: string | null;
+      alreadyExamed: boolean;
+      onLessonClick: (lesson: LessonWithCompletion) => void;
+      onComplete: (id: string, completed: boolean) => void;
+    }) => (
+      <div
+        key={lesson.id}
+        onClick={() => onLessonClick(lesson)}
+        className={`w-full cursor-pointer flex items-center justify-end gap-3 py-3 px-3 rounded-lg transition-all 
+      ${selectedUrl === lesson.url ? "bg-primary/10" : "hover:bg-primary/10"} 
+      ${
+        lesson.completed
+          ? "opacity-60 text-muted-foreground"
+          : "text-foreground"
+      }`}
+      >
+        <LessonIcon lesson={lesson} />
+        <div className="flex-1 text-left">
+          <p
+            className={`text-sm ${
+              lesson.completed && "line-through text-muted-foreground"
+            }`}
+          >
+            {lesson.name}
+          </p>
+          <p className="text-[10px] text-muted-foreground">{lesson.period}</p>
+        </div>
+        <CompletionIcon
+          lesson={lesson}
+          alreadyExamed={alreadyExamed}
+          onClick={() => onComplete(lesson.id, lesson.completed ?? false)}
+        />
+      </div>
+    )
   );
+  LessonRow.displayName = "LessonRow";
+  const { dynamicProgress } = useMemo(() => {
+    const completed = localCurriculum.reduce(
+      (sum, week) =>
+        sum +
+        week.Lessons.filter((l) => l.completed && l.type === "VIDEO").length,
+      0
+    );
+    const total = localCurriculum.reduce(
+      (sum, week) =>
+        sum + week.Lessons.filter((l) => l.type === "VIDEO").length,
+      0
+    );
+    const progress =
+      total === 0 ? 0 : Number(((completed / total) * 100).toFixed(2));
+    return {
+      dynamicProgress: progress,
+    };
+  }, [localCurriculum]);
 
-  const dynamicProgress =
-    totalLessonsCount === 0
-      ? 0
-      : Number(((completedLessonsCount / totalLessonsCount) * 100).toFixed(2));
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const currentUrl = params.get("url");
+
+    // If there's already a ?url=... value, don't touch it
+    if (currentUrl) {
+      setSelectedUrl(currentUrl);
+    }
+    // Find the first lesson that has a valid URL
+    const firstLesson = localCurriculum
+      .flatMap((week) => week.Lessons)
+      .find((lesson) => lesson.url && lesson.url.trim() !== "");
+
+    params.set("url", firstLesson!.url);
+    window.history.replaceState(null, "", `?${params.toString()}`);
+  }, [localCurriculum]);
   return (
     <div className="space-y-4 font-sans">
       {/* Progress Section */}
@@ -185,37 +258,14 @@ const CourseCurriculum = ({
           <CollapsibleContent>
             <div className="pb-3 pt-1 space-y-2">
               {week.Lessons.map((lesson) => (
-                <div
+                <LessonRow
                   key={lesson.id}
-                  onClick={() => handleLessonClick(lesson)}
-                  className={`w-full hover:cursor-pointer flex items-center justify-end gap-3 py-3 px-3 rounded-lg transition-all hover:bg-primary/10 focus-visible:outline-ring ${
-                    lesson.completed
-                      ? "opacity-60 text-muted-foreground"
-                      : "text-foreground"
-                  }`}
-                >
-                  <LessonIcon lesson={lesson} />
-                  <div className="flex-1 text-left">
-                    <p
-                      className={`text-sm ${
-                        lesson.completed && "line-through text-muted-foreground"
-                      }`}
-                    >
-                      {lesson.name}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {lesson.period}
-                    </p>
-                  </div>
-
-                  <CompletionIcon
-                    lesson={lesson}
-                    alreadyExamed={alreadyExamed}
-                    onClick={() =>
-                      handleCompleteLesson(lesson.id, lesson.completed ?? false)
-                    }
-                  />
-                </div>
+                  lesson={lesson}
+                  selectedUrl={selectedUrl}
+                  alreadyExamed={alreadyExamed}
+                  onLessonClick={handleLessonClick}
+                  onComplete={handleCompleteLesson}
+                />
               ))}
             </div>
           </CollapsibleContent>

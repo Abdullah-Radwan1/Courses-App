@@ -31,6 +31,7 @@ export const getStaticCourseData = cache(async (courseId: string) => {
                 period: true,
                 type: true,
               },
+              orderBy: { order: "asc" },
             },
           },
           orderBy: { period: "asc" },

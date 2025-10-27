@@ -5757,8 +5757,18 @@ export namespace Prisma {
 
   export type AggregateLesson = {
     _count: LessonCountAggregateOutputType | null
+    _avg: LessonAvgAggregateOutputType | null
+    _sum: LessonSumAggregateOutputType | null
     _min: LessonMinAggregateOutputType | null
     _max: LessonMaxAggregateOutputType | null
+  }
+
+  export type LessonAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type LessonSumAggregateOutputType = {
+    order: number | null
   }
 
   export type LessonMinAggregateOutputType = {
@@ -5767,6 +5777,7 @@ export namespace Prisma {
     type: $Enums.Type | null
     name: string | null
     url: string | null
+    order: number | null
     courseId: string | null
     curriculumId: string | null
   }
@@ -5777,6 +5788,7 @@ export namespace Prisma {
     type: $Enums.Type | null
     name: string | null
     url: string | null
+    order: number | null
     courseId: string | null
     curriculumId: string | null
   }
@@ -5787,11 +5799,20 @@ export namespace Prisma {
     type: number
     name: number
     url: number
+    order: number
     courseId: number
     curriculumId: number
     _all: number
   }
 
+
+  export type LessonAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type LessonSumAggregateInputType = {
+    order?: true
+  }
 
   export type LessonMinAggregateInputType = {
     id?: true
@@ -5799,6 +5820,7 @@ export namespace Prisma {
     type?: true
     name?: true
     url?: true
+    order?: true
     courseId?: true
     curriculumId?: true
   }
@@ -5809,6 +5831,7 @@ export namespace Prisma {
     type?: true
     name?: true
     url?: true
+    order?: true
     courseId?: true
     curriculumId?: true
   }
@@ -5819,6 +5842,7 @@ export namespace Prisma {
     type?: true
     name?: true
     url?: true
+    order?: true
     courseId?: true
     curriculumId?: true
     _all?: true
@@ -5862,6 +5886,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: LessonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LessonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: LessonMinAggregateInputType
@@ -5892,6 +5928,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: LessonCountAggregateInputType | true
+    _avg?: LessonAvgAggregateInputType
+    _sum?: LessonSumAggregateInputType
     _min?: LessonMinAggregateInputType
     _max?: LessonMaxAggregateInputType
   }
@@ -5902,9 +5940,12 @@ export namespace Prisma {
     type: $Enums.Type
     name: string
     url: string
+    order: number
     courseId: string
     curriculumId: string
     _count: LessonCountAggregateOutputType | null
+    _avg: LessonAvgAggregateOutputType | null
+    _sum: LessonSumAggregateOutputType | null
     _min: LessonMinAggregateOutputType | null
     _max: LessonMaxAggregateOutputType | null
   }
@@ -5929,6 +5970,7 @@ export namespace Prisma {
     type?: boolean
     name?: boolean
     url?: boolean
+    order?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -5942,6 +5984,7 @@ export namespace Prisma {
     type?: boolean
     name?: boolean
     url?: boolean
+    order?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -5953,6 +5996,7 @@ export namespace Prisma {
     type?: boolean
     name?: boolean
     url?: boolean
+    order?: boolean
     courseId?: boolean
     curriculumId?: boolean
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
@@ -5964,11 +6008,12 @@ export namespace Prisma {
     type?: boolean
     name?: boolean
     url?: boolean
+    order?: boolean
     courseId?: boolean
     curriculumId?: boolean
   }
 
-  export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "period" | "type" | "name" | "url" | "courseId" | "curriculumId", ExtArgs["result"]["lesson"]>
+  export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "period" | "type" | "name" | "url" | "order" | "courseId" | "curriculumId", ExtArgs["result"]["lesson"]>
   export type LessonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     curriculum?: boolean | CurriculumDefaultArgs<ExtArgs>
     LessonCompletion?: boolean | Lesson$LessonCompletionArgs<ExtArgs>
@@ -5993,6 +6038,7 @@ export namespace Prisma {
       type: $Enums.Type
       name: string
       url: string
+      order: number
       courseId: string
       curriculumId: string
     }, ExtArgs["result"]["lesson"]>
@@ -6425,6 +6471,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Lesson", 'Type'>
     readonly name: FieldRef<"Lesson", 'String'>
     readonly url: FieldRef<"Lesson", 'String'>
+    readonly order: FieldRef<"Lesson", 'Int'>
     readonly courseId: FieldRef<"Lesson", 'String'>
     readonly curriculumId: FieldRef<"Lesson", 'String'>
   }
@@ -16569,6 +16616,7 @@ export namespace Prisma {
     type: 'type',
     name: 'name',
     url: 'url',
+    order: 'order',
     courseId: 'courseId',
     curriculumId: 'curriculumId'
   };
@@ -16744,6 +16792,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -16761,20 +16823,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
   /**
    * Deep Input Types
@@ -16995,6 +17043,7 @@ export namespace Prisma {
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
     url?: StringFilter<"Lesson"> | string
+    order?: IntFilter<"Lesson"> | number
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
     curriculum?: XOR<CurriculumScalarRelationFilter, CurriculumWhereInput>
@@ -17007,6 +17056,7 @@ export namespace Prisma {
     type?: SortOrder
     name?: SortOrder
     url?: SortOrder
+    order?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
     curriculum?: CurriculumOrderByWithRelationInput
@@ -17022,6 +17072,7 @@ export namespace Prisma {
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
     url?: StringFilter<"Lesson"> | string
+    order?: IntFilter<"Lesson"> | number
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
     curriculum?: XOR<CurriculumScalarRelationFilter, CurriculumWhereInput>
@@ -17034,11 +17085,14 @@ export namespace Prisma {
     type?: SortOrder
     name?: SortOrder
     url?: SortOrder
+    order?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
     _count?: LessonCountOrderByAggregateInput
+    _avg?: LessonAvgOrderByAggregateInput
     _max?: LessonMaxOrderByAggregateInput
     _min?: LessonMinOrderByAggregateInput
+    _sum?: LessonSumOrderByAggregateInput
   }
 
   export type LessonScalarWhereWithAggregatesInput = {
@@ -17050,6 +17104,7 @@ export namespace Prisma {
     type?: EnumTypeWithAggregatesFilter<"Lesson"> | $Enums.Type
     name?: StringWithAggregatesFilter<"Lesson"> | string
     url?: StringWithAggregatesFilter<"Lesson"> | string
+    order?: IntWithAggregatesFilter<"Lesson"> | number
     courseId?: StringWithAggregatesFilter<"Lesson"> | string
     curriculumId?: StringWithAggregatesFilter<"Lesson"> | string
   }
@@ -17798,6 +17853,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
@@ -17809,6 +17865,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     curriculumId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
@@ -17820,6 +17877,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     curriculum?: CurriculumUpdateOneRequiredWithoutLessonsNestedInput
     LessonCompletion?: LessonCompletionUpdateManyWithoutLessonNestedInput
@@ -17831,6 +17889,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutLessonNestedInput
@@ -17842,6 +17901,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     curriculumId: string
   }
@@ -17852,6 +17912,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -17861,6 +17922,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
   }
@@ -18614,6 +18676,17 @@ export namespace Prisma {
     not?: NestedEnumTypeFilter<$PrismaModel> | $Enums.Type
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type CurriculumScalarRelationFilter = {
     is?: CurriculumWhereInput
     isNot?: CurriculumWhereInput
@@ -18625,8 +18698,13 @@ export namespace Prisma {
     type?: SortOrder
     name?: SortOrder
     url?: SortOrder
+    order?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
+  }
+
+  export type LessonAvgOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type LessonMaxOrderByAggregateInput = {
@@ -18635,6 +18713,7 @@ export namespace Prisma {
     type?: SortOrder
     name?: SortOrder
     url?: SortOrder
+    order?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
   }
@@ -18645,8 +18724,13 @@ export namespace Prisma {
     type?: SortOrder
     name?: SortOrder
     url?: SortOrder
+    order?: SortOrder
     courseId?: SortOrder
     curriculumId?: SortOrder
+  }
+
+  export type LessonSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type EnumTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -18657,6 +18741,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTypeFilter<$PrismaModel>
     _max?: NestedEnumTypeFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -19585,6 +19685,14 @@ export namespace Prisma {
     set?: $Enums.Type
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type CurriculumUpdateOneRequiredWithoutLessonsNestedInput = {
     create?: XOR<CurriculumCreateWithoutLessonsInput, CurriculumUncheckedCreateWithoutLessonsInput>
     connectOrCreate?: CurriculumCreateOrConnectWithoutLessonsInput
@@ -20087,6 +20195,33 @@ export namespace Prisma {
     _max?: NestedEnumTypeFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -20129,17 +20264,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -20751,6 +20875,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     LessonCompletion?: LessonCompletionCreateNestedManyWithoutLessonInput
   }
@@ -20761,6 +20886,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     LessonCompletion?: LessonCompletionUncheckedCreateNestedManyWithoutLessonInput
   }
@@ -20837,6 +20963,7 @@ export namespace Prisma {
     type?: EnumTypeFilter<"Lesson"> | $Enums.Type
     name?: StringFilter<"Lesson"> | string
     url?: StringFilter<"Lesson"> | string
+    order?: IntFilter<"Lesson"> | number
     courseId?: StringFilter<"Lesson"> | string
     curriculumId?: StringFilter<"Lesson"> | string
   }
@@ -20966,6 +21093,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     curriculum: CurriculumCreateNestedOneWithoutLessonsInput
   }
@@ -20976,6 +21104,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
     curriculumId: string
   }
@@ -21043,6 +21172,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     curriculum?: CurriculumUpdateOneRequiredWithoutLessonsNestedInput
   }
@@ -21053,6 +21183,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     curriculumId?: StringFieldUpdateOperationsInput | string
   }
@@ -22298,6 +22429,7 @@ export namespace Prisma {
     type?: $Enums.Type
     name: string
     url: string
+    order?: number
     courseId: string
   }
 
@@ -22307,6 +22439,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUpdateManyWithoutLessonNestedInput
   }
@@ -22317,6 +22450,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
     LessonCompletion?: LessonCompletionUncheckedUpdateManyWithoutLessonNestedInput
   }
@@ -22327,6 +22461,7 @@ export namespace Prisma {
     type?: EnumTypeFieldUpdateOperationsInput | $Enums.Type
     name?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
   }
 

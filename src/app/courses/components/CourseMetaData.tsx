@@ -10,6 +10,8 @@ type CourseWithCounts = Prisma.CourseGetPayload<{
     duration: true;
     language: true;
     _count: {
+      _count: true;
+
       select: {
         lessons: true;
         enrollments: true;

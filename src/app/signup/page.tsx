@@ -6,7 +6,6 @@ import { signUpSchema } from "@/lib/auth/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,7 +17,6 @@ import {
 } from "@/components/ui/card";
 
 export default function SignUpPage() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,7 +57,7 @@ export default function SignUpPage() {
       if (res?.error) {
         setErrors({ general: res.error });
       } else if (res?.ok) {
-        router.push("/");
+        window.location.href = "/";
       }
     } catch (err) {
       if (err instanceof ZodError) {
@@ -85,7 +83,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex  items-center justify-center px-4">
+    <div className="flex  items-center justify-center p-2">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center font-semibold">
@@ -101,7 +99,7 @@ export default function SignUpPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
@@ -116,7 +114,7 @@ export default function SignUpPage() {
             </div>
 
             {/* Email */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -131,7 +129,7 @@ export default function SignUpPage() {
             </div>
 
             {/* Password */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -149,7 +147,7 @@ export default function SignUpPage() {
             </div>
 
             {/* Confirm Password */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
                 id="confirmPassword"

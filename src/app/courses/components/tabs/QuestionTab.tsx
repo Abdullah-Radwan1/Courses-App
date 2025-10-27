@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Loader2, MessageCircleQuestionMark } from "lucide-react";
 import { useEffect, useState } from "react";
-import CustomSkeleton from "@/components/CustomSkeleton";
+import { CustomSkeleton } from "@/components/CustomSkeleton";
 import {
   createQuestionAction,
   getQuestionsByCourseAction,

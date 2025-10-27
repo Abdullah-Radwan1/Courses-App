@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { LeaderboardResult } from "@/lib/types";
 import { getLeaderboard } from "@/lib/actions/leaderboard";
 import { useEffect, useState } from "react";
-import CustomSkeleton from "@/components/CustomSkeleton";
+import { LeaderboardSkeleton } from "@/components/CustomSkeleton";
 
 interface LeaderboardProps {
   courseId: string;
@@ -82,7 +82,7 @@ export default function LeaderboardPage({ courseId }: LeaderboardProps) {
         </DialogHeader>
 
         <div className="space-y-3 mt-4">
-          {loading && <CustomSkeleton />}
+          {loading && <LeaderboardSkeleton />}
 
           {!loading && leaderboard.length === 0 && (
             <h2 className="text-center">

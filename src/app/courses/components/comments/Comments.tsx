@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getCommentsByCourseAction } from "@/lib/actions/commentsAction";
-import CustomSkeleton from "@/components/CustomSkeleton";
+import { CustomSkeleton } from "@/components/CustomSkeleton";
 import AddComment from "./AddComment"; // 👈 new component
 import { CommentWithUser } from "@/lib/types";
 

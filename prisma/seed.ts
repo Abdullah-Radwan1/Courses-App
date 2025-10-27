@@ -1,23 +1,22 @@
-import { Type } from "@/generated/prisma";
+import { Type } from "../src/generated/prisma";
 import { db } from "./db";
 
 async function main() {
-  // ✅ Step 1: Create or find the course
+  // Step 1: Course
   const course = await db.course.upsert({
     where: { id: "353b6d90-7f3f-45c6-9795-f5f7f8fd5a46" },
     update: {},
     create: {
       title: "Next.js Mastery Course",
-      description:
-        "A complete guide to mastering Next.js from fundamentals to advanced topics.",
+      description: "A complete guide to mastering Next.js.",
       duration: "6 weeks",
       language: "English",
     },
   });
 
-  // ✅ Step 2: Create or find the curriculums
+  // Step 2: Curriculums
   const fundamentals = await db.curriculum.upsert({
-    where: { id: "fundamentals-1" }, // use a fake ID for deterministic seeding
+    where: { id: "fundamentals-1" },
     update: {},
     create: {
       id: "fundamentals-1",
@@ -38,98 +37,82 @@ async function main() {
     },
   });
 
-  // ✅ Step 3: Define lesson data
+  // Step 3: Lessons
   const lessonsFundamentals = [
     {
       name: "Introduction to Next.js",
       period: "Day 1",
       type: Type.VIDEO,
-      url: "https://www.youtube.com/watch?v=1",
-      curriculumId: fundamentals.id,
+      url: "https://www.youtube.com/watch?v=xWkozeculPo",
     },
     {
-      name: "Setting up the environment",
+      name: "Routing & Links",
       period: "Day 2",
       type: Type.VIDEO,
-      url: "https://www.youtube.com/watch?v=2",
-      curriculumId: fundamentals.id,
+      url: "https://www.youtube.com/watch?v=O94ESaJtHtM",
     },
     {
-      name: "Your first Next.js page",
+      name: "CSR VS SSR",
       period: "Day 3",
-      type: Type.PDF,
-      url: "/pdfs/lesson1.pdf",
-      curriculumId: fundamentals.id,
+      type: Type.VIDEO,
+      url: "https://www.youtube.com/watch?v=S5tjBqzs31w",
+    },
+    {
+      name: "Next.js Layout",
+      period: "Day 4",
+      type: Type.VIDEO,
+      url: "https://www.youtube.com/watch?v=NK-8a8EzWrU",
     },
   ];
 
   const lessonsAdvanced = [
     {
-      name: "API Routes Deep Dive",
+      name: "Caching in Next.js",
       period: "Day 1",
       type: Type.VIDEO,
-      url: "https://www.youtube.com/watch?v=3",
-      curriculumId: advanced.id,
+      url: "https://www.youtube.com/watch?v=JhFrgQjc1p8",
     },
     {
-      name: "Server Components in Next.js",
+      name: "Server Actions",
       period: "Day 2",
       type: Type.VIDEO,
-      url: "https://www.youtube.com/watch?v=4",
-      curriculumId: advanced.id,
+      url: "https://www.youtube.com/watch?v=O94ESaJtHtM",
     },
-    {
-      name: "Final Exam",
-      period: "Day 3",
-      type: Type.EXAM,
-      url: "/exam/final",
-      curriculumId: advanced.id,
-    },
+    { name: "Final Exam", period: "Day 3", type: Type.EXAM, url: "" },
+    { name: "Course Overview", period: "Day 4", type: Type.PDF, url: "" },
   ];
 
-  // ✅ Step 4: Upsert lessons concurrently
-  await Promise.all([
-    ...lessonsFundamentals.map((lesson) =>
-      upsertLessonByAttrs({ ...lesson, courseId: course.id })
-    ),
-    ...lessonsAdvanced.map((lesson) =>
-      upsertLessonByAttrs({ ...lesson, courseId: course.id })
-    ),
-  ]);
+  // Step 4: Replace lessons deterministically
+  await replaceLessonsForCurriculum(
+    fundamentals.id,
+    course.id,
+    lessonsFundamentals
+  );
+  await replaceLessonsForCurriculum(advanced.id, course.id, lessonsAdvanced);
 
   console.log("✅ Seeding completed successfully!");
 }
 
-// ✅ Helper function: Find or create lesson
-async function upsertLessonByAttrs({
-  name,
-  period,
-  type,
-  url,
-  courseId,
-  curriculumId,
-}: {
-  name: string;
-  period: string;
-  type: Type;
-  url: string;
-  courseId: string;
-  curriculumId: string;
-}) {
-  const existing = await db.lesson.findFirst({
-    where: { name, period, courseId, curriculumId },
-  });
+// Helper: Reset and insert lessons in stable order
+async function replaceLessonsForCurriculum(
+  curriculumId: string,
+  courseId: string,
+  lessons: any[]
+) {
+  await db.lesson.deleteMany({ where: { curriculumId } }); // 🔥 Clear old lessons
 
-  if (existing) {
-    return db.lesson.update({
-      where: { id: existing.id },
-      data: { name, period, type, url },
-    });
-  }
-
-  return db.lesson.create({
-    data: { name, period, type, url, courseId, curriculumId },
-  });
+  await db.$transaction(
+    lessons.map((lesson, index) =>
+      db.lesson.create({
+        data: {
+          ...lesson,
+          order: index + 1, // ✅ Deterministic order
+          courseId,
+          curriculumId,
+        },
+      })
+    )
+  );
 }
 
 main()

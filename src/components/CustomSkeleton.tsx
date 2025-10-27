@@ -1,7 +1,8 @@
 import React from "react";
 import { Skeleton } from "./ui/skeleton";
+import { Card } from "./ui/card";
 
-const CustomSkeleton = () => {
+export const CustomSkeleton = () => {
   return (
     <div className="space-y-4">
       {[1, 2].map((n) => (
@@ -21,4 +22,22 @@ const CustomSkeleton = () => {
   );
 };
 
-export default CustomSkeleton;
+export const LeaderboardSkeleton = () => (
+  <div className="space-y-3 mt-4">
+    {[1, 2, 3].map((n) => (
+      <Card
+        key={n}
+        className="flex items-center justify-between p-4 rounded-xl shadow-sm border"
+      >
+        <div className="flex items-center gap-3">
+          <Skeleton className="w-5 h-5 rounded-full" />
+          <div>
+            <Skeleton className="h-4 w-28 mb-1" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+        </div>
+        <Skeleton className="h-5 w-40 rounded-full" />
+      </Card>
+    ))}
+  </div>
+);
